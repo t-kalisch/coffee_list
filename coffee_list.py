@@ -126,7 +126,7 @@ if logged_in == True:
              temp1.append(temp)
 
         df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
-        fig2 = px.bar(df, y="total", x="months", title="Total number of coffees per month", labels={"months":"Number of coffees", "total":""}, text_auto=True)
+        fig2 = px.bar(df, y="total", x="months", title="Total number of coffees per month", labels={"months":"", "total":"Number of coffees"}, text_auto=True)
         fig2.update_layout(title_font_size=24)
         st.plotly_chart(fig2, use_container_width=True) 
 
