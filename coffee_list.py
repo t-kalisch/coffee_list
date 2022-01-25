@@ -127,7 +127,7 @@ if logged_in == True:
 
         df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
         fig2 = px.bar(df, x="total", y="months", title="Total number of coffees per month", labels={"months":"Number of coffees", "total":""}, text_auto=True)
-        fig2.update_layout(title_font_size=24)
+        fig2.update_layout(title_font_size=24, orientation='v')
         st.plotly_chart(fig2, use_container_width=True) 
 
         #fig2_1 = echarts.init(temp1)
@@ -221,7 +221,7 @@ if logged_in == True:
        columns_corr=['x-values','y-values','size']
 
        df = pd.DataFrame(temp2, columns=columns_corr)
-       st.write(df)
+        
        fig5 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Absolute correlation", color='size')#, text='size')
        fig5.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
        col3.plotly_chart(fig5, use_container_width=True)#              absolute correlation
