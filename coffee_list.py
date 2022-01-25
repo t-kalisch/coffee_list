@@ -13,6 +13,7 @@ import plotly.express as px
 import streamlit_echarts as echarts
 import mysql.connector as mysql
 from data_collection import *
+from calculations import *
 
 
 st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
@@ -27,8 +28,8 @@ def submit_holidays(holidays):
     st.write("Submitted holidays: "+str(holidays))
 
 null = None
-user_data=[['TK', 'akstr!admin2'],['PB','akstr!admin2'],['NV',null],['DB',null],['FLG','baddragon'],['SHK',null],['TB',null],['TT',null],['RS',null]]
-simple_data=[9, 7, 15, 1879, 720, 66, 9]
+user_data=get_user_data()
+simple_data=get_simple_data()
 monthly_coffees_total=[75,25,59,88,163,196,197,150,127,206,184,144,163,103,32]
 monthly_coffees1=[]
 monthly_coffees=[[19, 9, 16, 19, 29, 31, 32, 30, 14, 41, 39, 34, 37, 24, 10], [15, 6, 6, 20, 29, 20, 24, 25, 29, 22, 32, 30, 35, 18, 12], [13, 6, 12, 16, 25, 35, 28, 37, 31, 27, 36, 30, 22, 14, 0], [10, 3, 7, 12, 27, 36, 37, 15, 22, 44, 10, 6, 4, 7, 1], [18, 1, 18, 21, 34, 35, 35, 26, 21, 43, 43, 27, 36, 22, 9], [0, 0, 0, 0, 19, 27, 23, 9, 5, 16, 22, 17, 26, 17, 0], [0, 0, 0, 0, 0, 12, 18, 8, 5, 13, 2, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0]]
