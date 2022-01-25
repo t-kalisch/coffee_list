@@ -127,7 +127,7 @@ if logged_in == True:
 
         df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
         fig2 = px.bar(df, x="total", y="months", title="Total number of coffees per month", labels={"months":"Number of coffees", "total":""}, text_auto=True)
-        fig2.update_layout(title_font_size=24, orientation='v')
+        fig2.update_layout(title_font_size=24)
         st.plotly_chart(fig2, use_container_width=True) 
 
         #fig2_1 = echarts.init(temp1)
