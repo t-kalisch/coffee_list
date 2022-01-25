@@ -1,1 +1,7 @@
-
+altair
+pandas
+streamlit
+matplotlib
+plotly
+streamlit-echarts
+mysql-connector-python==8.0.27
