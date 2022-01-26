@@ -108,32 +108,37 @@ col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
 @st.cache
+def print_coffees_monthly():
+    st.subheader("Coffees per month")                           
+    df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
+    fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"drinkers", "index":"", "value":"Number of coffees"})
+    fig1.update_layout(title_font_size=24)
+    st.plotly_chart(fig1, use_container_width=True)
+
+    temp1=[]
+    for i in range(len(months)):
+         temp=[]
+         temp.append(months[i])
+         temp.append(monthly_coffees_total[i])
+         temp1.append(temp)
+
+    df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
+    fig2 = px.bar(df, y="total", x="months", title="Total number of coffees per month", labels={"months":"", "total":"Number of coffees"}, text_auto=True)
+    fig2.update_layout(title_font_size=24)
+    st.plotly_chart(fig2, use_container_width=True) 
+
+    #fig2_1 = echarts.init(temp1)
+    #option = {xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},yAxis: {type: 'value'},series: [{data: [150, 230, 224, 218, 135, 147, 260],type: 'line'}]}
+
+
+
+
 if logged_in == True or logged_in == False:
 
 
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
-        st.subheader("Coffees per month")                           
-        df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
-        fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"drinkers", "index":"", "value":"Number of coffees"})
-        fig1.update_layout(title_font_size=24)
-        st.plotly_chart(fig1, use_container_width=True)
-
-        temp1=[]
-        for i in range(len(months)):
-             temp=[]
-             temp.append(months[i])
-             temp.append(monthly_coffees_total[i])
-             temp1.append(temp)
-
-        df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
-        fig2 = px.bar(df, y="total", x="months", title="Total number of coffees per month", labels={"months":"", "total":"Number of coffees"}, text_auto=True)
-        fig2.update_layout(title_font_size=24)
-        st.plotly_chart(fig2, use_container_width=True) 
-
-        #fig2_1 = echarts.init(temp1)
-        #option = {xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},yAxis: {type: 'value'},series: [{data: [150, 230, 224, 218, 135, 147, 260],type: 'line'}]}
-
+        print_coffees_monthly()
     #-------------------------------------------------------------------------------------------------------------- weekly coffees and breaks (line chart)
     if c_b_weekly:
         st.subheader("Weekly breaks and coffees")
