@@ -129,7 +129,7 @@ if logged_in == True or logged_in == False:
         fig2 = px.bar(df, y="total", x="months", title="Total number of coffees per month", labels={"months":"", "total":"Number of coffees"}, text_auto=True)
         fig2.update_layout(title_font_size=24)
         st.plotly_chart(fig2, use_container_width=True) 
-        return df
+
         #fig2_1 = echarts.init(temp1)
         #option = {xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},yAxis: {type: 'value'},series: [{data: [150, 230, 224, 218, 135, 147, 260],type: 'line'}]}
 
