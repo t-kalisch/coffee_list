@@ -107,7 +107,7 @@ col3.subheader(str(simple_data[3])+" cups of coffee")
 col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
-@st.cache
+@st.cache(suppress_st_warning=True)
 def print_coffees_monthly():
     st.subheader("Coffees per month")                           
     df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
