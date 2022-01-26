@@ -255,10 +255,10 @@ if logged_in == True or logged_in == False:
         for i in range(len(months)-4):
             months_from_march.append(months[i+4])
         df = pd.DataFrame(perc_p_m, columns=names, index=months_from_march)
-        fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"drinkers", "index":"", "value":"Percentage"})
+        fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"drinkers", "index":"", "value":"Percentage"}, hover_data=names)
         fig7.update_layout(title_font_size=24)
         st.write("plotly express hovertemplate:", fig7.data[0].hovertemplate)
-        #fig7.update_traces(hovertemplate='%{} <br>%{x}<br>Percentage: %{y}')
+        #fig7.update_traces(hovertemplate='drinkers=TK<br>=%{x}<br>Percentage=%{y}<extra></extra>')
         col5.plotly_chart(fig7, use_container_width=True)
 
         percentage_total=[]
