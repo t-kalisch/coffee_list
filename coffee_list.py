@@ -177,7 +177,7 @@ if logged_in == True or logged_in == False:
        temp2.append("months")
        for i in range(len(names)):
           temp2.append(names[i])
-       st.write(temp)
+       
        df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
        fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
        fig4.update_layout(title_font_size=24, showlegend=False)
