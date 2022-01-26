@@ -257,7 +257,8 @@ if logged_in == True or logged_in == False:
         df = pd.DataFrame(perc_p_m, columns=names, index=months_from_march)
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"drinkers", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24)
-        #fig7.update_traces(hovertemplate='%{variable} <br>%{x}<br>Percentage: %{y}')
+        st.write("plotly express hovertemplate:", fig7.data[0].hovertemplate)
+        #fig7.update_traces(hovertemplate='%{} <br>%{x}<br>Percentage: %{y}')
         col5.plotly_chart(fig7, use_container_width=True)
 
         percentage_total=[]
