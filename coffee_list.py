@@ -107,7 +107,7 @@ col3.subheader(str(simple_data[3])+" cups of coffee")
 col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
-
+@st.cache
 if logged_in == True or logged_in == False:
 
 
