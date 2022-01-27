@@ -78,6 +78,7 @@ if logged_in == True:
     profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     
     if profile_nav == "Enter holidays":
+        st.subheader("Enter holidays")
         col1, col2 = st.columns([2,1])
         holidays = col1.date_input("Please enter your holidays", [])
         col2.write(". ")
