@@ -48,7 +48,7 @@ admin_status=0
 
 with st.sidebar:
     page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
-
+    login = st.checkbox("Login", help="Log in with your username and password")
     hol = st.checkbox("Enter holidays")
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
@@ -63,7 +63,7 @@ if page_nav == 'Login':
     st.header("Login:")
     user = st.text_input(label="", placeholder="Username")
     user_pw = st.text_input(label="", type="password", placeholder="Password")
-    login = st.checkbox("Login", help="Log in with your username and password")
+
     
 if hol:
     col1, col2 = st.columns([2,1])
