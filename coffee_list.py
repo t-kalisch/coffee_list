@@ -88,7 +88,7 @@ if logged_in == True:
             st.subheader("Enter holidays for another person")
             col1,col2 = st.columns([3,1])
             col1.text_input("Person", placeholder = "User")
-            holidays = col2.date_input("Please enter your holidays", [])
+            holidays_admin = col2.date_input("Please enter your holidays", [])
         
     if profile_nav == "Change username":
         st.subheader("Change username")
