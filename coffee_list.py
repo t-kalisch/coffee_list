@@ -67,11 +67,11 @@ if login:
         else:
             st.sidebar.write("Member status: User") 
     else:
-        st.title("Welcome to our coffee list")
+        st.title("Welcome to the future of coffee drinking")
         st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
         st.warning("Incorrect username/password")
 else:
-    st.title("Welcome to our coffee list")
+    st.title("Welcome to the future of coffee drinking")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
 
