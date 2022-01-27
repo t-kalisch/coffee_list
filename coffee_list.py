@@ -74,9 +74,11 @@ if login:
         st.title("Logged in as {}".format(user))
         
     else:
-        st.sidebar.warning("Incorrect username/password")
         st.title("Welcome to our coffee list")
-
+        st.warning("Incorrect username/password")
+else:
+    st.title("Welcome to our coffee list")
+    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
 
 for i in range(15):
     temp=[]
