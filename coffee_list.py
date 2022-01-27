@@ -25,8 +25,8 @@ def submit_holidays(holidays):
     st.write("Submitted holidays: "+str(holidays))
 
 null = None
-#user_data=get_user_data()
-user_data=[['TK', 'akstr!admin2'],['PB','akstr!admin2'],['NV',None],['DB',None],['FLG','baddragon'],['SHK',None],['TB',None],['TT',None],['RS',None]]
+user_data=get_user_data()
+#user_data=[['TK', 'akstr!admin2'],['PB','akstr!admin2'],['NV',None],['DB',None],['FLG','baddragon'],['SHK',None],['TB',None],['TT',None],['RS',None]]
 simple_data=get_simple_data()
 monthly_coffees_total=[75,25,59,88,163,196,197,150,127,206,184,144,163,103,32]
 monthly_coffees1=[]
