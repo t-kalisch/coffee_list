@@ -18,10 +18,7 @@ from calculations import *
 
 st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
 
-"""
-# Welcome to our coffee list!
-In order to submit a coffee break, you need to be logged in with your username and password. Pauses are then automatically generated for you.
-"""
+
 
 
 def submit_holidays(holidays):
@@ -76,7 +73,17 @@ if hol:
     col2.write(". ")
     sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
 
-
+if logged_in == True:
+    st.title("Logged in as "+str(user))
+    """
+    #test
+    In order to submit a coffee break, you need to be logged in with your username and password. Pauses are then automatically generated for you.
+    """
+else:
+    """
+    # Welcome to our coffee list!
+    In order to submit a coffee break, you need to be logged in with your username and password. Pauses are then automatically generated for you.
+    """
 
 
 for i in range(15):
