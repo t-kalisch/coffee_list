@@ -70,7 +70,7 @@ if hol:
 if login:
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
-            admin_status=1
+            admin_status=user_data[i][2]
             logged_in=True
     if logged_in == True:
         st.title("Logged in as {}".format(user))
