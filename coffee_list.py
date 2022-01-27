@@ -82,7 +82,7 @@ else:
 if logged_in == True:
     profile_nav = st.selectbox("Options", ("-","Enter holdidays","Change password")
     
-    if profile_nav == 'Enter holidays':
+    if profile_nav == "Enter holidays":
         col1, col2 = st.columns([2,1])
         holidays = col1.date_input("Please enter your holidays", [])
         col2.write(". ")
