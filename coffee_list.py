@@ -104,6 +104,7 @@ if logged_in == True:
             col1,col2,col3,col4 = st.columns([3,3,0.5,1])
             col1.text_input("Old username", placeholder = "User")
             col2.text_input("New username", placeholder = "User")
+            col4.write(".")
             col4.button("Confirm")
         
     if profile_nav == "Change password":
@@ -111,7 +112,7 @@ if logged_in == True:
         st.markdown("You can change your password here.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
         curr_user = col2.text_input("Current password", type="password", placeholder = "Old password")
-        st.write("-" * 34)
+        col2.write("-" * 34)
         col1,col2,col3 = st.columns([0.5,1,0.7])
         user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
         new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
