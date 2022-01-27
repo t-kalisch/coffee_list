@@ -87,7 +87,7 @@ if logged_in == True:
         st.subheader("Change username")
         st.markdown("Please enter your current username, password and new username.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
-        curr_user = col2.text_input("Current username", placeholder = "Username")
+        curr_user = col2.text_input("Username", placeholder = "Username")
         user_pw = col2.text_input("Password", type="password", placeholder = "Password")
         new_user = col2.text_input("Choose a new username", placeholder = "Username")
         
