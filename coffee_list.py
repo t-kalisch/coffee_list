@@ -96,7 +96,7 @@ if logged_in == True:
         st.markdown("You can change your password here.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
         curr_user = col2.text_input("Current password", type="password", placeholder = "Old password")
-        col2.write(":heavy_minus_sign:" * 34)
+        col2.write("-" * 34)
         user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
         new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
         
