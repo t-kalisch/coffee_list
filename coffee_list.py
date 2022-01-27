@@ -137,7 +137,7 @@ with st.sidebar:
 
 
 
-if logged_in == True and profile_nav == "Show diagrams"
+if logged_in == True and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
         st.subheader("Coffees per month")                           
