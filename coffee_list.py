@@ -126,7 +126,7 @@ with st.sidebar:
 
 
 
-if logged_in == True:# or logged_in == False:
+if logged_in == True and profile_nav == "-":# or logged_in == False:
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
         st.subheader("Coffees per month")                           
