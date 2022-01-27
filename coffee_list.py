@@ -80,7 +80,7 @@ else:
     
 
 if logged_in == True:
-    profile_nav = st.selectbox("Options", ("-","Enter holidays","Change password")
+    profile_nav = st.sidebar.selectbox("Options", ("-","Enter holidays","Change password"), 0)
     
     if profile_nav == "Enter holidays":
         col1, col2 = st.columns([2,1])
