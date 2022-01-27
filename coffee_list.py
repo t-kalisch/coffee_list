@@ -133,7 +133,7 @@ if logged_in == True:# or logged_in == False:
              temp1.append(temp)
 
         df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
-        fig2 = px.bar(df, y="total", x="months", title="Total number of coffees per month", labels={"months":"", "total":"Number of coffees"}, text_auto=True)
+        fig2 = px.bar(df, y="months", x="total", title="Total number of coffees per month", labels={"months":"", "total":"Number of coffees"}, text_auto=True)
         fig2.update_layout(title_font_size=24)
         st.plotly_chart(fig2, use_container_width=True) 
 
@@ -144,7 +144,8 @@ if logged_in == True:# or logged_in == False:
     #-------------------------------------------------------------------------------------------------------------- weekly coffees and breaks (line chart)
     if c_b_weekly:
         st.subheader("Weekly breaks and coffees")
-        df = pd.DataFrame(coffees_breaks_weekly, columns={'Breaks','Coffees'}, index=weeks)
+        columns=['Breaks','Coffees']
+        df = pd.DataFrame(coffees_breaks_weekly, columns=columns, index=weeks)
         fig3 = px.line(df, labels={"variable":"", "index":"", "value":""})
         fig3.update_layout(hovermode="x unified")
         st.plotly_chart(fig3, use_container_width=True)
