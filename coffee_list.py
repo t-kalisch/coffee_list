@@ -41,6 +41,7 @@ cumulated_coffees1=[]
 cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
+last_breaks=get_last_breaks()
 logged_in=False
 admin_status=0
 
@@ -153,7 +154,11 @@ elif logged_in == True and admin_status == 1:
     if profile_nav == "Delete coffee break":
         st.subheader("Delete a coffee break")
         st.markdown("Please enter extended ID of the break you want to delete")
-    
+        col1,col2 = st.columns([1,3)])
+        col1.text_input("Extended ID of break")
+        col1.button("Delete break")
+        col2.write("Last 10 breaks")
+        col2.write(last_break)
     
     
 for i in range(15):
