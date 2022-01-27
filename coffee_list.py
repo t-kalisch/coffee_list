@@ -163,7 +163,7 @@ if logged_in == True:
         max_id = max(temp)
         
         col1,col2,col3 = st.columns([1,0.5,3])
-        col1.text_input("Extended ID of break", placeholder=str(max_id)
+        col1.text_input("Extended ID of break", placeholder=str(max_id))
         col1.button("Delete break")
         columns=['Extended ID','Date','Drinkers','Coffees']
         df=pd.DataFrame(last_breaks,columns=columns)
