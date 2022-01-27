@@ -155,7 +155,7 @@ elif logged_in == True and admin_status == 1:
         st.subheader("Delete a coffee break")
         st.markdown("Please enter extended ID of the break you want to delete")
         col1,col2 = st.columns([1,3])
-        col1.text_input("Extended ID of break", placeholder="0000000000")
+        col1.text_input("Extended ID of break", placeholder="2022012703")
         col1.button("Delete break")
         col2.write("Last 10 breaks")
         columns=['Extended ID','Date','Drinkers','Coffees']
