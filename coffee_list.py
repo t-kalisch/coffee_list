@@ -85,8 +85,8 @@ if logged_in == True:
         
     if profile_nav == "Change username":
         st.subheader("Change username")
-        col1,col2,col3 = st.columns([0.5,1,0.7])
         st.markdown("Please enter your current username, password and new username.")
+        col1,col2,col3 = st.columns([0.5,1,0.7])
         curr_user = col2.text_input("Current username", placeholder = "Username")
         user_pw = col2.text_input("Password", placeholder = "Password")
         new_user = col2.text_input("Choose a new username.", placeholder = "Username")
