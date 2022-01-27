@@ -50,7 +50,7 @@ with st.sidebar:
     page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
     if page_nav == 'Login':
         #st.markdown("Login:")
-        col1,col2 = st.columns([1,1.5])
+        col1,col2 = st.columns([1,1.6])
         user = col1.text_input(label="", placeholder="Username")
         user_pw = col2.text_input(label="", type="password", placeholder="Password")
     login = st.checkbox("Login", help="Log in with your username and password")
