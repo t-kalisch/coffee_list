@@ -59,11 +59,6 @@ with st.sidebar:
     break_percentage = st.checkbox("Percentages of breaks")
     coffees_cumulated = st.checkbox("Cumulated coffees")
 
-if page_nav == 'Login':
-    st.header("Login:")
-    user = st.text_input(label="", placeholder="Username")
-    user_pw = st.text_input(label="", type="password", placeholder="Password")
-
     
 if hol:
     col1, col2 = st.columns([2,1])
@@ -90,6 +85,12 @@ else:
     st.title("Welcome to our coffee list")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
 
+if page_nav == 'Login':
+    st.header("Login:")
+    user = st.text_input(label="", placeholder="Username")
+    user_pw = st.text_input(label="", type="password", placeholder="Password")
+    
+    
 for i in range(15):
     temp=[]
     for j in range(len(monthly_coffees)):
