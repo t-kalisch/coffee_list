@@ -108,7 +108,7 @@ col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
 
-if logged_in == True or logged_in == False:
+if logged_in == True:# or logged_in == False:
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
         st.subheader("Coffees per month")                           
