@@ -47,7 +47,7 @@ admin_status=0
 
 
 with st.sidebar:
-    page_nav = st.selectbox(label = "Page navigation", ("Login","Data visualisation"), index=0)
+    page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
 
     hol = st.checkbox("Enter holidays")
     st.title("Available diagrams:")
