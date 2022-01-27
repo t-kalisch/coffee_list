@@ -154,17 +154,17 @@ elif logged_in == True and admin_status == 1:
     if profile_nav == "Delete coffee break":
         st.subheader("Delete a coffee break")
         st.markdown("Please enter extended ID of the break you want to delete")
-        col1,col2 = st.columns([1,3])
+        col1,col2,col3 = st.columns([1,0.5,3])
         col1.text_input("Extended ID of break", placeholder="2022012703")
         col1.button("Delete break")
         #col2.write("Last 10 breaks")
         columns=['Extended ID','Date','Drinkers','Coffees']
         df=pd.DataFrame(last_breaks,columns=columns)
-        col2.markdown("Last 10 breaks")
-        col2.dataframe(df, width=600, height=500)
+        col3.markdown("Last 10 breaks")
+        col3.dataframe(df, width=600, height=500)
         
         tab_last_breaks = go.Figure(data=[go.Table(header=dict(values=list(df.columns),  fill_color='lightgoldenrodyellow', align='left'), cells=dict(values=df.transpose().values.tolist(), fill_color='gainsboro', align='left'))])
-        col2.plotly_chart(tab_last_breaks, use_container_width = True)
+        col3.plotly_chart(tab_last_breaks, use_container_width = True)
         
     
     
