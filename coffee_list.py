@@ -61,9 +61,10 @@ if login:
             admin_status=user_data[i][2]
             logged_in=True
     if logged_in == True:
-        st.title("Logged in as {}".format(user))
+        col1, col2 = st.columns([1,1])
+        col1.title("Logged in as {}".format(user))
         if admin_status == 1:
-            st.write("Member status: Administrator")
+            col2.write("Member status: Administrator")
         else:
             st.write("Member status: User") 
     else:
