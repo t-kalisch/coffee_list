@@ -222,26 +222,26 @@ if logged_in == True and profile_nav == "Show diagrams":
         
     #-------------------------------------------------------------------------------------------------------------- monthly ratios (stacked bar chart)
     #if ratio_monthly:                                                          #with inverted months (top: Nov '20, bottom: now)
-       col2.subheader("Monthly ratios")
+        col2.subheader("Monthly ratios")
 
-       months_inv=[]
-       temp=[]
-       for i in range(len(months)):
+        months_inv=[]
+        temp=[]
+        for i in range(len(months)):
           months_inv.append(months[len(months)-i-1])
           temp1=[]
           temp1.append(months[len(months)-i-1])
           for j in range(len(names)):
              temp1.append(monthly_ratios[j][len(months)-i-1])
           temp.append(temp1)
-       temp2=[]
-       temp2.append("months")
-       for i in range(len(names)):
+        temp2=[]
+        temp2.append("months")
+        for i in range(len(names)):
           temp2.append(names[i])
 
-       df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
-       fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
-       fig4.update_layout(title_font_size=24, showlegend=False)
-       col2.plotly_chart(fig4, use_container_width=True)
+        df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
+        fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
+        fig4.update_layout(title_font_size=24, showlegend=False)
+        col2.plotly_chart(fig4, use_container_width=True)
     #if ratio_monthly:                                                          #with non-inverted months (top: now, bottom: Nov '20)
     #   col2.header("Monthly ratios")
     #   
