@@ -80,7 +80,7 @@ else:
     
 
 if logged_in == True:
-    profile_nav = st.sidebar.selectbox("Profile Options", ("-","Enter holidays","Change password"), 0)
+    profile_nav = st.sidebar.selectbox("Profile Options", ("-","Enter holidays","Change username","Change password"), 0)
     
     if profile_nav == "Enter holidays":
         col1, col2 = st.columns([2,1])
@@ -103,14 +103,14 @@ for i in range(15):
     cumulated_coffees1.append(temp)
 
 if logged_in == False or (logged_in == True and profile_nav == "-"):
-col1,col2,col3,col4 = st.columns([1,1,1,1])
-col1.subheader(str(simple_data[0])+" drinkers")
-col1.subheader(str(simple_data[1])+" active drinkers")
-col2.subheader(str(simple_data[2])+" months of drinking")
-col3.subheader(str(simple_data[4])+" coffee breaks")
-col3.subheader(str(simple_data[3])+" cups of coffee")
-col4.subheader(str(simple_data[5])+" data sets")
-col4.subheader(str(simple_data[6])+" diagrams")
+    col1,col2,col3,col4 = st.columns([1,1,1,1])
+    col1.subheader(str(simple_data[0])+" drinkers")
+    col1.subheader(str(simple_data[1])+" active drinkers")
+    col2.subheader(str(simple_data[2])+" months of drinking")
+    col3.subheader(str(simple_data[4])+" coffee breaks")
+    col3.subheader(str(simple_data[3])+" cups of coffee")
+    col4.subheader(str(simple_data[5])+" data sets")
+    col4.subheader(str(simple_data[6])+" diagrams")
 
 with st.sidebar:
     st.title("Available diagrams:")
