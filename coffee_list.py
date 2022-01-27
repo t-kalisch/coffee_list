@@ -53,12 +53,7 @@ with st.sidebar:
     col1,col2 = st.columns([1,1.65])
     user = col1.text_input(label="", placeholder="Username")
     user_pw = col2.text_input(label="", type="password", placeholder="Password")
-    login = st.checkbox("Login", help="Log in with your username and password")
-
-
-
-    
-
+    login = st.checkbox("Login", help="You are logged in while this checkbox is ticked")
 
 if login:
     for i in range(len(user_data)):
@@ -87,7 +82,14 @@ if logged_in == True:
         holidays = col1.date_input("Please enter your holidays", [])
         col2.write(". ")
         sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
-    
+        
+    if profile_nav == "Change username":
+        col1,col2 = st.columns([0.5,1,0.7])
+        st.subheader("Change username")
+        st.markdown("Please enter your current username, password and new username.")
+        curr_user = st.text_input("Current username", placeholder = "Username")
+        user_pw = st.text_input("Password", placeholder = "Password")
+        new_user = st.text_input("Choose a new username.", placeholder = "Username")
     
     
 for i in range(15):
