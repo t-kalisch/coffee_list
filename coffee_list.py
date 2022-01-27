@@ -113,7 +113,7 @@ for i in range(15):
         temp.append(cumulated_coffees[j][i])
     cumulated_coffees1.append(temp)
 
-if logged_in == False or (logged_in == True and profile_nav == "-"):
+if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
     col1,col2,col3,col4 = st.columns([1,1,1,1])
     col1.subheader(str(simple_data[0])+" drinkers")
     col1.subheader(str(simple_data[1])+" active drinkers")
