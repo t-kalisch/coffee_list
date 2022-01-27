@@ -145,6 +145,8 @@ elif logged_in == True and admin_status == 1:
         p2_coffees = col7.text_input("name person 2")
         p3_name = col8.text_input("person 3")
         p3_coffees = col8.text_input("name person 3")
+        col1.button("Start break")
+        col2.button("End break")
         
     
 for i in range(15):
