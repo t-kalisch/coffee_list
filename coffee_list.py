@@ -51,16 +51,6 @@ with st.sidebar:
     user_pw = st.text_input(label="", type="password", placeholder="Password")
     login = st.checkbox("Login", help="Log in with your username and password")
     hol = st.checkbox("Enter holidays")
-    st.write(user)
-    st.write(user_pw)
-    if login:
-        for i in range(len(user_data)):
-            if user == user_data[i][0] and user_pw == user_data[i][1]:
-                logged_in=True
-        if logged_in == True:
-            st.success("Logged in as {}".format(user))
-        else:
-            st.warning("Incorrect username/password")
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
     c_b_weekly = st.checkbox ("Weekly breaks and coffees")
@@ -76,17 +66,16 @@ if hol:
     col2.write(". ")
     sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
 
-if logged_in == True:
-    st.title("Logged in as "+str(user))
-    """
-    #test
-    In order to submit a coffee break, you need to be logged in with your username and password. Pauses are then automatically generated for you.
-    """
-else:
-    """
-    # Welcome to our coffee list!
-    In order to submit a coffee break, you need to be logged in with your username and password. Pauses are then automatically generated for you.
-    """
+if login:
+    for i in range(len(user_data)):
+        if user == user_data[i][0] and user_pw == user_data[i][1]:
+            logged_in=True
+    if logged_in == True:
+        st.title("Logged in as {}".format(user))
+        
+    else:
+        st.sidebar.warning("Incorrect username/password")
+        st.title("Welcome to our coffee list")
 
 
 for i in range(15):
