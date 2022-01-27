@@ -25,7 +25,7 @@ def submit_holidays(holidays):
     st.write("Submitted holidays: "+str(holidays))
 
 null = None
-user_data=get_user_data()
+#user_data=get_user_data()
 user_data=[['TK', 'akstr!admin2'],['PB','akstr!admin2'],['NV',None],['DB',None],['FLG','baddragon'],['SHK',None],['TB',None],['TT',None],['RS',None]]
 simple_data=get_simple_data()
 monthly_coffees_total=[75,25,59,88,163,196,197,150,127,206,184,144,163,103,32]
@@ -56,9 +56,9 @@ with st.sidebar:
             if user == user_data[i][0] and user_pw == user_data[i][1]:
                 logged_in=True
         if logged_in == True:
-            st.sidebar.success("Logged in as {}".format(user))
+            st.success("Logged in as {}".format(user))
         else:
-            st.sidebar.warning("Incorrect username/password")
+            st.warning("Incorrect username/password")
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
     c_b_weekly = st.checkbox ("Weekly breaks and coffees")
