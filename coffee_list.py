@@ -219,8 +219,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         fig3.update_layout(title_font_size=24)
         col1.plotly_chart(fig3, use_container_width=True)
 
-
-
+        
     #-------------------------------------------------------------------------------------------------------------- monthly ratios (stacked bar chart)
     #if ratio_monthly:                                                          #with inverted months (top: Nov '20, bottom: now)
        col2.subheader("Monthly ratios")
