@@ -62,7 +62,7 @@ if login:
     if logged_in == True:
         st.title("Logged in as {}".format(user))
         if admin_status == 1:
-            col2.sidebar.markdown("Status: Administrator")
+            col2.sidebar.write("Status: Administrator")
         else:
             st.sidebar.write("Member status: User") 
     else:
