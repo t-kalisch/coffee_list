@@ -157,8 +157,8 @@ with st.sidebar:
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
     c_b_weekly = st.checkbox ("Weekly breaks and coffees")
-    coffees_total = st.checkbox("Total coffees")
-    ratio_monthly = st.checkbox("Monthly ratios")
+    coffees_total = st.checkbox("Total coffees and monthly ratios")
+    #ratio_monthly = st.checkbox("Monthly ratios")
     correlation = st.checkbox("Correlation")
     break_percentage = st.checkbox("Percentages of breaks")
     coffees_cumulated = st.checkbox("Cumulated coffees")
@@ -222,7 +222,7 @@ if logged_in == True and profile_nav == "Show diagrams":
 
 
     #-------------------------------------------------------------------------------------------------------------- monthly ratios (stacked bar chart)
-    if ratio_monthly:                                                          #with inverted months (top: Nov '20, bottom: now)
+    #if ratio_monthly:                                                          #with inverted months (top: Nov '20, bottom: now)
        col2.subheader("Monthly ratios")
 
        months_inv=[]
