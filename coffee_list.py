@@ -145,7 +145,7 @@ elif logged_in == True and admin_status == 1:
         col5.write("SHK")
         shk = col5.text_input("SHK")
         p1_name = col6.text_input("")
-        p1_coffees = col6.text_input("")
+        p1_coffees = col6.text_input()
         p2_name = col7.text_input("")
         p2_coffees = col7.text_input("")
         p3_name = col8.text_input("")
