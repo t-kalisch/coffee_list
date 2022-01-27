@@ -160,10 +160,7 @@ elif logged_in == True and admin_status == 1:
         col2.write("Last 10 breaks")
         columns=['Extended ID','Date','Drinkers','Coffees']
         df=pd.DataFrame(last_breaks,columns=columns)
-        fig = go.Figure(data=[go.Table(header=dict(values=list(df.columns),  fill_color='paleturquoise', align='left'), cells=dict(values=[df.'Extended ID', df.'Date', df.'Drinkers', df.'Coffees'],
-               fill_color='lavender',
-               align='left'))
-])
+        fig = go.Figure(data=[go.Table(header=dict(values=list(df.columns),  fill_color='paleturquoise', align='left') ])
         col2.write(df)
     
     
