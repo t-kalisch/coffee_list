@@ -150,6 +150,11 @@ elif logged_in == True and admin_status == 1:
         col1.button("Start break")
         col2.button("End break")
         
+    if profile_nav == "Delete coffee break":
+        st.subheader("Delete a coffee break")
+        st.markdown("Please enter extended ID of the break you want to delete")
+    
+    
     
 for i in range(15):
     temp=[]
