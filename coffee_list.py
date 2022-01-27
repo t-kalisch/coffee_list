@@ -115,9 +115,10 @@ col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
 if page_nav == 'Login':
-    st.header("Login:")
-    user = st.text_input(label="", placeholder="Username")
-    user_pw = st.text_input(label="", type="password", placeholder="Password")
+    st.subheader("Login:")
+    col1,col2 = st.columns([1,1])
+    user = col1.text_input(label="", placeholder="Username")
+    user_pw = col2.text_input(label="", type="password", placeholder="Password")
 
 
 
