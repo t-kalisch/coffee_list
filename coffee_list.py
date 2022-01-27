@@ -80,7 +80,7 @@ if logged_in == True and admin_status == 0:
 elif logged_in == True and admin_status == 1:
     profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change username","Change password"), 0)
     
-    if profile_nav == "Enter holidays":
+    if profile_nav == "Enter holidays":                                             # Enter holidays page
         st.subheader("Enter holidays")
         col1, col2 = st.columns([2,1])
         holidays = col1.date_input("Please enter your holidays", [])
@@ -94,7 +94,7 @@ elif logged_in == True and admin_status == 1:
             holidays_admin = col2.date_input("Holidays", [])
             st.button("Submit holidays")
         
-    if profile_nav == "Change username":
+    if profile_nav == "Change username":                                            # Change username page
         st.subheader("Change username")
         st.markdown("Please enter your current username, password and new username.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
@@ -112,7 +112,7 @@ elif logged_in == True and admin_status == 1:
             col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
             col4.button("Confirm")
         
-    if profile_nav == "Change password":
+    if profile_nav == "Change password":                                            # Change password page
         st.subheader("Change password")
         st.markdown("You can change your password here.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
@@ -131,7 +131,7 @@ elif logged_in == True and admin_status == 1:
             col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
             col4.button("Confirm")        
  
-    if profile_nav == "Submit coffee break":
+    if profile_nav == "Submit coffee break":                                        # Submit break page
         st.subheader("Submit a coffee break")
         st.markdown("Please enter the names and number of coffees for the break")
         col1,col2,col3,col4,col5,col6,col7,col8 = st.columns([1,1,1,1,1,1,1,1])
@@ -151,7 +151,7 @@ elif logged_in == True and admin_status == 1:
         col1.button("Start break")
         col2.button("End break")
         
-    if profile_nav == "Delete coffee break":
+    if profile_nav == "Delete coffee break":                                        # Delete break page
         st.subheader("Delete a coffee break")
         st.markdown("Please enter extended ID of the break you want to delete")
         col1,col2,col3 = st.columns([1,0.5,3])
@@ -163,8 +163,6 @@ elif logged_in == True and admin_status == 1:
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
         
-        tab_last_breaks = go.Figure(data=[go.Table(header=dict(values=list(df.columns),  fill_color='lightgoldenrodyellow', align='left'), cells=dict(values=df.transpose().values.tolist(), fill_color='gainsboro', align='left'))])
-        col3.plotly_chart(tab_last_breaks, use_container_width = True)
         
     
     
