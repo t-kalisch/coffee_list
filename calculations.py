@@ -1,4 +1,5 @@
 import mysql.connector as mysql
+import streamlit as st
 
 @st.cache
 def get_user_data():
