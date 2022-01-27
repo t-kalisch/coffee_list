@@ -157,7 +157,7 @@ with st.sidebar:
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
     c_b_weekly = st.checkbox ("Weekly breaks and coffees")
-    coffees_total = st.checkbox("Total coffees and monthly ratios")
+    coffees_total = st.checkbox("Total coffees / monthly ratios")
     #ratio_monthly = st.checkbox("Monthly ratios")
     correlation = st.checkbox("Correlation")
     break_percentage = st.checkbox("Percentages of breaks")
