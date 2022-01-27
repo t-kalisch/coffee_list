@@ -158,7 +158,9 @@ elif logged_in == True and admin_status == 1:
         col1.text_input("Extended ID of break")
         col1.button("Delete break")
         col2.write("Last 10 breaks")
-        col2.write(last_breaks)
+        columns=['Extended ID','Date','Drinkers','Coffees']
+        df=pd.DataFrame(last_breaks,columns=columns)
+        col2.write(df)
     
     
 for i in range(15):
