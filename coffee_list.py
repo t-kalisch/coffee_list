@@ -75,7 +75,7 @@ else:
     
 
 if logged_in == True:
-    profile_nav = st.sidebar.selectbox("Profile Options", ("-","Enter holidays","Change username","Change password"), 0)
+    profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     
     if profile_nav == "Enter holidays":
         col1, col2 = st.columns([2,1])
@@ -137,7 +137,7 @@ with st.sidebar:
 
 
 
-if logged_in == True and profile_nav == "-":# or logged_in == False:
+if logged_in == True and profile_nav == "Show diagrams"
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
         st.subheader("Coffees per month")                           
