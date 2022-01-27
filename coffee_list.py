@@ -98,7 +98,7 @@ if logged_in == True:
         user_pw = col2.text_input("Password", type="password", placeholder = "Password")
         col2.write("-" * 34)
         new_user = col2.text_input("Choose a new username", placeholder = "Username")
-        col2.button("Save changes")
+        user_change = col2.button("Save changes")
         if admin_status == 1:
             st.write("-" * 34)
             st.subheader("Change username for another person")
@@ -117,7 +117,15 @@ if logged_in == True:
         col1,col2,col3 = st.columns([0.5,1,0.7])
         user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
         new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
-        
+        pw_change = col2.button("Save changes")
+        if admin_status == 1:
+            st.write("-" * 34)
+            st.subheader("Change password for another person")
+            col1,col2,col3,col4 = st.columns([3,3,0.5,1])
+            col1.text_input("Username", placeholder = "User")
+            col2.text_input("New password", type = 'password', placeholder = "Password")
+            col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
+            col4.button("Confirm")        
         
     
 for i in range(15):
