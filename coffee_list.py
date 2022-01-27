@@ -84,11 +84,6 @@ if login:
 else:
     st.title("Welcome to our coffee list")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
-
-if page_nav == 'Login':
-    st.header("Login:")
-    user = st.text_input(label="", placeholder="Username")
-    user_pw = st.text_input(label="", type="password", placeholder="Password")
     
     
 for i in range(15):
@@ -118,6 +113,14 @@ col3.subheader(str(simple_data[4])+" coffee breaks")
 col3.subheader(str(simple_data[3])+" cups of coffee")
 col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
+
+if page_nav == 'Login':
+    st.header("Login:")
+    user = st.text_input(label="", placeholder="Username")
+    user_pw = st.text_input(label="", type="password", placeholder="Password")
+
+
+
 
 if page_nav == 'Data visualisation':
     if logged_in == True:# or logged_in == False:
