@@ -98,6 +98,7 @@ if logged_in == True:
         user_pw = col2.text_input("Password", type="password", placeholder = "Password")
         col2.write("-" * 34)
         new_user = col2.text_input("Choose a new username", placeholder = "Username")
+        col2.button("Confirm")
         if admin_status == 1:
             st.write("-" * 34)
             st.subheader("Change username for another person")
