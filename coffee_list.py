@@ -104,7 +104,7 @@ if logged_in == True:
             col1,col2,col3,col4 = st.columns([3,3,0.5,1])
             col1.text_input("Old username", placeholder = "User")
             col2.text_input("New username", placeholder = "User")
-            col4.markdown(f'<p style="color:#FFFFFF;font-size:24px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
+            col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
             col4.button("Confirm")
         
     if profile_nav == "Change password":
