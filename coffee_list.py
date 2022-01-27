@@ -88,9 +88,18 @@ if logged_in == True:
         st.markdown("Please enter your current username, password and new username.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
         curr_user = col2.text_input("Current username", placeholder = "Username")
-        user_pw = col2.text_input("Password", placeholder = "Password")
-        new_user = col2.text_input("Choose a new username.", placeholder = "Username")
-    
+        user_pw = col2.text_input("Password", type="password", placeholder = "Password")
+        new_user = col2.text_input("Choose a new username", placeholder = "Username")
+        
+    if profile_nav == "Change password":
+        st.subheader("Change password")
+        st.markdown("You can change your password here.")
+        col1,col2,col3 = st.columns([0.5,1,0.7])
+        curr_user = col2.text_input("Current password", type="password", placeholder = "Old password")
+        user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
+        new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
+        
+        
     
 for i in range(15):
     temp=[]
