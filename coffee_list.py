@@ -192,6 +192,7 @@ if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
     col4.subheader(str(simple_data[6])+" diagrams")
 
 if login and logged_in == False:
+    st.write("-" * 34)
     st.warning("Incorrect username/password")
     
 with st.sidebar:
