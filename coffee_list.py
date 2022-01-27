@@ -15,7 +15,7 @@ import mysql.connector as mysql
 
 from data_collection import *
 from calculations import *
-import change_password
+import change_password.py
 
 
 st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
