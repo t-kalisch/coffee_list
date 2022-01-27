@@ -48,6 +48,11 @@ admin_status=0
 
 with st.sidebar:
     page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
+    if page_nav == 'Login':
+        st.subheader("Login:")
+        col1,col2 = st.columns([1,1])
+        user = col1.text_input(label="", placeholder="Username")
+        user_pw = col2.text_input(label="", type="password", placeholder="Password")
     login = st.checkbox("Login", help="Log in with your username and password")
     hol = st.checkbox("Enter holidays")
     st.title("Available diagrams:")
@@ -98,12 +103,6 @@ for i in range(15):
         temp.append(cumulated_coffees[j][i])
     cumulated_coffees1.append(temp)
 
-#col1, buff1, col2, buff2, col3 = st.columns([2,1,2,1,1])
-#user = col1.text_input(label="", placeholder="User")
-#user_pw = col2.text_input(label="", type="password", placeholder="pw")
-#col3.write("")
-#col3.write("")
-#login = col3.button("Log In", help="Log in with your username and password", on_click=log_in(user, user_pw))
 
 col1,col2,col3,col4 = st.columns([1,1,1,1])
 col1.subheader(str(simple_data[0])+" drinkers")
@@ -114,11 +113,7 @@ col3.subheader(str(simple_data[3])+" cups of coffee")
 col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
-if page_nav == 'Login':
-    st.subheader("Login:")
-    col1,col2 = st.columns([1,1])
-    user = col1.text_input(label="", placeholder="Username")
-    user_pw = col2.text_input(label="", type="password", placeholder="Password")
+
 
 
 
