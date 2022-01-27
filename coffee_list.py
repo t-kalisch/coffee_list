@@ -74,8 +74,10 @@ else:
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
 
-if logged_in == True:
+if logged_in == True and admin_status == 0:
     profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
+elif logged_in == True and admin_status == 1:
+    profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit break","Delete break","Enter holidays","Change username","Change password"), 0)
     
     if profile_nav == "Enter holidays":
         st.subheader("Enter holidays")
@@ -127,6 +129,27 @@ if logged_in == True:
             col2.text_input("New password", type = 'password', placeholder = "Password")
             col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
             col4.button("Confirm")        
+ 
+    if profile_nav == "Submit break":
+        st.subheader("Submit a coffee break")
+        st.markdown("Please enter the names and number of coffees for the break")
+        col1,col2,col3,col4,col5,col6,col7,col8 = st.columns([1,1,1,1,1,1,1,1])
+        col1.write("TK")
+        col1.text_input("TK")
+        col2.write("PB")
+        col2.text_input("PB")
+        col3.write("DB")
+        col3.text_input("DB")
+        col4.write("FLG")
+        col4.text_input("FLG")
+        col5.write("SHK")
+        col5.text_input("SHK")
+        col6.text_input("P1")
+        col6.text_input("P1")
+        col7.text_input("P2")
+        col7.text_input("P2")
+        col8.text_input("P3")
+        col8.text_input("P3")
         
     
 for i in range(15):
