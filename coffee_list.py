@@ -89,7 +89,7 @@ if logged_in == True:
         col1,col2,col3 = st.columns([0.5,1,0.7])
         curr_user = col2.text_input("Username", placeholder = "Username")
         user_pw = col2.text_input("Password", type="password", placeholder = "Password")
-        st.write("-" * 34)
+        col2.write("-" * 34)
         new_user = col2.text_input("Choose a new username", placeholder = "Username")
         
     if profile_nav == "Change password":
@@ -142,6 +142,7 @@ with st.sidebar:
 
 if logged_in == True and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
+    st.write("-" * 34)
     if coffees_monthly:
         st.subheader("Coffees per month")                           
         df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
