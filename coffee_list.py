@@ -69,7 +69,6 @@ if login:
     else:
         st.title("Welcome to the future of coffee drinking")
         st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
-        st.warning("Incorrect username/password")
 else:
     st.title("Welcome to the future of coffee drinking")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
@@ -192,6 +191,9 @@ if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
     col4.subheader(str(simple_data[5])+" data sets")
     col4.subheader(str(simple_data[6])+" diagrams")
 
+if login and logged_in == False:
+    st.warning("Incorrect username/password")
+    
 with st.sidebar:
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
