@@ -61,12 +61,11 @@ if login:
             admin_status=user_data[i][2]
             logged_in=True
     if logged_in == True:
-        col1, col2 = st.columns([1,1])
-        col1.title("Logged in as {}".format(user))
+        st.title("Logged in as {}".format(user))
         if admin_status == 1:
-            col1.markdown("Member status: Administrator")
+            st.sidebar.markdown("Member status: Administrator")
         else:
-            st.write("Member status: User") 
+            st.sidebar.write("Member status: User") 
     else:
         st.title("Welcome to our coffee list")
         st.warning("Incorrect username/password")
