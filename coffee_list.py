@@ -101,9 +101,10 @@ if logged_in == True:
         if admin_status == 1:
             st.write("-" * 34)
             st.subheader("Change username for another person")
-            col1,col2,col3,col4 = st.columns([1,3,3,1])
-            col2.text_input("Old username", placeholder = "User")
-            col3.text_input("New username", placeholder = "User")
+            col1,col2,col3,col4 = st.columns([3,3,0.5,1])
+            col1.text_input("Old username", placeholder = "User")
+            col2.text_input("New username", placeholder = "User")
+            col4.button("Confirm")
         
     if profile_nav == "Change password":
         st.subheader("Change password")
