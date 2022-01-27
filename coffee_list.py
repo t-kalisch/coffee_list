@@ -61,6 +61,7 @@ if login:
             logged_in=True
     if logged_in == True:
         st.title("Logged in as {}".format(user))
+        st.write("You now have access to the coffee list.")
         if admin_status == 1:
             st.sidebar.markdown("Member status: Administrator")
         else:
@@ -82,6 +83,9 @@ if logged_in == True:
         holidays = col1.date_input("Please enter your holidays", [])
         col2.write(". ")
         sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
+        if admin_status == 1:
+            st.write("-" * 34)
+            st.subheader("Enter holidays for another person")
         
     if profile_nav == "Change username":
         st.subheader("Change username")
