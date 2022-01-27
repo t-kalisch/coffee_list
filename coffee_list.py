@@ -84,7 +84,7 @@ if logged_in == True:
         sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
         
     if profile_nav == "Change username":
-        col1,col2 = st.columns([0.5,1,0.7])
+        col1,col2,col3 = st.columns([0.5,1,0.7])
         st.subheader("Change username")
         st.markdown("Please enter your current username, password and new username.")
         curr_user = st.text_input("Current username", placeholder = "Username")
