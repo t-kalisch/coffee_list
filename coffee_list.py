@@ -146,6 +146,7 @@ elif logged_in == True and admin_status == 1:
         p3_name = col8.text_input("person 3")
         p3_coffees = col8.text_input("name person 3")
         st.write("-" * 34)
+        col1,col2,col3 = st.columns([1,1,6])
         col1.button("Start break")
         col2.button("End break")
         
