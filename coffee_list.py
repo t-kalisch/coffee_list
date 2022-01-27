@@ -160,7 +160,7 @@ elif logged_in == True and admin_status == 1:
         col2.write("Last 10 breaks")
         columns=['Extended ID','Date','Drinkers','Coffees']
         df=pd.DataFrame(last_breaks,columns=columns)
-        tab_last_breaks = go.Figure(data=[go.Table(header=dict(values=list(df.columns),  fill_color='paleturquoise', align='left'))])
+        tab_last_breaks = go.Figure(data=[go.Table(header=dict(values=list(df.columns),  fill_color='paleturquoise', align='left'), cells=df)])
         col2.plotly_chart(tab_last_breaks, use_container_width = True)
     
     
