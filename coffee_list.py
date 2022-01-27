@@ -64,7 +64,7 @@ if login:
         col1, col2 = st.columns([1,1])
         col1.title("Logged in as {}".format(user))
         if admin_status == 1:
-            col2.write("Member status: Administrator")
+            col2.markdown("Member status: Administrator")
         else:
             st.write("Member status: User") 
     else:
