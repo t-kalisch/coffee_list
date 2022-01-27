@@ -156,10 +156,15 @@ if logged_in == True:
     if profile_nav == "Delete coffee break":                                        # Delete break page
         st.subheader("Delete a coffee break")
         st.markdown("Please enter extended ID of the break you want to delete")
+        
+        temp=[]
+        for i in range(len(last_breaks)):
+            temp.append(int(last_breaks[i][0]))
+        max_id = max(temp)
+        
         col1,col2,col3 = st.columns([1,0.5,3])
-        col1.text_input("Extended ID of break", placeholder="2022012703")
+        col1.text_input("Extended ID of break", placeholder=str(max_id)
         col1.button("Delete break")
-        #col2.write("Last 10 breaks")
         columns=['Extended ID','Date','Drinkers','Coffees']
         df=pd.DataFrame(last_breaks,columns=columns)
         col3.markdown("Last 10 breaks")
