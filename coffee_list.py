@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import streamlit_echarts as echarts
 import mysql.connector as mysql
-from multiapp import MultiApp
+
 from data_collection import *
 from calculations import *
 import change_password
@@ -20,10 +20,6 @@ import change_password
 
 st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
 
-
-app=MultiApp()
-app.add("Change password", change_password)
-app.run()
 
 
 def submit_holidays(holidays):
