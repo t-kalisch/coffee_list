@@ -86,9 +86,9 @@ if logged_in == True:
         if admin_status == 1:
             st.write("-" * 34)
             st.subheader("Enter holidays for another person")
-            col1,col2 = st.columns([3,1])
+            col1,col2 = st.columns([1,3])
             col1.text_input("Person", placeholder = "User")
-            holidays_admin = col2.date_input("Please enter your holidays", [])
+            holidays_admin = col2.date_input("Holidays", [])
         
     if profile_nav == "Change username":
         st.subheader("Change username")
