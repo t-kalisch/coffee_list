@@ -98,7 +98,7 @@ if logged_in == True:
         user_pw = col2.text_input("Password", type="password", placeholder = "Password")
         col2.write("-" * 34)
         new_user = col2.text_input("Choose a new username", placeholder = "Username")
-        col2.button("Confirm")
+        col2.button("Save changes")
         if admin_status == 1:
             st.write("-" * 34)
             st.subheader("Change username for another person")
@@ -106,7 +106,7 @@ if logged_in == True:
             col1.text_input("Old username", placeholder = "User")
             col2.text_input("New username", placeholder = "User")
             col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
-            col4.button("Save changes")
+            col4.button("Confirm")
         
     if profile_nav == "Change password":
         st.subheader("Change password")
