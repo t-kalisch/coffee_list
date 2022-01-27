@@ -47,29 +47,18 @@ admin_status=0
 
 
 with st.sidebar:
-    page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
-    if page_nav == 'Login':
-        #st.markdown("Login:")
-        col1,col2 = st.columns([1,1.65])
-        user = col1.text_input(label="", placeholder="Username")
-        user_pw = col2.text_input(label="", type="password", placeholder="Password")
+    #page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
+    #if page_nav == 'Login':
+    
+    col1,col2 = st.columns([1,1.65])
+    user = col1.text_input(label="", placeholder="Username")
+    user_pw = col2.text_input(label="", type="password", placeholder="Password")
     login = st.checkbox("Login", help="Log in with your username and password")
-    hol = st.checkbox("Enter holidays")
-    st.title("Available diagrams:")
-    coffees_monthly = st.checkbox("Monthly coffees")
-    c_b_weekly = st.checkbox ("Weekly breaks and coffees")
-    coffees_total = st.checkbox("Total coffees")
-    ratio_monthly = st.checkbox("Monthly ratios")
-    correlation = st.checkbox("Correlation")
-    break_percentage = st.checkbox("Percentages of breaks")
-    coffees_cumulated = st.checkbox("Cumulated coffees")
+
+
 
     
-if hol:
-    col1, col2 = st.columns([2,1])
-    holidays = col1.date_input("Please enter your holidays", [])
-    col2.write(". ")
-    sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
+
 
 if login:
     for i in range(len(user_data)):
@@ -79,16 +68,26 @@ if login:
     if logged_in == True:
         st.title("Logged in as {}".format(user))
         if admin_status == 1:
-            st.write("Member status: administrator")
+            st.write("Member status: Administrator")
         else:
-            st.write("Member status: user")
-        
+            st.write("Member status: User") 
     else:
         st.title("Welcome to our coffee list")
         st.warning("Incorrect username/password")
 else:
     st.title("Welcome to our coffee list")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
+    
+
+if logged_in == True:
+    profile_nav = st.selectbox("Options", ("-","Enter holdidays","Change password")
+    
+if profile_nav == 'Enter holidays':
+    col1, col2 = st.columns([2,1])
+    holidays = col1.date_input("Please enter your holidays", [])
+    col2.write(". ")
+    sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
+    
     
     
 for i in range(15):
@@ -113,7 +112,15 @@ col3.subheader(str(simple_data[3])+" cups of coffee")
 col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
-
+with st.sidebar:
+    st.title("Available diagrams:")
+    coffees_monthly = st.checkbox("Monthly coffees")
+    c_b_weekly = st.checkbox ("Weekly breaks and coffees")
+    coffees_total = st.checkbox("Total coffees")
+    ratio_monthly = st.checkbox("Monthly ratios")
+    correlation = st.checkbox("Correlation")
+    break_percentage = st.checkbox("Percentages of breaks")
+    coffees_cumulated = st.checkbox("Cumulated coffees")
 
 
 
