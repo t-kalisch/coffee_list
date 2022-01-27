@@ -77,7 +77,7 @@ else:
 if logged_in == True and admin_status == 0:
     profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
 elif logged_in == True and admin_status == 1:
-    profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit break","Delete break","Enter holidays","Change username","Change password"), 0)
+    profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change username","Change password"), 0)
     
     if profile_nav == "Enter holidays":
         st.subheader("Enter holidays")
@@ -130,7 +130,7 @@ elif logged_in == True and admin_status == 1:
             col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
             col4.button("Confirm")        
  
-    if profile_nav == "Submit break":
+    if profile_nav == "Submit coffee break":
         st.subheader("Submit a coffee break")
         st.markdown("Please enter the names and number of coffees for the break")
         col1,col2,col3,col4,col5,col6,col7,col8 = st.columns([1,1,1,1,1,1,1,1])
