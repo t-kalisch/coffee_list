@@ -130,7 +130,7 @@ if logged_in == True:
             col2.text_input("Username", placeholder = "User")
             col2.text_input("New password", type = 'password', placeholder = "Password")
             col2.write("-" * 34)
-            col2.text_input("Please enter your password", type = 'password', placeholder = "Password")
+            col2.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
             col2.button("Confirm")        
  
     if profile_nav == "Change profile":
@@ -148,7 +148,7 @@ if logged_in == True:
         col1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
         col1,col2 = st.columns([0.5,0.5])
-        col1.text_input("Please enter your password", type = 'password', placeholder = "Password")
+        col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
         col1.button("Confirm")       
 
     if profile_nav == "Submit coffee break":                                        # Submit break page
