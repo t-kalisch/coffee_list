@@ -96,21 +96,22 @@ if logged_in == True:
         
     if profile_nav == "Change username":                                            # Change username page
         st.subheader("Change username")
-        st.markdown("Please enter your current username, password and new username.")
-        col1,col2,col3 = st.columns([0.5,1,0.7])
-        curr_user = col2.text_input("Username", placeholder = "Username")
-        user_pw = col2.text_input("Password", type="password", placeholder = "Password")
-        col2.write("-" * 34)
-        new_user = col2.text_input("Choose a new username", placeholder = "Username")
-        user_change = col2.button("Save new username")
+        if admin_status != 1:
+            st.markdown("Please enter your current username, password and new username.")
+            col1,col2,col3 = st.columns([0.5,1,0.7])
+            curr_user = col2.text_input("Username", placeholder = "Username")
+            user_pw = col2.text_input("Password", type="password", placeholder = "Password")
+            col2.write("-" * 34)
+            new_user = col2.text_input("Choose a new username", placeholder = "Username")
+            user_change = col2.button("Save new username")
         if admin_status == 1:
-            st.write("-" * 34)
-            st.subheader("Change username for another person")
-            col1,col2,col3,col4 = st.columns([3,3,0.5,1])
-            col1.text_input("Old username", placeholder = "User")
-            col2.text_input("New username", placeholder = "User")
-            col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
-            col4.button("Confirm")
+            st.subheader("Change username for a member.")
+            col1,col2,col3 = st.columns([0.5,1,0.7])
+            curr_user = col2.text_input("Old username", placeholder = " Old username")
+            user_pw = col2.text_input("New username", placeholder = "New username")
+            col2.write("-" * 34)
+            new_user = col2.text_input("Please enter your password", type = 'password', placeholder = "Password")
+            user_change = col2.button("Confirm")
         
     if profile_nav == "Change password":                                            # Change password page
         st.subheader("Change password")
