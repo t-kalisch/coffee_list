@@ -147,7 +147,7 @@ if logged_in == True:
         col1,col2,col3 = st.columns([0.5,1,0.7])
         col1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
-        col1,col2,col3 = st.columns([0.5,1,0.7])
+        col1,col2 = st.columns([0.5,0.5])
         col1.text_input("Please enter your password", type = 'password', placeholder = "Password")
         col1.button("Confirm")       
 
