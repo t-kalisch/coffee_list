@@ -144,10 +144,12 @@ if logged_in == True:
             status=1
         else:
             status=0
-        st.selectbox ("Change member status", ("User", "Admin"), status)
+        col1,col2,col3 = st.columns([0.5,1,0.7])
+        col1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
-        st.text_input("Please enter your password", type = 'password', placeholder = "Password")
-        st.button("Confirm")       
+        col1,col2,col3 = st.columns([0.5,1,0.7])
+        col1.text_input("Please enter your password", type = 'password', placeholder = "Password")
+        col1.button("Confirm")       
 
     if profile_nav == "Submit coffee break":                                        # Submit break page
         st.subheader("Submit a coffee break")
