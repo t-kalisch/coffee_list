@@ -142,12 +142,13 @@ if logged_in == True:
         col2.text_input("New password", type = "password", placeholder = "Password")
         if change_user != "":
             for i in range(len(user_data)):
-                if user_data[i][2] == 1:
-                    st.write("True")
-                    status=1
+                if user_data[i][0] == change_user:
+                    if user_data[i][2] == 1:
+                        status=1
+                    else:
+                        status=0
                 else:
-                    st.write("False")
-                    status=0
+                    st.warning("This user is not a member of the coffee list.")
         else:
             st.write("Error")
             status=0
