@@ -148,11 +148,12 @@ if logged_in == True:
                         status=1
                     else:
                         status=0
-        col1,col2,col3 = st.columns([0.5,1,0.7])
+        col1,col2 = st.columns([0.5,1.7])
         if status == -1:
-            st.warning("The user you entered is not a member of the coffee list.")
-        else:
-            col1.selectbox ("Change member status", ("User", "Admin"), status)
+            col2.warning("The user you entered is not a member of the coffee list.")
+            col1.selectbox ("Change member status", ("User", "Admin"), 0)
+        else: 
+
         st.write("-" * 34)
         col1,col2 = st.columns([0.5,0.5])
         col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
