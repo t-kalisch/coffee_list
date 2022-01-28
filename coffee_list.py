@@ -157,7 +157,7 @@ if logged_in == True:
         
     if profile_nav == "Delete coffee break":                                        # Delete break page
         st.subheader("Delete a coffee break")
-        st.markdown("Please enter extended ID of the break you want to delete")
+        st.markdown("Please enter the extended ID of the break you want to delete")
         
         temp=[]
         for i in range(len(last_breaks)):
