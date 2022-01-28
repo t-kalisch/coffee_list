@@ -142,12 +142,14 @@ if logged_in == True:
         col2.text_input("New password", type = "password", placeholder = "Password")
         if change_user != "":
             for i in range(len(user_data)):
-                st.write(user_data[i][2])
                 if user_data[i][2] == 1:
+                    st.write("True")
                     status=1
                 else:
+                    st.write("False")
                     status=0
         else:
+            st.write("Error")
             status=0
         col1,col2,col3 = st.columns([0.5,1,0.7])
         col1.selectbox ("Change member status", ("User", "Admin"), status)
