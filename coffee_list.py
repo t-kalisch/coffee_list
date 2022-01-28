@@ -150,7 +150,7 @@ if logged_in == True:
                         status=0
         col1,col2,col3 = st.columns([0.5,1,0.7])
         if status == -1:
-            col1.warning("The user you entered is not a member of the coffee list.")
+            st.warning("The user you entered is not a member of the coffee list.")
         else:
             col1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
