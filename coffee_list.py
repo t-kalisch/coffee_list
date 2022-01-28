@@ -151,9 +151,9 @@ if logged_in == True:
         col1,col2 = st.columns([0.5,1.7])
         if status == -1:
             col2.warning("The user you entered is not a member of the coffee list.")
-            col1.selectbox ("Change member status", ("User", "Admin"), 0)
+            col1.selectbox ("Change member status", (""), 0)
         else: 
-
+            ol1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
         col1,col2 = st.columns([0.5,0.5])
         col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
