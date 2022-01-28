@@ -140,14 +140,19 @@ if logged_in == True:
         change_user = col1.text_input("User", placeholder = "Username")
         col2.text_input("New username", placeholder = "Username")
         col2.text_input("New password", type = "password", placeholder = "Password")
-        status=0
+        status=-1
         if change_user != "":
             for i in range(len(user_data)):
                 if user_data[i][0] == change_user:
                     if user_data[i][2] == 1:
                         status=1
+                    else:
+                        status=0
         col1,col2,col3 = st.columns([0.5,1,0.7])
-        col1.selectbox ("Change member status", ("User", "Admin"), status)
+        if status == -1:
+            col1.warn1ng("The user you entered is not a member of the coffee list.")
+        else:
+            col1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
         col1,col2 = st.columns([0.5,0.5])
         col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
