@@ -147,8 +147,6 @@ if logged_in == True:
                         status=1
                     else:
                         status=0
-                else:
-                    st.warning("This user is not a member of the coffee list.")
         else:
             st.write("Error")
             status=0
