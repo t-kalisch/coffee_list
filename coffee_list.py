@@ -125,10 +125,11 @@ if logged_in == True:
             new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
             pw_change = col2.button("Save new password")
         if admin_status == 1:
-            st.subheader("Change password for another person")
+            st.markdown("Change password for another person")
             col1,col2,col3 = st.columns([0.5,1,0.7])
             col2.text_input("Username", placeholder = "User")
             col2.text_input("New password", type = 'password', placeholder = "Password")
+            col2.write("-" * 34)
             col2.text_input("Please enter your password", type = 'password', placeholder = "Password")
             col2.button("Confirm")        
  
