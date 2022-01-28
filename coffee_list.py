@@ -148,7 +148,6 @@ if logged_in == True:
                     else:
                         status=0
         else:
-            st.write("Error")
             status=0
         col1,col2,col3 = st.columns([0.5,1,0.7])
         col1.selectbox ("Change member status", ("User", "Admin"), status)
