@@ -137,9 +137,9 @@ if logged_in == True:
         st.subheader("Change the profile of a member")
         st.markdown("You can enter a new username or password for a member, or change their member status.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
-        col1.text_input("User", placeholder "Username")
-        col2.text_input("New username", placeholder "Username")
-        col2.text_input("New password", type = "password", placeholder "Password")
+        col1.text_input("User", placeholder = "Username")
+        col2.text_input("New username", placeholder = "Username")
+        col2.text_input("New password", type = "password", placeholder = "Password")
         if admin_status == 1:
             status=1
         else:
