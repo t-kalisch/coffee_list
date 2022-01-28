@@ -142,7 +142,7 @@ if logged_in == True:
         col2.text_input("New password", type = "password", placeholder = "Password")
         if change_user != "":
             for i in range(len(user_data)):
-                st.write(user_data[i])
+                st.write(user_data[i][1])
                 if user_data[i][2] == 1:
                     status=1
                 else:
