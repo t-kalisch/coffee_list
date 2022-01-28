@@ -105,7 +105,7 @@ if logged_in == True:
             new_user = col2.text_input("Choose a new username", placeholder = "Username")
             user_change = col2.button("Save new username")
         if admin_status == 1:
-            st.subheader("Change username for a member.")
+            st.markdown("Change username for a member.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
             curr_user = col2.text_input("Old username", placeholder = " Old username")
             user_pw = col2.text_input("New username", placeholder = "New username")
@@ -115,22 +115,22 @@ if logged_in == True:
         
     if profile_nav == "Change password":                                            # Change password page
         st.subheader("Change password")
-        st.markdown("You can change your password here.")
-        col1,col2,col3 = st.columns([0.5,1,0.7])
-        curr_user = col2.text_input("Current password", type="password", placeholder = "Old password")
-        col2.write("-" * 34)
-        col1,col2,col3 = st.columns([0.5,1,0.7])
-        user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
-        new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
-        pw_change = col2.button("Save new password")
+        if admin_status != 1:
+            st.markdown("You can change your password here.")
+            col1,col2,col3 = st.columns([0.5,1,0.7])
+            curr_user = col2.text_input("Current password", type="password", placeholder = "Old password")
+            col2.write("-" * 34)
+            col1,col2,col3 = st.columns([0.5,1,0.7])
+            user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
+            new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
+            pw_change = col2.button("Save new password")
         if admin_status == 1:
-            st.write("-" * 34)
             st.subheader("Change password for another person")
-            col1,col2,col3,col4 = st.columns([3,3,0.5,1])
-            col1.text_input("Username", placeholder = "User")
+            col1,col2,col3 = st.columns([0.5,1,0.7])
+            col2.text_input("Username", placeholder = "User")
             col2.text_input("New password", type = 'password', placeholder = "Password")
-            col4.markdown(f'<p style="color:#FFFFFF;font-size:12px;border-radius:2%;">{"."}</p>', unsafe_allow_html=True)
-            col4.button("Confirm")        
+            col2.text_input("Please enter your password", type = 'password', placeholder = "Password")
+            col2.button("Confirm")        
  
     if profile_nav == "Submit coffee break":                                        # Submit break page
         st.subheader("Submit a coffee break")
