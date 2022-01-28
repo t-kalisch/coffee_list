@@ -78,7 +78,7 @@ if logged_in == True:
     if admin_status != 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     elif logged_in == True and admin_status == 1:
-        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile"), 0)
+        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
         st.subheader("Enter holidays")
@@ -133,7 +133,7 @@ if logged_in == True:
             col2.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
             col2.button("Confirm")        
  
-    if profile_nav == "Change profile":
+    if profile_nav == "Change profile data":
         st.subheader("Change the profile of a member")
         st.markdown("You can enter a new username and password for a member, or change their member status.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
