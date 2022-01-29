@@ -396,7 +396,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
 
-        fig7.update_traces(hovertemplate='<br>%{x}<br>%{y} %<extra></extra>')
+        fig7.update_traces(hovertemplate=': %{y} %')
         col5.plotly_chart(fig7, use_container_width=True)
 
         percentage_total=[]                                                                     # total percentages
@@ -408,7 +408,7 @@ if logged_in == True and profile_nav == "Show diagrams":
 
         fig8 = px.bar(df, x='percentage', y=names, title="Total percentages of breaks", labels={"y":"", "count":"Percentage", "variable":"drinkers"}, text='percentage', text_auto=True, orientation='h')
         fig8.update_layout(title_font_size=24, showlegend=False)
-        fig8.update_traces(hovertemplate='%{y} %')
+        fig8.update_traces(hovertemplate=': %{y} %')
         col6.plotly_chart(fig8, use_container_width=True)
 
     #-------------------------------------------------------------------------------------------------------------- cumulated coffees monthly (line chart)
