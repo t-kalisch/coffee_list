@@ -393,12 +393,12 @@ if logged_in == True and profile_nav == "Show diagrams":
             months_from_march.append(months[i+4])
         df = pd.DataFrame(perc_p_m, columns=names, index=months_from_march)
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"drinkers", "index":"", "value":"Percentage"})
-        fig7.update_layout(title_font_size=24)
+        fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
 
         fig7.update_traces(hovertemplate='<br>%{x}<br>%{y} %<extra></extra>')
         col5.plotly_chart(fig7, use_container_width=True)
 
-        percentage_total=[]
+        percentage_total=[]                                                                     # total percentages
         for i in range(len(names)):
             temp=[]
             temp.append(round(perc_tot[i],1))
@@ -416,6 +416,7 @@ if logged_in == True and profile_nav == "Show diagrams":
 
         df = pd.DataFrame(cumulated_coffees1, columns=names, index=months)
         fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"drinkers", "index":"", "value":"Number of coffees"})
+        fig10.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         st.plotly_chart(fig10, use_container_width=True)
 
         
