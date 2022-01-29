@@ -250,7 +250,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
 
         fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
-        fig1.update_traces(hovertemplate='%{y}<br> coffees')
+        fig1.update_traces(hovertemplate='%{y}')
         fig1.update_layout(title_font_size=24, hovermode="x", legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         st.plotly_chart(fig1, use_container_width=True)
 
