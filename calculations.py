@@ -48,7 +48,7 @@ def get_perc_tot():
 
 @st.cache
 def get_names():
-	names = ['TK','PB','NV','DB','FLG','SHK','TB','TT','RS']
+	names = ['P1','P2','P2','P4','P5','P6','P7','P8','P9']
 	return names
 
 @st.cache
