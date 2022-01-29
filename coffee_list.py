@@ -250,7 +250,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
 
         fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"drinkers", "index":"", "value":"Number of coffees"})
-        fig1.update_layout(title_font_size=24)
+        fig1.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
         st.plotly_chart(fig1, use_container_width=True)
 
         temp1=[]
@@ -262,7 +262,7 @@ if logged_in == True and profile_nav == "Show diagrams":
 
         df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
         fig2 = px.bar(df, y="months", x="total", title="Total number of coffees per month", labels={"months":"Number of coffees", "total":""}, text_auto=True)
-        fig2.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+        fig2.update_layout(title_font_size=24)
         fig2.update_traces(hovertemplate='<br>%{x}<br>Number of coffees: %{y}<extra></extra>')
         st.plotly_chart(fig2, use_container_width=True) 
 
