@@ -63,9 +63,9 @@ if login:
     if logged_in == True:
         st.title("Logged in as {}".format(user))
         if admin_status == 1:
-            col2.write("Status: Administrator")
+            col2.write("  Status: Administrator")
         else:
-            st.sidebar.write("Member status: User") 
+            st.sidebar.write("  Member status: User") 
     else:
         st.title("Welcome to the future of coffee drinking")
         st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
