@@ -396,7 +396,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
 
-        fig7.update_traces(hovertemplate=': %{y} %')
+        fig7.update_traces(hovertemplate='%{x}: %{y} %')
         col5.plotly_chart(fig7, use_container_width=True)
 
         percentage_total=[]                                                                     # total percentages
