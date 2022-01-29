@@ -249,7 +249,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         st.subheader("Coffees per month")                           
         df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
 
-        fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"drinkers", "index":"", "value":"Number of coffees"})
+        fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
         fig1.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         st.plotly_chart(fig1, use_container_width=True)
 
@@ -276,7 +276,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         columns=['Breaks','Coffees']
         df = pd.DataFrame(coffees_breaks_weekly, columns=columns, index=weeks)
         fig3 = px.line(df, labels={"variable":"", "index":"", "value":""})
-        fig3.update_layout(hovermode="x unified")
+        fig3.update_layout(hovermode="x unified", egend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         st.plotly_chart(fig3, use_container_width=True)
 
     col1, col2 = st.columns([1,1])
