@@ -430,25 +430,10 @@ if logged_in == True and profile_nav == "Show diagrams":
         st.plotly_chart(fig10, use_container_width=True)
       
         fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
-        fig10.update_traces(hovertemplate='%{x}<br> %{y} coffees')
+        fig10.update_traces(hovertemplate='%{y}')
         fig10.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         st.plotly_chart(fig10, use_container_width=True)
         
-        fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
-        fig10.update_traces(hovertemplate='%{y} coffees')
-        fig10.update_layout(hovermode="x unified", legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
-        st.plotly_chart(fig10, use_container_width=True)
- 
-        fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
-        fig10.update_traces(hovertemplate='%{y}')
-        fig10.update_layout(hovermode="x unified", legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
-        st.plotly_chart(fig10, use_container_width=True)
-
-        fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
-        fig10.update_traces(hovertemplate='%{y}')
-        fig10.update_layout(hovermode="x", legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
-        st.plotly_chart(fig10, use_container_width=True)        
-      
     
 #total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
 #num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
