@@ -318,6 +318,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
         fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
         fig4.update_layout(title_font_size=24, showlegend=False)
+        fig4.update_traces(hovertemplate='%{x}<br>%{y} coffees')
         col2.plotly_chart(fig4, use_container_width=True)
     #if ratio_monthly:                                                          #with non-inverted months (top: now, bottom: Nov '20)
     #   col2.header("Monthly ratios")
@@ -396,7 +397,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
 
-        fig7.update_traces(hovertemplate='%{x}: %{y} %')
+        fig7.update_traces(hovertemplate='%{x}<br>%{y} %')
         col5.plotly_chart(fig7, use_container_width=True)
 
         percentage_total=[]                                                                     # total percentages
