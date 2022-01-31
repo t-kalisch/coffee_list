@@ -318,7 +318,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
         fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
         fig4.update_layout(title_font_size=24, showlegend=False)
-        fig4.update_traces(hovertemplate='%{x}<br>%{y} coffees')
+        fig4.update_traces(hovertemplate='%{y}<br>%{x} %')
         col2.plotly_chart(fig4, use_container_width=True)
     #if ratio_monthly:                                                          #with non-inverted months (top: now, bottom: Nov '20)
     #   col2.header("Monthly ratios")
