@@ -382,7 +382,7 @@ if logged_in == True and profile_nav == "Show diagrams":
 
        fig6 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Relative correlation", color='size')#, text='size')
        fig6.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
-       fig6.update_traces(hovertemplate='<br>%{x} with %{y}<br>Percentage: %{size} %<extra></extra>')
+       fig6.update_traces(hovertemplate='<br>%{x} with %{y}<br>Percentage: %{size}')
        col4.plotly_chart(fig6, use_container_width=True)
 
     #-------------------------------------------------------------------------------------------------------------- percentages of breaks (line + bar charts)
