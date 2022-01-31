@@ -264,7 +264,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
         fig2 = px.bar(df, y="months", x="total", title="Total number of coffees per month", labels={"months":"Number of coffees", "total":""}, text_auto=True)
         fig2.update_layout(title_font_size=24)
-        fig2.update_traces(hovertemplate='<br>%{x}<br%{y} coffees')
+        fig2.update_traces(hovertemplate='%{x}<br>%{y} coffees')
         st.plotly_chart(fig2, use_container_width=True) 
 
         #fig2_1 = echarts.init(temp1)
