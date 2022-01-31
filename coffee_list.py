@@ -415,11 +415,6 @@ if logged_in == True and profile_nav == "Show diagrams":
     if coffees_cumulated:
         st.subheader("Cumulated coffees")
 
-        df = pd.DataFrame(cumulated_coffees1, columns=names, index=months)
-        fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
-        fig10.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
-        st.plotly_chart(fig10, use_container_width=True)
-
         fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"drinkers", "index":"", "value":"Number of coffees"})
         fig10.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig10.update_traces(hovertemplate='%{x}<br> %{y}')
