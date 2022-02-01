@@ -348,6 +348,7 @@ if logged_in == True and profile_nav == "Show diagrams":
        temp=[]
        temp1=[]
        temp2=[]
+       size=[]
        tickval_num=[]
        for i in range(len(names)):
            tickval_num.append(i+1)
@@ -355,6 +356,7 @@ if logged_in == True and profile_nav == "Show diagrams":
                temp=[]
                temp.append(i+1)
                temp.append(j+1)
+               size.append(corr_abs[i][j])
                temp.append(corr_abs[i][j])      #calculates absolute correlation
                temp2.append(temp)
        columns_corr=['x-values','y-values','size']
