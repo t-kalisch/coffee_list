@@ -364,8 +364,8 @@ if logged_in == True and profile_nav == "Show diagrams":
        df = pd.DataFrame(temp2, columns=columns_corr)
 
        fig5 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Absolute correlation", color='size')#, text='size')
-       fig5.update_layout(title_font_size=24, showlegend=False, hoverlabel=["size"], xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
-       fig5.update_traces(hovertemplate='<br>%{x} with %{y}<br>' + '%{size}')
+       fig5.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
+       fig5.update_traces(hoverinfo="x+y+size")#hovertemplate='<br>%{x} with %{y}<br>' + '%{size}')
        col3.plotly_chart(fig5, use_container_width=True)#              absolute correlation
        #                                                  --------------------------------------------------
        temp=[]#                                                        relative correlation
