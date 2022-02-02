@@ -343,46 +343,46 @@ if logged_in == True and profile_nav == "Show diagrams":
 
     #-------------------------------------------------------------------------------------------------------------- absolute and relative correlations (bubble charts)
     if correlation:
-       st.subheader("Correlation diagrams")
-       col3, col4 = st.columns([1,1])                        #setting up two columns for narrower charts 
-    corr_abs_raw=corr_tot[0]
-    corr_rel_raw=corr_tot[1]
-    print(corr_tot)
-    temp1=[]
-    temp2_abs=[]
-    temp2_rel=[]
-    tickval_num=[]
-    for i in range(len(names)):
-       tickval_num.append(i+1)
-       for j in range(len(names)):
-           temp_abs=[]
-           temp_rel=[]
-           temp_abs.append(i+1)
-           temp_rel.append(i+1)
-           temp_abs.append(j+1)
-           temp_rel.append(j+1)
-           temp_abs.append(corr_abs_raw[len(names)-j-1][i])      #calculates absolute correlation
-           temp_rel.append(corr_rel_raw[len(names)-j-1][i])      #calculates relative correlation
-           temp2_abs.append(temp_abs)
-           temp2_rel.append(temp_rel)
-       columns_corr=['x-values','y-values','size']
+        st.subheader("Correlation diagrams")
+        col3, col4 = st.columns([1,1])                        #setting up two columns for narrower charts 
+        corr_abs_raw=corr_tot[0]
+        corr_rel_raw=corr_tot[1]
+        print(corr_tot)
+        temp1=[]
+        temp2_abs=[]
+        temp2_rel=[]
+        tickval_num=[]
+        for i in range(len(names)):
+            tickval_num.append(i+1)
+            for j in range(len(names)):
+               temp_abs=[]
+               temp_rel=[]
+               temp_abs.append(i+1)
+               temp_rel.append(i+1)
+               temp_abs.append(j+1)
+               temp_rel.append(j+1)
+               temp_abs.append(corr_abs_raw[len(names)-j-1][i])      #calculates absolute correlation
+               temp_rel.append(corr_rel_raw[len(names)-j-1][i])      #calculates relative correlation
+               temp2_abs.append(temp_abs)
+               temp2_rel.append(temp_rel)
+        columns_corr=['x-values','y-values','size']
 
-       df = pd.DataFrame(temp2_abs, columns=columns_corr)
-       fig5 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Absolute correlation", color='size')
-        
-       #df = pd.DataFrame(temp2, columns=columns_corr)
+        df = pd.DataFrame(temp2_abs, columns=columns_corr)
+        fig5 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Absolute correlation", color='size')
 
-       #fig5 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Absolute correlation", color='size')#, text='size')
-       fig5.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
-       #fig5.update_traces(hovertemplate='<br>%{x} with %{y}<br>' + '%{size}')
-       fig5.update_xaxes(side="top")
-       col3.plotly_chart(fig5, use_container_width=True)#              absolute correlation
-       #                                                  --------------------------------------------------
-       temp=[]#                                                        relative correlation
-       temp1=[]
-       temp2=[]
-       tickval_num=[]
-       for i in range(len(names)):
+        #df = pd.DataFrame(temp2, columns=columns_corr)
+
+        #fig5 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Absolute correlation", color='size')#, text='size')
+        fig5.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
+        #fig5.update_traces(hovertemplate='<br>%{x} with %{y}<br>' + '%{size}')
+        fig5.update_xaxes(side="top")
+        col3.plotly_chart(fig5, use_container_width=True)#              absolute correlation
+        #                                                  --------------------------------------------------
+        temp=[]#                                                        relative correlation
+        temp1=[]
+        temp2=[]
+        tickval_num=[]
+        for i in range(len(names)):
            tickval_num.append(i+1)
            for j in range(len(names)):
                temp=[]
@@ -391,13 +391,13 @@ if logged_in == True and profile_nav == "Show diagrams":
                temp.append(round(100*corr_abs[i][j]/total_coffees[i],1))         #!!!!  Calculates relative correlation; uses total_coffees  !!!!
                temp2.append(temp)
 
-       df = pd.DataFrame(temp2, columns=columns_corr)
+        df = pd.DataFrame(temp2, columns=columns_corr)
 
-       fig6 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Relative correlation", color='size')#, text='size')
-       fig6.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
-       fig6.update_traces(hovertemplate='<br>%{x} with %{y}<br>Percentage: %{size}')
-       fig6.update_xaxes(side="top")
-       col4.plotly_chart(fig6, use_container_width=True)
+        fig6 = px.scatter(df, x='x-values', y='y-values', size='size', labels={"x-values":"", "y-values":""}, title="Relative correlation", color='size')#, text='size')
+        fig6.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names))
+        fig6.update_traces(hovertemplate='<br>%{x} with %{y}<br>Percentage: %{size}')
+        fig6.update_xaxes(side="top")
+        col4.plotly_chart(fig6, use_container_width=True)
 
     #-------------------------------------------------------------------------------------------------------------- percentages of breaks (line + bar charts)
     if break_percentage:
