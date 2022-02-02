@@ -353,18 +353,18 @@ if logged_in == True and profile_nav == "Show diagrams":
     temp2_rel=[]
     tickval_num=[]
     for i in range(len(names)):
-        tickval_num.append(i+1)
-        for j in range(len(names)):
-            temp_abs=[]
-            temp_rel=[]
-            temp_abs.append(i+1)
-            temp_rel.append(i+1)
-            temp_abs.append(j+1)
-            temp_rel.append(j+1)
-            temp_abs.append(corr_abs_raw[len(names)-j-1][i])      #calculates absolute correlation
-            temp_rel.append(corr_rel_raw[len(names)-j-1][i])      #calculates relative correlation
-            temp2_abs.append(temp_abs)
-            temp2_rel.append(temp_rel)
+       tickval_num.append(i+1)
+       for j in range(len(names)):
+           temp_abs=[]
+           temp_rel=[]
+           temp_abs.append(i+1)
+           temp_rel.append(i+1)
+           temp_abs.append(j+1)
+           temp_rel.append(j+1)
+           temp_abs.append(corr_abs_raw[len(names)-j-1][i])      #calculates absolute correlation
+           temp_rel.append(corr_rel_raw[len(names)-j-1][i])      #calculates relative correlation
+           temp2_abs.append(temp_abs)
+           temp2_rel.append(temp_rel)
        columns_corr=['x-values','y-values','size']
 
        df = pd.DataFrame(temp2_abs, columns=columns_corr)
