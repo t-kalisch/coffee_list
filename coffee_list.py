@@ -32,7 +32,7 @@ monthly_coffees1=[]
 monthly_coffees=get_monthly_coffees()
 monthly_ratios=get_monthly_ratios()
 total_coffees=get_total_coffees()
-corr_abs=get_corr()
+corr_tot=get_corr()
 perc_p_m=get_perc_p_m()
 perc_tot=get_perc_tot()
 names=get_names()
@@ -345,20 +345,26 @@ if logged_in == True and profile_nav == "Show diagrams":
     if correlation:
        st.subheader("Correlation diagrams")
        col3, col4 = st.columns([1,1])                        #setting up two columns for narrower charts 
-       temp=[]
-       temp1=[]
-       temp2=[]
-       size=[]
-       tickval_num=[]
-       for i in range(len(names)):
-           tickval_num.append(i+1)
-           for j in range(len(names)):
-               temp=[]
-               temp.append(i+1)
-               temp.append(j+1)
-               size.append(corr_abs[i][j])
-               temp.append(corr_abs[i][j])      #calculates absolute correlation
-               temp2.append(temp)
+    corr_abs_raw=corr_tot[0]
+    corr_rel_raw=corr_tot[1]
+    print(corr_tot)
+    temp1=[]
+    temp2_abs=[]
+    temp2_rel=[]
+    tickval_num=[]
+    for i in range(len(names)):
+        tickval_num.append(i+1)
+        for j in range(len(names)):
+            temp_abs=[]
+            temp_rel=[]
+            temp_abs.append(i+1)
+            temp_rel.append(i+1)
+            temp_abs.append(j+1)
+            temp_rel.append(j+1)
+            temp_abs.append(corr_abs_raw[len(names)-j-1][i])      #calculates absolute correlation
+            temp_rel.append(corr_rel_raw[len(names)-j-1][i])      #calculates relative correlation
+            temp2_abs.append(temp_abs)
+            temp2_rel.append(temp_rel)
        columns_corr=['x-values','y-values','size']
 
        df = pd.DataFrame(temp2_abs, columns=columns_corr)
