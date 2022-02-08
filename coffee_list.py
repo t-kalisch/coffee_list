@@ -261,9 +261,10 @@ if logged_in == True and profile_nav == "Show diagrams":
              temp.append(months[i])
              temp.append(monthly_coffees_total[i])
              temp1.append(temp)
-
-        df = pd.DataFrame(temp1, columns={'months','total'})              #total coffees per month)
-        fig2 = px.bar(df, y="total", x="months", title="Total number of coffees per month", labels={"months":"Number of coffees", "total":""}, text_auto=True)
+        
+        columns=['months','total']
+        df = pd.DataFrame(temp1, columns=columns)              #total coffees per month)
+        fig2 = px.bar(df, y="months", x="total", title="Total number of coffees per month", labels={"months":"Number of coffees", "total":""}, text_auto=True)
         fig2.update_layout(title_font_size=24)
         fig2.update_traces(hovertemplate='%{x}<br>%{y} coffees')
         st.plotly_chart(fig2, use_container_width=True) 
