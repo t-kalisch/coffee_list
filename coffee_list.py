@@ -236,7 +236,7 @@ with st.sidebar:
     #ratio_monthly = st.checkbox("Monthly ratios")
     correlation = st.checkbox("Correlation")
     break_percentage = st.checkbox("Percentages of breaks")
-    coffess_pwd = st.checkbox("Coffees per work day")
+    coffees_pwd = st.checkbox("Coffees per work day")
     coffees_cumulated = st.checkbox("Cumulated coffees")
 
 
