@@ -8,7 +8,7 @@ def get_user_data():
 
 @st.cache
 def get_simple_data():
-	simple_data=[9, 7, 15, 1879, 720, 66, 9]
+	simple_data=[9, 7, 15, 1879, 720, 66, 12]
 	return simple_data
 
 @st.cache
