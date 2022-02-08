@@ -419,7 +419,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         
         df = pd.DataFrame(coffees_per_work_day, columns = names, index = months)
     
-        fig9 = px.line(df, title="Coffees per work day", labels={"variable":"", "index":"", "value":"Number of coffees"})      #plotting monthly coffees
+        fig9 = px.line(df, title="Monthly coffees per work day", labels={"variable":"", "index":"", "value":"Number of coffees"})      #plotting monthly coffees
         fig9.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig9.update_traces(hovertemplate='%{x}<br>%{y}')
         col7.plotly_chart(fig9, use_container_width=True)
