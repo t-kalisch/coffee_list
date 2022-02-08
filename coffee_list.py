@@ -394,7 +394,6 @@ if logged_in == True and profile_nav == "Show diagrams":
         df = pd.DataFrame(perc_p_m, columns=names, index=months_from_march)
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
-
         fig7.update_traces(hovertemplate='%{x}<br>%{y} %')
         col5.plotly_chart(fig7, use_container_width=True)
 
@@ -421,7 +420,7 @@ if logged_in == True and profile_nav == "Show diagrams":
         df = pd.DataFrame(coffees_per_work_day, columns = names, index = months)
     
         fig9 = px.line(df, title="Coffees per work day", labels={"variable":"drinkers", "index":"", "value":"Number of coffees"})      #plotting monthly coffees
-        fig9.update_layout(title_font_size=24)
+        fig9.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig9.update_traces(hovertemplate='%{x}<br>%{y}')
         col7.plotly_chart(fig9, use_container_width=True)
 
