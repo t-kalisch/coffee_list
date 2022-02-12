@@ -14,6 +14,7 @@ import streamlit_echarts as echarts
 import mysql.connector as mysql
 from data_collection import *
 from calculations import *
+import streamlit_authenticator as stauth
 #import change_password
 
 
