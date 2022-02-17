@@ -50,9 +50,10 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
-logged_in=cookie_manager.get(cookie="logged_in")
+
 if not (cookie_manager.get(cookie="logged_in") == "true" or cookie_manager.get(cookie="logged_in") == "false"):
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
+logged_in=cookie_manager.get(cookie="logged_in")
 
 
 
@@ -71,7 +72,7 @@ with st.sidebar:
 
 if login:
     login_check=False
-    cookie_manager.set("attempt", True, expires_at=(datetime.datetime.now()+datetime.timedelta(seconds=30)), key="login_attempt")
+    cookie_manager.set("attempt", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="login_attempt")
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             login_check = True
