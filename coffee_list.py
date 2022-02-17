@@ -259,7 +259,15 @@ if logged_in == "true":
         col3.subheader(str(simple_data[3])+" cups of coffee")
         col4.subheader(str(simple_data[5])+" data sets")
         col4.subheader(str(simple_data[6])+" diagrams")
-
+ else:
+    col1,col2,col3,col4 = st.columns([1,1,1,1])
+    col1.subheader(str(simple_data[0])+" drinkers")
+    col1.subheader(str(simple_data[1])+" active drinkers")
+    col2.subheader(str(simple_data[2])+" months of drinking")
+    col3.subheader(str(simple_data[4])+" coffee breaks")
+    col3.subheader(str(simple_data[3])+" cups of coffee")
+    col4.subheader(str(simple_data[5])+" data sets")
+    col4.subheader(str(simple_data[6])+" diagrams")
 
 if cookie_manager.get(cookie="attempt") == "true" and cookie_manager.get(cookie="logged_in") == "false":
     st.write("-" * 34)
