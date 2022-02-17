@@ -75,9 +75,11 @@ if login:
         cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
     else:
         cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
+        logged_in = "false"
 
 if logout:
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
+    logged_in = "false"
             
 
 if logged_in == "true":
