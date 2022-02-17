@@ -82,7 +82,7 @@ if logout:
     logged_in = False
             
 
-if logged_in == True:
+if cookie_manager.get(cookie="logged_in") == True:
     st.title("Logged in as {}".format(user))
     if admin_status == 1:
         col2.write("  Status: Administrator")
