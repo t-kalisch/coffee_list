@@ -61,8 +61,8 @@ with st.sidebar:
     #if page_nav == 'Login':
     
     col1,col2 = st.columns([1,1.65])
-    user_inp = col1.text_input(label="", placeholder="Username", key="user")
-    user_pw_inp = col2.text_input(label="", type="password", placeholder="Password", key="user_pw")
+    user = col1.text_input(label="", placeholder="Username", key="user")
+    user_pw = col2.text_input(label="", type="password", placeholder="Password", key="user_pw")
     login = col1.button("Login", help="Log in here")
     logout = col2.button("Logout", help="Log out here")
 
