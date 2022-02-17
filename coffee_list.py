@@ -12,10 +12,10 @@ import plotly.graph_objects as go
 import plotly.express as px
 import streamlit_echarts as echarts
 import mysql.connector as mysql
+import extra_streamlit_components as stx
 from data_collection import *
 from calculations import *
-import extra_streamlit_components as stx
-import cookie_manager
+from cookie_manager import *
 #import change_password
 
 
