@@ -50,6 +50,10 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
+logged_in=cookie_manager.get(cookie="logged_in")
+if not (cookie_manager.get(cookie="logged_in") == "true" or ookie_manager.get(cookie="logged_in") == "false"):
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
+
 
 
 admin_status=0
@@ -66,7 +70,6 @@ with st.sidebar:
     logout = col2.button("Logout", help="Log out here")
 
 if login:
-    
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             login_check = True
@@ -81,7 +84,7 @@ if logout:
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
     logged_in = "false"
             
-logged_in=cookie_manager.get(cookie="logged_in")
+
 if logged_in == "true":
     st.title("Logged in as {}".format(user))
     if admin_status == 1:
