@@ -69,6 +69,8 @@ if login:
             admin_status=user_data[i][2]
             #logged_in=True
             cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1))
+        else:
+            cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1))
     #if logged_in == True:
 if cookie_manager.get(cookie=logged_in) == True:
     st.title("Logged in as {}".format(user))
