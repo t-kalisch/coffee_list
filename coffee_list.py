@@ -61,8 +61,8 @@ with st.sidebar:
     #if page_nav == 'Login':
     
     col1,col2 = st.columns([1,1.65])
-    user_inp = col1.text_input(label="", placeholder="Username")
-    user_pw_inp = col2.text_input(label="", type="password", placeholder="Password")
+    user_inp = col1.text_input(label="", placeholder="Username", key="user")
+    user_pw_inp = col2.text_input(label="", type="password", placeholder="Password", key="user_pw")
     login = col1.button("Login", help="Log in here")
     logout = col2.button("Logout", help="Log out here")
 
@@ -84,8 +84,8 @@ if login:
             logged_in = False
 
 if logout:
-    cookie_manager.delete("user")
-    cookie_manager.delete("user_pw")
+    cookie_manager.delete("user", key="user")
+    cookie_manager.delete("user_pw", key="user_pw")
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
 
     logged_in = False
