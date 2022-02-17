@@ -70,6 +70,7 @@ with st.sidebar:
     user_pw = col2.text_input(label="", type="password", placeholder="Password", key="user_pw")
     login = col1.button("Login", help="Log in here")
     logout = col2.button("Logout", help="Log out here")
+    remember = st.checkbox("Remember me", help="Keep me logged in")
 
 if login:
     login_check=False
