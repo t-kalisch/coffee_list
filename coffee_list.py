@@ -86,7 +86,7 @@ else:
 #    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
 
-if logged_in == true:
+if logged_in == True:
     if admin_status != 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     elif logged_in == True and admin_status == 1:
