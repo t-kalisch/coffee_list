@@ -231,8 +231,7 @@ for i in range(15):
     for j in range(len(cumulated_coffees)):
         temp.append(cumulated_coffees[j][i])
     cumulated_coffees1.append(temp)
-if show_login:
-    st.write(logged_in)
+
     
 if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
     if logged_in == True:
@@ -264,7 +263,8 @@ with st.sidebar:
     show_login = st.checkbox("show login")
 
 
-
+if show_login:
+    st.write(logged_in)
 
 
 if logged_in == True and profile_nav == "Show diagrams":
