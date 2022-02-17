@@ -99,7 +99,7 @@ st.write(admin_status)
 
 if logged_in == "true":
     st.title("Logged in as {}".format(logged_in_user))
-    if admin_status == 1:
+    if admin_status == "1":
         col2.write("  Status: Administrator")
     else:
         st.sidebar.write("  Member status: User") 
