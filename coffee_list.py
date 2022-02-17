@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import streamlit_echarts as echarts
 import mysql.connector as mysql
+import extra_streamlit_components as stx
 from data_collection import *
 from calculations import *
 from cookie_manager import *
