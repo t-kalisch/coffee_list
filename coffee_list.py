@@ -61,7 +61,7 @@ with st.sidebar:
     col1,col2 = st.columns([1,1.65])
     user = col1.text_input(label="", placeholder="Username")
     user_pw = col2.text_input(label="", type="password", placeholder="Password")
-    login = col1.button("Login", help="You are logged in while this checkbox is ticked")
+    login = col1.checkbox("Login", help="You are logged in while this checkbox is ticked")
 
 if login:
     for i in range(len(user_data)):
