@@ -84,9 +84,10 @@ if login:
             logged_in = False
 
 if logout:
-    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
     cookie_manager.delete("user")
     cookie_manager.delete("user_pw")
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+
     logged_in = False
             
 
