@@ -72,7 +72,7 @@ with st.sidebar:
 
 if login:
     login_check=False
-    cookie_manager.set("attempt", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="login_attempt")
+    cookie_manager.set("attempt", True, expires_at=(datetime.datetime.now() + datetime.timestap(minutes=5)), key="login_attempt")
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             login_check = True
@@ -250,8 +250,8 @@ col3.subheader(str(simple_data[3])+" cups of coffee")
 col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
-if logged_in == False:
-#if cookie_manager.get(cookie="attempt") == "true" and cookie_manager.get(cookie="logged_in") == "false":
+
+if cookie_manager.get(cookie="attempt") == "true" and cookie_manager.get(cookie="logged_in") == "false":
     st.write("-" * 34)
     st.warning("Incorrect username/password")
     
