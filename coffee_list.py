@@ -65,19 +65,24 @@ with st.sidebar:
     user = col1.text_input(label="", placeholder="Username")
     user_pw = col2.text_input(label="", type="password", placeholder="Password")
     login = col1.button("Login", help="You are logged in while this checkbox is ticked")
+    logout = col2.button("Logout", help="Log out here")
+    
+if logout:
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+    logged_in = False
 
 if login:
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             admin_status=user_data[i][2]
-            #logged_in=True
             #cookie_manager.delete("logged_in")
             cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+            logged_in = True
         else:
             #cookie_manager.delete("logged_in")
             cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
-            
-logged_in = cookie_manager.get(cookie="logged_in")
+            logged_in = False
+
 st.write(logged_in)
 if logged_in == True:
     st.title("Logged in as {}".format(user))
