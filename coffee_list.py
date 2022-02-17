@@ -72,7 +72,7 @@ with st.sidebar:
 
 if login:
     login_check=False
-    expire = datetime.datetime.now() + datetime.timedelta(seconds=30)
+    expire = datetime.datetime.now() + datetime.timedelta(hours=1,seconds=30)
     st.write(expire)
     cookie_manager.set("attempt", True, expires_at=expire, key="login_attempt")
     for i in range(len(user_data)):
