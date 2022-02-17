@@ -15,7 +15,7 @@ import mysql.connector as mysql
 import extra_streamlit_components as stx
 from data_collection import *
 from calculations import *
-from cookie_manager import *
+#from cookie_manager import *
 #import change_password
 
 
