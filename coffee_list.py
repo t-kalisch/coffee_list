@@ -26,7 +26,7 @@ def get_manager():
     return stx.CookieManager()
 
 cookie_manager = get_manager()
-
+cookie_manager.get_all()
 
 
 def submit_holidays(holidays):
