@@ -236,9 +236,9 @@ if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
     col4.subheader(str(simple_data[5])+" data sets")
     col4.subheader(str(simple_data[6])+" diagrams")
 
-#if cookie_manager.get(cookie=logged_in) == False:
-#    st.write("-" * 34)
-#    st.warning("Incorrect username/password")
+if logged_in == False:
+    st.write("-" * 34)
+    st.warning("Incorrect username/password")
     
 with st.sidebar:
     st.title("Available diagrams:")
