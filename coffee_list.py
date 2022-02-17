@@ -66,10 +66,6 @@ with st.sidebar:
     user_pw = col2.text_input(label="", type="password", placeholder="Password")
     login = col1.button("Login", help="You are logged in while this checkbox is ticked")
     logout = col2.button("Logout", help="Log out here")
-    
-if logout:
-    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
-    logged_in = False
 
 if login:
     for i in range(len(user_data)):
@@ -83,6 +79,11 @@ if login:
             cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
             logged_in = False
 
+if logout:
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+    logged_in = False
+            
+            
 st.write(logged_in)
 if logged_in == True:
     st.title("Logged in as {}".format(user))
