@@ -51,9 +51,8 @@ weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
 logged_in=cookie_manager.get(cookie="logged_in")
-if not (logged_in == True or logged_in == False):
-    logged_in=False
-    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1))
+user = cookie_manager.get(cookie="user")
+user_pw=cookie_manager.get(cookie="user_pw")
 admin_status=0
 
 
@@ -62,12 +61,14 @@ with st.sidebar:
     #if page_nav == 'Login':
     
     col1,col2 = st.columns([1,1.65])
-    user = col1.text_input(label="", placeholder="Username")
-    user_pw = col2.text_input(label="", type="password", placeholder="Password")
+    user_inp = col1.text_input(label="", placeholder="Username")
+    user_pw_inp = col2.text_input(label="", type="password", placeholder="Password")
     login = col1.button("Login", help="You are logged in while this checkbox is ticked")
     logout = col2.button("Logout", help="Log out here")
 
 if login:
+    cookie_manager.set("user", user_inp, expires_at=datetime.datetime(year=2030, month=1, day=1), key="user")
+    cookie_manager.set("user_pw", user_pw_inp, expires_at=datetime.datetime(year=2030, month=1, day=1), key="user_pw")
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             admin_status=user_data[i][2]
@@ -81,10 +82,11 @@ if login:
 
 if logout:
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+    cookie_manager.delete("user")
+    cookie_manager.delete("user_pw")
     logged_in = False
             
-            
-st.write(logged_in)
+
 if logged_in == True:
     st.title("Logged in as {}".format(user))
     if admin_status == 1:
