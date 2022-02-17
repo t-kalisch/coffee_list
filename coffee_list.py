@@ -54,6 +54,7 @@ last_breaks=get_last_breaks()
 #if not (cookie_manager.get(cookie="logged_in") == "true" or cookie_manager.get(cookie="logged_in") == "false"):
 #    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
 logged_in=cookie_manager.get(cookie="logged_in")
+logged_in_user=cookie_manager.get(cookie="user")
 
 
 
@@ -80,18 +81,21 @@ if login:
             admin_status=user_data[i][2]
     if login_check == True:
         cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
+        cookie_manager.set("user", user, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_user")
         #logged_in = "true"
     else:
         cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
+        cookie_manager.delete("user")
         logged_in = "false"
 
 if logout:
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
+    cookie_manager.delete("user")
     logged_in = "false"
             
 
 if logged_in == "true":
-    st.title("Logged in as {}".format(user))
+    st.title("Logged in as {}".format(logged_in_user))
     if admin_status == 1:
         col2.write("  Status: Administrator")
     else:
