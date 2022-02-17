@@ -62,19 +62,21 @@ if login:
         st.write("Attempted login")
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             admin_status=user_data[i][2]
-            logged_in=True
-    if logged_in == True:
-        st.title("Logged in as {}".format(user))
-        if admin_status == 1:
-            col2.write("  Status: Administrator")
-        else:
-            st.sidebar.write("  Member status: User") 
+            #logged_in=True
+            cookie_manager.set(logged_in, True, expires_at=datetime.datetime(year=2030, month=1, day=1))
+    #if logged_in == True:
+if cookie_manager.get(cookie=logged_in) == True:
+    st.title("Logged in as {}".format(user))
+    if admin_status == 1:
+        col2.write("  Status: Administrator")
     else:
-        st.title("Welcome to the future of coffee drinking")
-        st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
+        st.sidebar.write("  Member status: User") 
 else:
     st.title("Welcome to the future of coffee drinking")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
+#else:
+#    st.title("Welcome to the future of coffee drinking")
+#    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
 
 if logged_in == True:
