@@ -265,6 +265,8 @@ with st.sidebar:
 
 if show_login:
     st.write(logged_in)
+    if logged_in == True:
+        st.write("penis")
 
 
 if logged_in == True and profile_nav == "Show diagrams":
