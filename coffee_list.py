@@ -113,7 +113,7 @@ else:
 if logged_in == "true":
     if admin_status != "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
-    elif logged_in == "true" and admin_status == 1:
+    elif logged_in == "true" and admin_status == "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
