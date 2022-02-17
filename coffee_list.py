@@ -248,7 +248,9 @@ for i in range(15):
     cumulated_coffees1.append(temp)
 
     
-if logged_in == "true" and profile_nav == "Show diagrams":
+if logged_in == "true":
+    if profile_nav == "Show diagrams":
+        st.markdown("You now have access to the coffee list."
         col1,col2,col3,col4 = st.columns([1,1,1,1])
         col1.subheader(str(simple_data[0])+" drinkers")
         col1.subheader(str(simple_data[1])+" active drinkers")
