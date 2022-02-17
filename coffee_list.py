@@ -21,6 +21,12 @@ from calculations import *
 
 st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
 
+@st.cache(allow_output_mutation=True)
+def get_manager():
+    return stx.CookieManager()
+
+cookie_manager = get_manager()
+
 
 
 def submit_holidays(holidays):
