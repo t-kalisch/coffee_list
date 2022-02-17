@@ -65,11 +65,10 @@ with st.sidebar:
 
 if login:
     for i in range(len(user_data)):
-        st.write("Attempted login")
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             admin_status=user_data[i][2]
             #logged_in=True
-            cookie_manager.set(logged_in, True, expires_at=datetime.datetime(year=2030, month=1, day=1))
+            cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1))
     #if logged_in == True:
 if cookie_manager.get(cookie=logged_in) == True:
     st.title("Logged in as {}".format(user))
