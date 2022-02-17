@@ -86,7 +86,7 @@ else:
 #    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
 
-if logged_in == True:
+if cookie_manager.get(cookie=logged_in) == True:
     if admin_status != 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     elif logged_in == True and admin_status == 1:
@@ -224,8 +224,8 @@ for i in range(15):
         temp.append(cumulated_coffees[j][i])
     cumulated_coffees1.append(temp)
 
-if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
-    if logged_in == True:
+if cookie_manager.get(cookie=logged_in) == False or (cookie_manager.get(cookie=logged_in) == True and profile_nav == "Show diagrams"):
+    if cookie_manager.get(cookie=logged_in) == True:
         st.write("You now have access to the coffee list.")
     col1,col2,col3,col4 = st.columns([1,1,1,1])
     col1.subheader(str(simple_data[0])+" drinkers")
@@ -236,9 +236,9 @@ if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
     col4.subheader(str(simple_data[5])+" data sets")
     col4.subheader(str(simple_data[6])+" diagrams")
 
-if login and logged_in == False:
-    st.write("-" * 34)
-    st.warning("Incorrect username/password")
+#if cookie_manager.get(cookie=logged_in) == False:
+#    st.write("-" * 34)
+#    st.warning("Incorrect username/password")
     
 with st.sidebar:
     st.title("Available diagrams:")
@@ -256,7 +256,7 @@ with st.sidebar:
 
 
 
-if logged_in == True and profile_nav == "Show diagrams":
+if cookie_manager.get(cookie=logged_in) == True and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     st.write("-" * 34)
     if coffees_monthly:
