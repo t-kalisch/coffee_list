@@ -51,8 +51,8 @@ weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
 
-if not (cookie_manager.get(cookie="logged_in") == "true" or cookie_manager.get(cookie="logged_in") == "false"):
-    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
+#if not (cookie_manager.get(cookie="logged_in") == "true" or cookie_manager.get(cookie="logged_in") == "false"):
+#    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
 logged_in=cookie_manager.get(cookie="logged_in")
 
 
