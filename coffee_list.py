@@ -50,9 +50,9 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
-logged_in=cookie_manager.get(cookie="logged_in")
-user = cookie_manager.get(cookie="user")
-user_pw=cookie_manager.get(cookie="user_pw")
+logged_in=cookie_manager.get(cookie="logged_in", key="login_status")
+#user = cookie_manager.get(cookie="user", key="user_status")
+#user_pw=cookie_manager.get(cookie="user_pw", key="pw_status")
 admin_status=0
 
 
@@ -67,26 +67,26 @@ with st.sidebar:
     logout = col2.button("Logout", help="Log out here")
 
 if login:
-    cookie_manager.set("user", user_inp, expires_at=datetime.datetime(year=2030, month=1, day=1), key="user")
-    cookie_manager.set("user_pw", user_pw_inp, expires_at=datetime.datetime(year=2030, month=1, day=1), key="user_pw")
-    user = cookie_manager.get(cookie="user")
-    user_pw=cookie_manager.get(cookie="user_pw")
+    #cookie_manager.set("user", user_inp, expires_at=datetime.datetime(year=2030, month=1, day=1))
+    #cookie_manager.set("user_pw", user_pw_inp, expires_at=datetime.datetime(year=2030, month=1, day=1))
+    #user = cookie_manager.get(cookie="user")
+    #user_pw=cookie_manager.get(cookie="user_pw")
     
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             admin_status=user_data[i][2]
             #cookie_manager.delete("logged_in")
-            cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+            cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
             logged_in = True
         else:
             #cookie_manager.delete("logged_in")
-            cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+            cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
             logged_in = False
 
 if logout:
     cookie_manager.delete("user", key="user")
     cookie_manager.delete("user_pw", key="user_pw")
-    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="3")
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
 
     logged_in = False
             
