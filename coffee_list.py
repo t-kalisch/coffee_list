@@ -70,6 +70,7 @@ with st.sidebar:
     logout = col2.button("Logout", help="Log out here")
 
 if login:
+    login_check=False
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             login_check = True
