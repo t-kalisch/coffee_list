@@ -3,4 +3,5 @@ pandas
 streamlit
 plotly
 mysql-connector-python==8.0.27
-streamlit_cookies_manager
+#matplotlib
+#streamlit_cookies_manager
