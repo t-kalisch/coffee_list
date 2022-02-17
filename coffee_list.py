@@ -256,7 +256,7 @@ with st.sidebar:
 
 
 
-if cookie_manager.get(cookie="logged_in") == True and profile_nav == "Show diagrams":
+if cookie_manager.get("logged_in") == True and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     st.write("-" * 34)
     if coffees_monthly:
