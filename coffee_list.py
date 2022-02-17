@@ -85,10 +85,9 @@ if login:
         logged_in = False
 
 if logout:
-    cookie_manager.delete("user", key="user")
-    cookie_manager.delete("user_pw", key="user_pw")
+    #cookie_manager.delete("user", key="user")
+    #cookie_manager.delete("user_pw", key="user_pw")
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
-
     logged_in = False
             
 
@@ -98,9 +97,9 @@ if logged_in == True:
         col2.write("  Status: Administrator")
     else:
         st.sidebar.write("  Member status: User") 
-else:
-    st.title("Welcome to the future of coffee drinking")
-    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
+#else:
+#    st.title("Welcome to the future of coffee drinking")
+#    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
 #else:
 #    st.title("Welcome to the future of coffee drinking")
 #    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
