@@ -93,7 +93,7 @@ if logout:
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
     cookie_manager.delete("user")
     logged_in = "false"
-            
+st.write(admin_status)            
 
 if logged_in == "true":
     st.title("Logged in as {}".format(logged_in_user))
