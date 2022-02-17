@@ -502,9 +502,9 @@ def get_manager():
 
 cookie_manager = get_manager()
 
-st.subheader("All Cookies:")
-cookies = cookie_manager.get_all()
-st.write(cookies)
+#st.subheader("All Cookies:")
+#cookies = cookie_manager.get_all()
+#st.write(cookies)
 
 c1, c2, c3 = st.columns(3)
 
