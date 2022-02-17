@@ -69,9 +69,9 @@ if login:
     
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
-            logged_in = True
+            login_check = True
             admin_status=user_data[i][2]
-    if logged_in == True:
+    if login_check == True:
         cookie_manager.set("logged_in", "false", expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
     else:
         cookie_manager.set("logged_in", "false", expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
