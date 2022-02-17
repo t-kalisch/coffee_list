@@ -50,15 +50,13 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
+admin_status=0
 
-#if not (cookie_manager.get(cookie="logged_in") == "true" or cookie_manager.get(cookie="logged_in") == "false"):
-#    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
 logged_in=cookie_manager.get(cookie="logged_in")
 logged_in_user=cookie_manager.get(cookie="user")
-
-
-
-admin_status=0
+#keep_logged_in=cookie_manager.get(cookie="keep_logged_in")
+#if not keep_logged_in == "true":
+#    cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout_restart")
 
 
 with st.sidebar:
@@ -84,6 +82,8 @@ if login:
         cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
         cookie_manager.set("user", user, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_user")
         #logged_in = "true"
+        #if remember:
+        #    cookie_manager.set("keep_logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="remember")
     else:
         cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
         cookie_manager.delete("user")
