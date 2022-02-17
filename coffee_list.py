@@ -76,7 +76,7 @@ if login:
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             logged_in = True
             admin_status=user_data[i][2]
-    if logged_in == True
+    if logged_in == True:
         #cookie_manager.delete("logged_in")
         cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
     else:
