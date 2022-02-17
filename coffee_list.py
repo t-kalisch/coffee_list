@@ -72,7 +72,7 @@ if login:
         else:
             cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1))
     #if logged_in == True:
-if cookie_manager.get(cookie=logged_in) == True:
+if cookie_manager.get(cookie="logged_in") == True:
     st.title("Logged in as {}".format(user))
     if admin_status == 1:
         col2.write("  Status: Administrator")
@@ -86,7 +86,7 @@ else:
 #    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
 
-if cookie_manager.get(cookie=logged_in) == True:
+if cookie_manager.get(cookie="logged_in") == True:
     if admin_status != 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     elif logged_in == True and admin_status == 1:
@@ -256,7 +256,7 @@ with st.sidebar:
 
 
 
-if cookie_manager.get(cookie=logged_in) == True and profile_nav == "Show diagrams":
+if cookie_manager.get(cookie="logged_in") == True and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     st.write("-" * 34)
     if coffees_monthly:
