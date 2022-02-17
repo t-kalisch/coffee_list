@@ -74,14 +74,15 @@ if login:
     
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
-            admin_status=user_data[i][2]
-            #cookie_manager.delete("logged_in")
-            cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
             logged_in = True
-        else:
-            #cookie_manager.delete("logged_in")
-            cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
-            logged_in = False
+            admin_status=user_data[i][2]
+    if logged_in == True
+        #cookie_manager.delete("logged_in")
+        cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
+    else:
+        #cookie_manager.delete("logged_in")
+        cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
+        logged_in = False
 
 if logout:
     cookie_manager.delete("user", key="user")
