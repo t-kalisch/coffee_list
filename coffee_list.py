@@ -259,7 +259,7 @@ if logged_in == "true":
         col3.subheader(str(simple_data[3])+" cups of coffee")
         col4.subheader(str(simple_data[5])+" data sets")
         col4.subheader(str(simple_data[6])+" diagrams")
- else:
+else:
     col1,col2,col3,col4 = st.columns([1,1,1,1])
     col1.subheader(str(simple_data[0])+" drinkers")
     col1.subheader(str(simple_data[1])+" active drinkers")
