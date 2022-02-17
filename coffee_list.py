@@ -95,8 +95,8 @@ if login:
 
 if logout:
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
-    cookie_manager.delete("status")
-    cookie_manager.delete("user")
+    cookie_manager.delete("asdmin_status")
+    cookie_manager.delete("logged_in_user")
     logged_in = "false"
          
 
