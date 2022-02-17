@@ -63,12 +63,15 @@ with st.sidebar:
     col1,col2 = st.columns([1,1.65])
     user_inp = col1.text_input(label="", placeholder="Username")
     user_pw_inp = col2.text_input(label="", type="password", placeholder="Password")
-    login = col1.button("Login", help="You are logged in while this checkbox is ticked")
+    login = col1.button("Login", help="Log in here")
     logout = col2.button("Logout", help="Log out here")
 
 if login:
     cookie_manager.set("user", user_inp, expires_at=datetime.datetime(year=2030, month=1, day=1), key="user")
     cookie_manager.set("user_pw", user_pw_inp, expires_at=datetime.datetime(year=2030, month=1, day=1), key="user_pw")
+    user = cookie_manager.get(cookie="user")
+    user_pw=cookie_manager.get(cookie="user_pw")
+    
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             admin_status=user_data[i][2]
