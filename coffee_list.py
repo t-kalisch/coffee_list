@@ -367,25 +367,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig4.update_layout(title_font_size=24, showlegend=False)
         fig4.update_traces(hovertemplate='%{y}<br>%{x} %')
         col2.plotly_chart(fig4, use_container_width=True)
-    #if ratio_monthly:                                                          #with non-inverted months (top: now, bottom: Nov '20)
-    #   col2.header("Monthly ratios")
-    #   
-    #   temp=[]
-    #   for i in range(len(months)):
-    #      temp1=[]
-    #      temp1.append(months[i])
-    #      for j in range(len(names)):
-    #         temp1.append(monthly_ratios[j][i])
-    #      temp.append(temp1)
-    #   temp2=[]
-    #   temp2.append("months")
-    #   for i in range(len(names)):
-    #      temp2.append(names[i])
-    #   
-    #   df_stack=pd.DataFrame(temp, columns = temp2, index = months)
-    #   fig4 = px.bar(df_stack, x=names, y = months, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinkers"})#, text='value', text_auto=True)
-    #   fig4.update_layout(title_font_size=24)
-    #   col2.plotly_chart(fig4, use_container_width=True)
+
 
 
     #-------------------------------------------------------------------------------------------------------------- absolute and relative correlations (bubble charts)
@@ -495,27 +477,27 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     
     
 
-st.write("# Cookie Manager")
-
-@st.cache(allow_output_mutation=True)
-def get_manager():
-    return stx.CookieManager()
-
-cookie_manager = get_manager()
-
-st.subheader("All Cookies:")
-cookies = cookie_manager.get_all(key = "penis")
-st.write(cookies)
-
-c1, c2, c3 = st.columns(3)
-
-with c1:
-    st.subheader("Get Cookie:")
-    cookie = st.text_input("Cookie", key="0")
-    clicked = st.button("Get")
-    if clicked:
-        value = cookie_manager.get(cookie=cookie)
-        st.write(value)
+#st.write("# Cookie Manager")
+#
+#@st.cache(allow_output_mutation=True)
+#def get_manager():
+#    return stx.CookieManager()
+#
+#cookie_manager = get_manager()
+#
+#st.subheader("All Cookies:")
+#cookies = cookie_manager.get_all(key = "penis")
+#st.write(cookies)
+#
+#c1, c2, c3 = st.columns(3)
+#
+#with c1:
+#    st.subheader("Get Cookie:")
+#    cookie = st.text_input("Cookie", key="0")
+#    clicked = st.button("Get")
+#    if clicked:
+#        value = cookie_manager.get(cookie=cookie)
+#        st.write(value)
 #    with c2:
 #        st.subheader("Set Cookie:")
 #        cookie = st.text_input("Cookie", key="1")
