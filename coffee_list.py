@@ -506,15 +506,15 @@ st.subheader("All Cookies:")
 cookies = cookie_manager.get_all()
 st.write(cookies)
 
-#    c1, c2, c3 = st.columns(3)
-#
-#    with c1:
-#        st.subheader("Get Cookie:")
-#        cookie = st.text_input("Cookie", key="0")
-#        clicked = st.button("Get")
-#        if clicked:
-#            value = cookie_manager.get(cookie=cookie)
-#            st.write(value)
+c1, c2, c3 = st.columns(3)
+
+with c1:
+    st.subheader("Get Cookie:")
+    cookie = st.text_input("Cookie", key="0")
+    clicked = st.button("Get")
+    if clicked:
+        value = cookie_manager.get(cookie=cookie)
+        st.write(value)
 #    with c2:
 #        st.subheader("Set Cookie:")
 #        cookie = st.text_input("Cookie", key="1")
