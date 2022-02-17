@@ -72,12 +72,12 @@ if login:
             login_check = True
             admin_status=user_data[i][2]
     if login_check == True:
-        cookie_manager.set("logged_in", "true", expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
+        cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
     else:
-        cookie_manager.set("logged_in", "false", expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
+        cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
 
 if logout:
-    cookie_manager.set("logged_in", "false", expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
             
 
 if logged_in == "true":
