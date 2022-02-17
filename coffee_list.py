@@ -225,7 +225,7 @@ for i in range(15):
     cumulated_coffees1.append(temp)
 
 if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
-    if cookie_manager.get(cookie=logged_in) == True:
+    if logged_in == True:
         st.write("You now have access to the coffee list.")
     col1,col2,col3,col4 = st.columns([1,1,1,1])
     col1.subheader(str(simple_data[0])+" drinkers")
