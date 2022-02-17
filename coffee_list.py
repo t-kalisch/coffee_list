@@ -50,10 +50,7 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
-if cookie_manager.get(cookie="logged_in") == "true":
-    logged_in=True
-else:
-    logged_in=False
+logged_in=cookie_manager.get(cookie="logged_in")
 
 admin_status=0
 
@@ -97,10 +94,10 @@ else:
 
     
 
-if logged_in == True:
+if logged_in == "true":
     if admin_status != 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
-    elif logged_in == True and admin_status == 1:
+    elif logged_in == "true" and admin_status == 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
@@ -236,8 +233,8 @@ for i in range(15):
     cumulated_coffees1.append(temp)
 
     
-if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
-    if logged_in == True:
+if logged_in == "false" or (logged_in == "true" and profile_nav == "Show diagrams"):
+    if logged_in == "true":
         st.write("You now have access to the coffee list.")
     col1,col2,col3,col4 = st.columns([1,1,1,1])
     col1.subheader(str(simple_data[0])+" drinkers")
@@ -272,7 +269,7 @@ if show_login:
         st.write("penis")
 
 
-if logged_in == True and profile_nav == "Show diagrams":
+if logged_in == "true" and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     st.write("-" * 34)
     if coffees_monthly:
