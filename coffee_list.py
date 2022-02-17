@@ -111,7 +111,7 @@ else:
     
 
 if logged_in == "true":
-    if admin_status != 1:
+    if admin_status != "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     elif logged_in == "true" and admin_status == 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
@@ -122,7 +122,7 @@ if logged_in == "true":
         holidays = col1.date_input("Please enter your holidays", [])
         col2.write(". ")
         sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
-        if admin_status == 1:
+        if admin_status == "1":
             st.write("-" * 34)
             st.subheader("Enter holidays for another person")
             col1,col2 = st.columns([1,3])
@@ -132,7 +132,7 @@ if logged_in == "true":
         
     if profile_nav == "Change username":                                            # Change username page
         st.subheader("Change username")
-        if admin_status != 1:
+        if admin_status != "1":
             st.markdown("Please enter your current username, password and new username.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
             curr_user = col2.text_input("Username", placeholder = "Username")
@@ -140,7 +140,7 @@ if logged_in == "true":
             col2.write("-" * 34)
             new_user = col2.text_input("Choose a new username", placeholder = "Username")
             user_change = col2.button("Save new username")
-        if admin_status == 1:
+        if admin_status == "1":
             st.markdown("Change username for a member.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
             curr_user = col2.text_input("Old username", placeholder = " Old username")
@@ -151,7 +151,7 @@ if logged_in == "true":
         
     if profile_nav == "Change password":                                            # Change password page
         st.subheader("Change password")
-        if admin_status != 1:
+        if admin_status != "1":
             st.markdown("You can change your password here.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
             curr_user = col2.text_input("Current password", type="password", placeholder = "Old password")
@@ -160,7 +160,7 @@ if logged_in == "true":
             user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
             new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
             pw_change = col2.button("Save new password")
-        if admin_status == 1:
+        if admin_status == "1":
             st.markdown("Change password for another person")
             col1,col2,col3 = st.columns([0.5,1,0.7])
             col2.text_input("Username", placeholder = "User")
