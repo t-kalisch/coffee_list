@@ -50,7 +50,7 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
-logged_in=False
+logged_in=cookie_manager.get(cookie="logged_in")
 admin_status=0
 
 
@@ -72,7 +72,7 @@ if login:
         else:
             cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1))
     #if logged_in == True:
-if cookie_manager.get(cookie="logged_in") == True:
+if logged_in == True:
     st.title("Logged in as {}".format(user))
     if admin_status == 1:
         col2.write("  Status: Administrator")
@@ -86,7 +86,7 @@ else:
 #    st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
 
-if cookie_manager.get(cookie="logged_in") == True:
+if logged_in == True:
     if admin_status != 1:
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     elif logged_in == True and admin_status == 1:
@@ -224,7 +224,7 @@ for i in range(15):
         temp.append(cumulated_coffees[j][i])
     cumulated_coffees1.append(temp)
 
-if cookie_manager.get(cookie=logged_in) == False or (cookie_manager.get(cookie=logged_in) == True and profile_nav == "Show diagrams"):
+if logged_in == False or (logged_in == True and profile_nav == "Show diagrams"):
     if cookie_manager.get(cookie=logged_in) == True:
         st.write("You now have access to the coffee list.")
     col1,col2,col3,col4 = st.columns([1,1,1,1])
@@ -256,7 +256,7 @@ with st.sidebar:
 
 
 
-if cookie_manager.get("logged_in") == True and profile_nav == "Show diagrams":
+if logged_in == True and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     st.write("-" * 34)
     if coffees_monthly:
