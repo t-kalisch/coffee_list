@@ -55,7 +55,7 @@ last_breaks=get_last_breaks()
 logged_in=cookie_manager.get(cookie="logged_in")
 logged_in_user=cookie_manager.get(cookie="user")
 admin_status=cookie_manager.get(cookie="status")
-st.write(admin_status)
+
 #keep_logged_in=cookie_manager.get(cookie="keep_logged_in")
 #if not keep_logged_in == "true":
 #    cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout_restart")
