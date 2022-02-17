@@ -493,19 +493,19 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 
     
     
-#if cookie_manager:
-#    st.write("# Cookie Manager")
-#
-#    @st.cache(allow_output_mutation=True)
-#    def get_manager():
-#        return stx.CookieManager()
-#
-#    cookie_manager = get_manager()
-#
-#    st.subheader("All Cookies:")
-#    cookies = cookie_manager.get_all()
-#    st.write(cookies)
-#
+
+st.write("# Cookie Manager")
+
+@st.cache(allow_output_mutation=True)
+def get_manager():
+    return stx.CookieManager()
+
+cookie_manager = get_manager()
+
+st.subheader("All Cookies:")
+cookies = cookie_manager.get_all()
+st.write(cookies)
+
 #    c1, c2, c3 = st.columns(3)
 #
 #    with c1:
