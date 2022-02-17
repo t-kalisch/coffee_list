@@ -50,9 +50,9 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
-logged_in=cookie_manager.get(cookie="logged_in", key="login_status")
-#user = cookie_manager.get(cookie="user", key="user_status")
-#user_pw=cookie_manager.get(cookie="user_pw", key="pw_status")
+logged_in=cookie_manager.get(cookie="logged_in")
+#user = cookie_manager.get(cookie="user")
+#user_pw=cookie_manager.get(cookie="user_pw")
 admin_status=0
 
 
