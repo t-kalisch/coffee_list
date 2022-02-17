@@ -250,7 +250,8 @@ col3.subheader(str(simple_data[3])+" cups of coffee")
 col4.subheader(str(simple_data[5])+" data sets")
 col4.subheader(str(simple_data[6])+" diagrams")
 
-if cookie_manager.get(cookie="attempt") == "true" and cookie_manager.get(cookie="logged_in") == "false":
+if logged_in == False:
+#if cookie_manager.get(cookie="attempt") == "true" and cookie_manager.get(cookie="logged_in") == "false":
     st.write("-" * 34)
     st.warning("Incorrect username/password")
     
