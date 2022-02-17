@@ -239,6 +239,7 @@ with st.sidebar:
     break_percentage = st.checkbox("Percentages of breaks")
     coffees_pwd = st.checkbox("Coffees per work day")
     coffees_cumulated = st.checkbox("Cumulated coffees")
+    cookie_manager = st.checkbox("Cookie manager")
 
 
 
