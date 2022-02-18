@@ -54,7 +54,11 @@ def get_names():
 @st.cache
 def get_months():
 	months = ["Nov '20","Dec '20", "Jan '21", "Feb '21", "Mar '21", "Apr '21", "May '21", "Jun '21", "Jul '21", "Aug '21", "Sep '21", "Oct '21", "Nov '21", "Dec '21", "Jan '22"]
-	return months
+	month_id = ['202011', '202012', '202101', '202102', '202103', '202104', '202105', '202106', '202107', '202108', '202109', '202110', '202111', '202112', '202201']
+	months_total[]
+	months_total.append(months)
+	months_total.append(month_id)
+	return months_total
 
 @st.cache
 def get_cumulated_coffees():
