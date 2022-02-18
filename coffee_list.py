@@ -449,6 +449,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     
         socialscore_total = get_social_score()
         total = socialscore_total[0]
+        socialscore=[]
         for i in range(len(socialscore_total[1])):
             socialscore.append(socialscore_total[1][i])
 
