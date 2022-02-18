@@ -362,14 +362,13 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 
     #-------------------------------------------------------------------------------------------------------------- expectation values and MAD (scatter chart and bar chart)
     if expectation_data:
-        st.subheader("Prediction Data")
+        
         col7,col8 = st.columns([1,1])
         if admin_status == "1":
             func_select = col7.selectbox("Functional selector", all_func, 10)
             act_func = func_select
         else:
-            st.markdown("""<style>.big-font {font-size:30px !important;}</style>""", unsafe_allow_html=True)
-            st.markdown('<p class="big-font">Active functional: </p>'+act_func, unsafe_allow_html=True)
+            st.subheader("Prediction Data (active functional: "+act_func+")")
         col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values()
