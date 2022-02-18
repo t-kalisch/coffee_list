@@ -105,3 +105,9 @@ def get_mad():
 def get_functionals():
 	all_func = ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p']
 	return all_func
+
+@st.cache
+def get_prizes():
+	prizes = [['202103', 4, 'Kaffeemeister', 40], ['202103', 2, 'Hotshot', 25], ['202103', 4, 'Genosse', 10], ['202104', 3, 'Kaffeemeister', 40], ['202104', 1, 'Hotshot', 25], ['202104', 4, 'Genosse', 10], ['202105', 3, 'Kaffeemeister', 40], ['202105', 1, 'Hotshot', 25], ['202105', 3, 'Genosse', 10], ['202106', 2, 'Kaffeemeister', 40], ['202106', 3, 'Hotshot', 25], ['202106', 0, 'Genosse', 10], ['202107', 2, 'Kaffeemeister', 40], ['202107', 4, 'Hotshot', 25], ['202107', 1, 'Genosse', 10], ['202108', 3, 'Kaffeemeister', 40], ['202108', 5, 'Hotshot', 25], ['202108', 0, 'Genosse', 10], ['202109', 4, 'Kaffeemeister', 40], ['202109', 5, 'Hotshot', 25], ['202109', 4, 'Genosse', 10], ['202110', 0, 'Kaffeemeister', 40], ['202110', 0, 'Hotshot', 25], ['202110', 0, 'Genosse', 10], ['202111', 0, 'Kaffeemeister', 40], ['202111', 3, 'Hotshot', 25], ['202111', 0, 'Genosse', 10], ['202112', 0, 'Kaffeemeister', 40], ['202112', 1, 'Hotshot', 25], ['202112', 4, 'Genosse', 10], ['202201', 1, 'Kaffeemeister', 40], ['202201', 5, 'Hotshot', 25], ['202201', 0, 'Genosse', 10], ['202202', 0, 'Kaffeemeister', 40], ['202202', 1, 'Hotshot', 25], ['202202', 0, 'Genosse', 10]]
+	return prizes
+
