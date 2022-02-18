@@ -96,6 +96,9 @@ def get_stdev():
 	stdev = [4.8, 5.8, 7.8, 10.3, 7.5, 7.1, 5.7, 0.3, 1.3]
 	return stdev
 
-	
+@st.cache
+def get_mad():
+	mad = [['TKPBW95', 6.2], ['TKPBW95p', 6.06], ['dynamic', 6.13], ['KKBK21', 6.67], ['KKBK21-G2', 6.4], ['BS3LYP', 6.29], ['BS3LYPp', 6.06], ['PBTK', 7.94], ['PJGL21', 6.73], ['KKBK21-G2I', 8.12], ['dynamicp', 6.07]]
+	return mad	
 
 
