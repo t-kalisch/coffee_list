@@ -384,7 +384,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         info = func_select
         fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values  ± σ for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
         fig8.update_layout(title_font_size=24, showlegend=False, hovermode='x unified')
-        fig8.update_traces(marker = dict(symbol = 'line-ew-open'), #hovertemplate='%{x}: %{y}', textposition='middle right')
+        fig8.update_traces(marker = dict(symbol = 'line-ew-open'), )#hovertemplate='%{x}: %{y}', textposition='middle right')
         fig8.update_yaxes(range=[0,max(max_values)+2])
         col7.plotly_chart(fig8, use_container_width=True)
         
