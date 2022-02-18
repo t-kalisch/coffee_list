@@ -369,7 +369,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
             act_func = func_select
         else:
             st.markdown("""<style>.big-font {font-size:30px !important;}</style>""", unsafe_allow_html=True)
-            st.markdown('<p class="big-font">Active functional: "+act_func+"</p>', unsafe_allow_html=True)
+            st.markdown('<p class="big-font">Active functional: </p>'+act_func, unsafe_allow_html=True)
         col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values()
