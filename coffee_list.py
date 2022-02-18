@@ -351,9 +351,9 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col7.plotly_chart(fig8, user_container_width=True)
         
         columns=['Functional','MAD']
-        df = pd.DataFrame(mad_total, columns=columns)#, index=names)
-
-        fig8 = px.bar(df, x='Functional', y='MAD', title="Mean absolute deviations", labels={"x":"Functional", "count":"MAD"}, text='MAD', text_auto=True).update_xaxes(categoryorder="total ascending")
+        df = pd.DataFrame(mad_total, columns=columns)
+        
+        fig8 = px.bar(df, x='Functional', y='MAD', title="Mean absolute deviations", labels={"x":"Functional", "count":"MAD"}, text='MAD', text_auto=True, orientation='h').update_xaxes(categoryorder="total ascending")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{x}')
         col8.plotly_chart(fig8, user_container_width=True)
