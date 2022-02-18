@@ -368,7 +368,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
             func_select = col7.selectbox("Functional selector", all_func, 10)
             act_func = func_select
         else:
-            st.write("Active functional: "+act_func)
+            st.write("Active functional: **"+act_func+"**")
         col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values()
