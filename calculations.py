@@ -101,4 +101,7 @@ def get_mad():
 	mad = [['TKPBW95', 6.2], ['TKPBW95p', 6.06], ['dynamic', 6.13], ['KKBK21', 6.67], ['KKBK21-G2', 6.4], ['BS3LYP', 6.29], ['BS3LYPp', 6.06], ['PBTK', 7.94], ['PJGL21', 6.73], ['KKBK21-G2I', 8.12], ['dynamicp', 6.07]]
 	return mad	
 
-
+@st.cache
+def get_functionals():
+	all_func = ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p']
+	return all_func
