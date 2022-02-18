@@ -327,7 +327,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Prediction Data")
         col7,col8 = st.columns([1,1])
         func_select = col7.selectbox("Functional selector", all_func, 10)
-        col7,col8 = st.columns([1,1])
+        col11,col12 = st.columns([1,1])
         
         exp_values = get_expectation_values()
         stdev = get_stdev()
@@ -347,7 +347,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values ±σ for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{x}: %{y}', marker = dict(symbol = 'line-ew-open'), textposition='middle right')
-        #fig8.update_yaxes(range=[0,max(max_values)+2])
+        fig8.update_yaxes(range=[0,max(max_values)+2])
         col7.plotly_chart(fig8, user_container_width=True)
         
         columns=['Functional','MAD']
