@@ -325,7 +325,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     if expectation_data:
         st.subheader("Prediction Data")
         
-        st.selectbox("Functional selector", ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p'], 10)
+        func_select = st.selectbox("Functional selector", ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p'], 10)
         col7,col8 = st.columns([2,1])
         
         exp_values = get_expectation_values()
@@ -342,6 +342,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df = pd.DataFrame(exp_values, columns={'Number of coffees'}, index=names)                #expectation values with standard deviation
         df["e"] = stdev
 
+        info = func_select
         fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Expectation values and σ intervals "+"("+info+")"+" for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{x}: %{y}', marker = dict(symbol = 'line-ew-open', size = 15), textposition='middle right')
