@@ -362,9 +362,9 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 
     #-------------------------------------------------------------------------------------------------------------- expectation values and MAD (scatter chart and bar chart)
     if expectation_data:
-        
-        col7,col8 = st.columns([1,1])
         if admin_status == "1":
+            st.subheader("Prediction Data")
+            col7,col8 = st.columns([1,1])
             func_select = col7.selectbox("Functional selector", all_func, 10)
             act_func = func_select
         else:
