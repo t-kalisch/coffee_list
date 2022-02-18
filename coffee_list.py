@@ -327,7 +327,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Prediction Data")
         col7,col8 = st.columns([1,2])
         func_select = st.selectbox("Functional selector", all_func, 10)
-        col7,col8 = st.columns([1,1])
+        col7,col8 = st.columns([1,2])
         
         exp_values = get_expectation_values()
         stdev = get_stdev()
@@ -344,7 +344,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df["e"] = stdev
 
         info = func_select
-        fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values and σ intervals for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
+        fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values ±σ for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{x}: %{y}', marker = dict(symbol = 'line-ew-open', size = 15), textposition='middle right')
         fig8.update_yaxes(range=[0,max(max_values)+2])
