@@ -327,7 +327,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Prediction Data")
         col7,col8 = st.columns([1,1])
         func_select = col7.selectbox("Functional selector", all_func, 10)
-
+        col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values()
         stdev = get_stdev()
