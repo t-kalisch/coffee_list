@@ -468,7 +468,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df = pd.DataFrame(total, columns={'Social score'}, index=names)                #total social score
 
         fig8 = px.bar(df, x='Social score', y=names, title="Total social score", labels={"y":"", "count":"Social score", "variable":"drinkers"}, text='Social score', text_auto=True, orientation='h').update_yaxes(categoryorder="total ascending")
-        fig8.update_layout(title_font_size=24, showlegend=False, )
+        fig8.update_layout(title_font_size=24, showlegend=False, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig8.update_traces(hovertemplate='%{y}: %{x} %')
         fig8.update_xaxes(showticklabels=False,range=[0,100])
         col8.plotly_chart(fig8, use_container_width=True)  
