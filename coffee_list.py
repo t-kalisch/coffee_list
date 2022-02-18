@@ -284,10 +284,9 @@ with st.sidebar:
     st.title("Available diagrams:")
     prizes = st.checkbox("Coffee prize history")
     coffees_monthly = st.checkbox("Monthly coffees")
+    coffees_total = st.checkbox("Total coffees / Monthly ratios")
     expectation_data = st.checkbox("Expectation values")
     c_b_weekly = st.checkbox ("Weekly breaks and coffees")
-    coffees_total = st.checkbox("Total coffees / Monthly ratios")
-    #ratio_monthly = st.checkbox("Monthly ratios")
     correlation = st.checkbox("Correlation")
     break_percentage = st.checkbox("Percentages of breaks")
     soc_sc = st.checkbox("Social score")
@@ -357,9 +356,51 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig2.update_traces(hovertemplate='%{x}<br>%{y} coffees')
         st.plotly_chart(fig2, use_container_width=True) 
 
-        #fig2_1 = echarts.init(temp1)
-        #option = {xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},yAxis: {type: 'value'},series: [{data: [150, 230, 224, 218, 135, 147, 260],type: 'line'}]}
+ 
+        
+        
+        col1, col2 = st.columns([1,1])
+    #-------------------------------------------------------------------------------------------------------------- total coffees (pie chart)
+    if coffees_total:
+        col1.subheader("Total coffees")
 
+        temp=[]
+        for i in range(len(total_coffees)):
+            temp1=[]
+            temp1.append(names[i])
+            temp1.append(total_coffees[i])
+            temp.append(temp1)
+        df = pd.DataFrame(temp, columns={"names","total"}, index=names)              #total coffees pie chart
+        fig3 = go.Figure(go.Pie(labels = names, values = total_coffees, sort=False, hole=.4))
+        fig3.update_layout(title_font_size=24)
+        col1.plotly_chart(fig3, use_container_width=True)
+
+        
+    #-------------------------------------------------------------------------------------------------------------- monthly ratios (stacked bar chart)
+        col2.subheader("Monthly ratios")
+
+        months_inv=[]
+        temp=[]
+        for i in range(len(months)):
+          months_inv.append(months[len(months)-i-1])
+          temp1=[]
+          temp1.append(months[len(months)-i-1])
+          for j in range(len(names)):
+             temp1.append(monthly_ratios[j][len(months)-i-1])
+          temp.append(temp1)
+        temp2=[]
+        temp2.append("months")
+        for i in range(len(names)):
+          temp2.append(names[i])
+
+        df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
+        fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
+        fig4.update_layout(title_font_size=24, showlegend=False)
+        fig4.update_traces(hovertemplate='%{y}<br>%{x} %')
+        col2.plotly_chart(fig4, use_container_width=True)
+        
+        
+        
     #-------------------------------------------------------------------------------------------------------------- expectation values and MAD (scatter chart and bar chart)
     if expectation_data:
         if admin_status == "1":
@@ -409,48 +450,6 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig3.update_layout(hovermode='x unified', legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig3.update_traces(hovertemplate='%{y}')
         st.plotly_chart(fig3, use_container_width=True)
-
-    col1, col2 = st.columns([1,1])
-    #-------------------------------------------------------------------------------------------------------------- total coffees (pie chart)
-    if coffees_total:
-        col1.subheader("Total coffees")
-
-        temp=[]
-        for i in range(len(total_coffees)):
-            temp1=[]
-            temp1.append(names[i])
-            temp1.append(total_coffees[i])
-            temp.append(temp1)
-        df = pd.DataFrame(temp, columns={"names","total"}, index=names)              #total coffees pie chart
-        fig3 = go.Figure(go.Pie(labels = names, values = total_coffees, sort=False, hole=.4))
-        fig3.update_layout(title_font_size=24)
-        col1.plotly_chart(fig3, use_container_width=True)
-
-        
-    #-------------------------------------------------------------------------------------------------------------- monthly ratios (stacked bar chart)
-    #if ratio_monthly:                                                          #with inverted months (top: Nov '20, bottom: now)
-        col2.subheader("Monthly ratios")
-
-        months_inv=[]
-        temp=[]
-        for i in range(len(months)):
-          months_inv.append(months[len(months)-i-1])
-          temp1=[]
-          temp1.append(months[len(months)-i-1])
-          for j in range(len(names)):
-             temp1.append(monthly_ratios[j][len(months)-i-1])
-          temp.append(temp1)
-        temp2=[]
-        temp2.append("months")
-        for i in range(len(names)):
-          temp2.append(names[i])
-
-        df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
-        fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
-        fig4.update_layout(title_font_size=24, showlegend=False)
-        fig4.update_traces(hovertemplate='%{y}<br>%{x} %')
-        col2.plotly_chart(fig4, use_container_width=True)
-
 
 
     #-------------------------------------------------------------------------------------------------------------- absolute and relative correlations (bubble charts)
