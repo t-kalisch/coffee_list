@@ -368,7 +368,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
             func_select = col7.selectbox("Functional selector", all_func, 10)
             act_func = func_select
         else:
-            st.write("Active functional: **"+act_func+"**")
+            st.markdown("""<style>.big-font {font-size:30px !important;}</style>""", unsafe_allow_html=True)
+            st.markdown('<p class="big-font">Active functional: "+act_func+"</p>', unsafe_allow_html=True)
         col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values()
