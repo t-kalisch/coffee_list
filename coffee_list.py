@@ -366,6 +366,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col7,col8 = st.columns([1,1])
         if admin_status == "1":
             func_select = col7.selectbox("Functional selector", all_func, 10)
+            act_func = func_select
         else:
             st.subheader("Active functional: "+act_func)
         col7,col8 = st.columns([1,1])
@@ -384,7 +385,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df = pd.DataFrame(exp_values, columns={'Number of coffees'}, index=names)                #expectation values with standard deviation
         df["e"] = stdev
 
-        info = func_select
+        info = act_func
         fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values  ± σ for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(marker = dict(symbol = 'line-ew-open'), hovertemplate='%{x}: %{y}', textposition='middle right')
