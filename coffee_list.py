@@ -364,7 +364,10 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     if expectation_data:
         st.subheader("Prediction Data")
         col7,col8 = st.columns([1,1])
-        func_select = col7.selectbox("Functional selector", all_func, 10)
+        if admin_status == "1":
+            func_select = col7.selectbox("Functional selector", all_func, 10)
+        else:
+            st.subheader("Active functional: "+act_func)
         col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values()
