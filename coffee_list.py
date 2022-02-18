@@ -325,7 +325,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     if expectation_data:
         st.subheader("Prediction Data")
         
-        func_select = st.selectbox("Functional selector", ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p'], 10)
+        func_select = st.selectbox("Functional selector", ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p'], 10, width=5)
         col7,col8 = st.columns([2,1])
         
         exp_values = get_expectation_values()
