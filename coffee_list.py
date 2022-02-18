@@ -459,7 +459,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         
         df = pd.DataFrame(socialscore, columns=names, index=months_from_march)                 #data frame for social score
 
-        fig2 = px.line(df, title="Monthly social scores", labels={"variable":"drinkers", "index":"", "value":"Social score / a.u."})      #plotting social score
+        fig2 = px.line(df, title="Monthly social scores", labels={"variable":"", "index":"", "value":"Social score / a.u."})      #plotting social score
         fig2.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig2.update_traces(hovertemplate='%{x}<br>%{y}')
         fig2.update_yaxes(showticklabels=False)
