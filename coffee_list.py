@@ -355,7 +355,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         
         fig8 = px.bar(df, x='Functional', y='MAD', title="Mean absolute deviations", labels={"x":"Functional", "count":"MAD"}, text='MAD', text_auto=True).update_xaxes(categoryorder="total ascending")
         fig8.update_layout(title_font_size=24, showlegend=False)
-        fig8.update_traces(hovertemplate='%{x} <\br> MAD = %{y}')
+        fig8.update_traces(hovertemplate='%{x}<br>MAD = %{y}')
         col8.plotly_chart(fig8, use_container_width=True)
         
     #-------------------------------------------------------------------------------------------------------------- weekly coffees and breaks (line chart)
