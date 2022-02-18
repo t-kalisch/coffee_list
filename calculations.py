@@ -89,10 +89,12 @@ def get_social_score():
 @st.cache
 def get_expectation_values():
 	exp_values = [37.1, 33.2, 2.6, -2.7, 31.8, 34.2, 0.0, -0.7, 2.5]
+	return exp_values
 
 @st.cache
 def get_stdev():
 	stdev = [4.8, 5.8, 7.8, 10.3, 7.5, 7.1, 5.7, 0.3, 1.3]
+	return stdev
 
 	
 
