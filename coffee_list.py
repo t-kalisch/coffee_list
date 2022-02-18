@@ -52,6 +52,7 @@ coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
 
 
+
 logged_in=cookie_manager.get(cookie="logged_in")
 logged_in_user=cookie_manager.get(cookie="user")
 admin_status=cookie_manager.get(cookie="status")
@@ -284,9 +285,10 @@ with st.sidebar:
     #ratio_monthly = st.checkbox("Monthly ratios")
     correlation = st.checkbox("Correlation")
     break_percentage = st.checkbox("Percentages of breaks")
+    soc_sc = st.checkbox("Social score")
     coffees_pwd = st.checkbox("Coffees per work day")
     coffees_cumulated = st.checkbox("Cumulated coffees")
-
+    
 
 
 if logged_in == "true" and profile_nav == "Show diagrams":
@@ -440,6 +442,34 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig8.update_traces(hovertemplate='%{y}: %{x} %')
         col6.plotly_chart(fig8, use_container_width=True)
     
+    #-------------------------------------------------------------------------------------------------------------- social score (line chart + bar chart)
+    if soc_sc:
+        st.subheader("Social Score")
+        col7,col8 = st.columns([2,1])
+    
+        socialscore_total = get_social_score()
+        total = socialscore_total[0]
+        for i in range(len(socialscore_total[1])):
+            socialscore.append(socialscore_total[1][i])
+
+        df = pd.DataFrame(socialscore, columns=names, index=months)                 #data frame for social score
+
+        fig2 = px.line(df, title="Monthly social scores", labels={"variable":"drinkers", "index":"", "value":"Social score / a.u."})      #plotting social score
+        fig2.update_layout(title_font_size=24)
+        fig2.update_traces(hovertemplate='%{x}<br>%{y}')
+        fig2.update_yaxes(showticklabels=False)
+        col7.plotly_chart(fig2, use_container_width=True)
+
+        df = pd.DataFrame(total, columns={'Social score'}, index=names)                #total social score
+
+        fig8 = px.bar(df, x='Social score', y=names, title="Total social score", labels={"y":"", "count":"Social score", "variable":"drinkers"}, text='Social score', text_auto=True, orientation='h').update_yaxes(categoryorder="total ascending")
+        fig8.update_layout(title_font_size=24, showlegend=False, )
+        fig8.update_traces(hovertemplate='%{y}: %{x} %')
+        fig8.update_xaxes(showticklabels=False,range=[0,100])
+        col8.plotly_chart(fig8, use_container_width=True)  
+
+    
+    
     #-------------------------------------------------------------------------------------------------------------- coffees per work day (line chart + bar chart)
     if coffees_pwd:
         st.subheader("Coffees per work day")
@@ -487,7 +517,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 #
 #cookie_manager = get_manager()
 #
-#st.subheader("All Cookies:")
+st.subheader("All Cookies:")
 cookies = cookie_manager.get_all(key = "penis")
 st.write(cookies)
 #
