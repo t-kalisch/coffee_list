@@ -280,6 +280,7 @@ if cookie_manager.get(cookie="attempt") == "true" and cookie_manager.get(cookie=
 with st.sidebar:
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
+    expectation_data = st.checkbox("Expectation values")
     c_b_weekly = st.checkbox ("Weekly breaks and coffees")
     coffees_total = st.checkbox("Total coffees / Monthly ratios")
     #ratio_monthly = st.checkbox("Monthly ratios")
@@ -320,7 +321,41 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         #fig2_1 = echarts.init(temp1)
         #option = {xAxis: {type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']},yAxis: {type: 'value'},series: [{data: [150, 230, 224, 218, 135, 147, 260],type: 'line'}]}
 
+    #-------------------------------------------------------------------------------------------------------------- expectation values and MAD (scatter chart and bar chart)
+    if expectation_data:
+        st.subheader("Prediction Data")
+        
+        st.selectbox("Functional selector", ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p'], 10)
+        col7,col8 = st.columns([2,1])
+        
+        exp_values = get_expectation_values()
+        stdev = get_stdev()
+        
+        max_values=[]
+        for i in range(len(names)):
+            if exp_values[i] < 0:
+                exp_values[i] = 0
+            max_values.append(exp_values[i]+stdev[i])
+        
+        mad_total = get_mad()
+        
+        df = pd.DataFrame(exp_values, columns={'Number of coffees'}, index=names)                #expectation values with standard deviation
+        df["e"] = stdev
 
+        fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Expectation values and σ intervals "+"("+info+")"+" for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
+        fig8.update_layout(title_font_size=24, showlegend=False)
+        fig8.update_traces(hovertemplate='%{x}: %{y}', marker = dict(symbol = 'line-ew-open', size = 15), textposition='middle right')
+        fig8.update_yaxes(range=[0,max(max_values)+2])
+        col7.plotly_chart(fig8, user_container_width=True)
+        
+        columns=['Functional','MAD']
+        df = pd.DataFrame(mad_total, columns=columns)#, index=names)
+
+        fig8 = px.bar(df, x='Functional', y='MAD', title="Mean absolute deviations", labels={"x":"Functional", "count":"MAD"}, text='MAD', text_auto=True).update_xaxes(categoryorder="total ascending")
+        fig8.update_layout(title_font_size=24, showlegend=False)
+        fig8.update_traces(hovertemplate='%{x}')
+        col8.plotly_chart(fig8, user_container_width=True)
+        
     #-------------------------------------------------------------------------------------------------------------- weekly coffees and breaks (line chart)
     if c_b_weekly:
         st.subheader("Weekly breaks and coffees")
