@@ -327,7 +327,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Prediction Data")
         col7,col8 = st.columns([1,1])
         func_select = col7.selectbox("Functional selector", all_func, 10)
-        col11,col12 = st.columns([1,1])
+        col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values()
         stdev = get_stdev()
@@ -348,7 +348,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{x}: %{y}', marker = dict(symbol = 'line-ew-open'), textposition='middle right')
         fig8.update_yaxes(range=[0,max(max_values)+2])
-        col7.plotly_chart(fig8, user_container_width=True)
+        col7.plotly_chart(fig8, use_container_width=True)
         
         columns=['Functional','MAD']
         df = pd.DataFrame(mad_total, columns=columns)
@@ -356,7 +356,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig8 = px.bar(df, x='Functional', y='MAD', title="Mean absolute deviations", labels={"x":"Functional", "count":"MAD"}, text='MAD', text_auto=True, orientation='h').update_xaxes(categoryorder="total ascending")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{x}')
-        col8.plotly_chart(fig8, user_container_width=True)
+        col8.plotly_chart(fig8, use_container_width=True)
         
     #-------------------------------------------------------------------------------------------------------------- weekly coffees and breaks (line chart)
     if c_b_weekly:
