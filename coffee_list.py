@@ -50,6 +50,7 @@ cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
 coffees_breaks_weekly=get_coffee_breaks_weekly()
 last_breaks=get_last_breaks()
+all_func=get_functionals()
 
 
 
@@ -324,8 +325,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- expectation values and MAD (scatter chart and bar chart)
     if expectation_data:
         st.subheader("Prediction Data")
-        
-        func_select = st.selectbox("Functional selector", ['BS3LYP', 'BS3LYPp', 'dynamic', 'dynamicp', 'KKBK21', 'KKBK21-G2', 'KKBK21-G2I', 'PBTK', 'PJGL21', 'TKPBW95', 'TKPBW95p'], 10, width=5)
+        col7,col8 = st.columns([1,2])
+        func_select = st.selectbox("Functional selector", all_func, 10)
         col7,col8 = st.columns([2,1])
         
         exp_values = get_expectation_values()
