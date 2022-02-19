@@ -55,7 +55,10 @@ all_func=get_functionals()
 act_func=get_active_func()
 
 if 'logged_in' not in st.session_state:
-    st.session_state.logged_in=cookie_manager.get(cookie="logged_in")
+    if cookie_manager.get(cookie="logged_in") == "true:
+        st.session_state.logged_in="true"
+    else:
+        st.session_state.logged_in="false"
 if 'user' not in st.session_state:
     st.session_state.user=cookie_manager.get(cookie="user")
 if 'admin' not in st.session_state:
