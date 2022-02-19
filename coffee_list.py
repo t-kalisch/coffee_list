@@ -74,7 +74,7 @@ col2.write(cookie_manager.get(cookie="logged_in"))
 col2.write(cookie_manager.get(cookie="user"))
 col2.write(cookie_manager.get(cookie="status"))
 
-#@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True)
 def check_login(user, user_pw):                         #login check
     login_check=False
     for i in range(len(user_data)):
