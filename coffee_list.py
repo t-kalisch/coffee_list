@@ -57,7 +57,7 @@ act_func=get_active_func()
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in=cookie_manager.get(cookie="logged_in")
 if 'user' not in st.session_state:
-    st.session_state.attempt=cookie_manager.get(cookie="user")
+    st.session_state.user=cookie_manager.get(cookie="user")
 if 'admin' not in st.session_state:
     st.session_state.admin=cookie_manager.get(cookie="status")
 if 'attempt' not in st.session_state:
@@ -102,7 +102,7 @@ def logout_check():
     st.session_state.admin = "0"
     cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
     cookie_manager.set("status", None, expires_at=datetime.datetime(year=2030, month=1, day=1), key="del_admin_status")
-    cookie_manager.delete("logged_in_user")
+    cookie_manager.set("user", "", expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_user")
     logged_in = "false"
         
         
