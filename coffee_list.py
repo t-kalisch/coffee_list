@@ -54,7 +54,8 @@ last_breaks=get_last_breaks()
 all_func=get_functionals()
 act_func=get_active_func()
 
-#if 'logged_in' not in st.session_state:
+if 'logged_in' not in st.session_state:
+    st.session_state.ogged_in=cookie_manager.get(cookie="logged_in")
 if cookie_manager.get(cookie="logged_in") == "true":
     st.write("passed")
     st.session_state.logged_in="true"
