@@ -66,7 +66,7 @@ if 'attempt' not in st.session_state:
 logged_in=st.session_state.logged_in
 logged_in_user=st.session_state.user
 admin_status=st.session_state.admin
-st.write(logged_in)
+st.write(logged_in+cookie_manager.get(cookie="logged_in"))
 st.write(logged_in_user)
 st.write(admin_status)
 
