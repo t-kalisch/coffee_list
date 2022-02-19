@@ -65,7 +65,6 @@ if 'attempt' not in st.session_state:
     
     
 if cookie_manager.get(cookie="logged_in") == "true":
-    st.write("passed")
     st.session_state.logged_in="true"
     st.session_state.user_name = cookie_manager.get(cookie="user")
     st.session_state.admin=cookie_manager.get(cookie="status")
