@@ -67,10 +67,10 @@ if 'attempt' not in st.session_state:
     st.session_state.attempt="false"
 
 logged_in=st.session_state.logged_in
-logged_in_user=st.session_state.user
+logged_in_user=st.session_state.user_name
 admin_status=st.session_state.admin
 col1, col2 = st.columns([1,1])
-col1.write(st.session_state.logged_in)
+col1.write(logged_in)
 col1.write(logged_in_user)
 col1.write(admin_status)
 col2.write(cookie_manager.get(cookie="logged_in"))
