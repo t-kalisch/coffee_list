@@ -94,7 +94,7 @@ def check_login(user, user_pw):                         #login check
         logged_in = "false"
 
 
-@st.cache(suppress_st_warning=True)       
+#@st.cache(suppress_st_warning=True)       
 def logout_check():
     st.session_state.attempt="false"
     st.session_state.logged_in = "false"
