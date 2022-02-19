@@ -66,9 +66,13 @@ if 'attempt' not in st.session_state:
 logged_in=st.session_state.logged_in
 logged_in_user=st.session_state.user
 admin_status=st.session_state.admin
-st.write(logged_in+cookie_manager.get(cookie="logged_in"))
-st.write(logged_in_user)
-st.write(admin_status)
+col1, col2 = st.columns([1,1])
+col1.write(logged_in)
+col1.write(logged_in_user)
+col1.write(admin_status)
+col2.write(cookie_manager.get(cookie="logged_in"))
+col2.write(cookie_manager.get(cookie="user"))
+col3.write(st.session_state.admin=cookie_manager.get(cookie="status"))
 
 @st.cache(suppress_st_warning=True)
 def check_login(user, user_pw):                         #login check
