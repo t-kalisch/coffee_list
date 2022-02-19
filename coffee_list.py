@@ -63,7 +63,7 @@ if 'admin' not in st.session_state:
 if 'attempt' not in st.session_state:
     st.session_state.attempt="false"
 
-logged_in=cookie_manager.get(cookie="logged_in")
+logged_in=st.session_state.logged_in
 logged_in_user=st.session_state.user
 admin_status=st.session_state.admin
 col1, col2 = st.columns([1,1])
