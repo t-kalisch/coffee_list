@@ -59,8 +59,8 @@ if 'logged_in' not in st.session_state:
         st.session_state.logged_in="true"
     else:
         st.session_state.logged_in="false"
-if 'user' not in st.session_state:
-    st.session_state.user=cookie_manager.get(cookie="user")
+if 'user_name' not in st.session_state:
+    st.session_state.user_name=cookie_manager.get(cookie="user")
 if 'admin' not in st.session_state:
     st.session_state.admin=cookie_manager.get(cookie="status")
 if 'attempt' not in st.session_state:
@@ -86,7 +86,7 @@ def check_login(user, user_pw):                         #login check
             admin_status=user_data[i][2]
     if login_check == True:
         st.session_state.logged_in = "true"
-        st.session_state.user = user
+        st.session_state.user_name = user
         st.session_state.admin = admin_status
         st.session_state.attempt = "false"
         if remember:
@@ -96,7 +96,7 @@ def check_login(user, user_pw):                         #login check
     else:
         st.session_state.attempt="true"
         st.session_state.logged_in = "false"
-        st.session_state.user = ""
+        st.session_state.user_name = ""
         st.session_state.admin = "0"
         #cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
         #cookie_manager.delete("user")
