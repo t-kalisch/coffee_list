@@ -54,17 +54,58 @@ last_breaks=get_last_breaks()
 all_func=get_functionals()
 act_func=get_active_func()
 
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in=cookie_manager.get(cookie="logged_in")
+if 'user' not in st.session_state:
+    st.session_state.attempt=cookie_manager.get(cookie="user")
+if 'admin' not in st.session_state:
+    st.session_state.admin=cookie_manager.get(cookie="status")
+if 'attempt' not in st.session_state:
+    st.session_state.attempt="false"
+
+logged_in=st.session_state.logged_in
+logged_in_user=st.session_state.user
+admin_status=st.session_state.admin
 
 
-logged_in=cookie_manager.get(cookie="logged_in")
-logged_in_user=cookie_manager.get(cookie="user")
-admin_status=cookie_manager.get(cookie="status")
+@st.cache(suppress_st_warning=True)
+def check_login(user, user_pw):                         #login check
+    login_check=False
+    for i in range(len(user_data)):
+        if user == user_data[i][0] and user_pw == user_data[i][1]:
+            login_check = True
+            admin_status=user_data[i][2]
+    if login_check == True:
+        st.session_state.logged_in = "true"
+        st.session_state.user = user
+        st.session_state.admin = admin_status
+        st.session_state.attempt = "false"
+        if remember:
+            cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
+            cookie_manager.set("user", user, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_user")
+            cookie_manager.set("status", admin_status, expires_at=datetime.datetime(year=2030, month=1, day=1), key="admin_status")
+    else:
+        st.session_state.attempt="true"
+        st.session_state.logged_in = "false"
+        st.session_state.user = ""
+        st.session_state.admin = "0"
+        #cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
+        #cookie_manager.delete("user")
+        logged_in = "false"
 
-#keep_logged_in=cookie_manager.get(cookie="keep_logged_in")
-#if not keep_logged_in == "true":
-#    cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout_restart")
 
-
+@st.cache(suppress_st_warning=True)       
+def logout_check():
+    st.session_state.attempt="false"
+    st.session_state.logged_in = "false"
+    st.session_state.user = ""
+    st.session_state.admin = "0"
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
+    cookie_manager.set("status", None, expires_at=datetime.datetime(year=2030, month=1, day=1), key="del_admin_status")
+    cookie_manager.delete("logged_in_user")
+    logged_in = "false"
+        
+        
 with st.sidebar:
     #page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
     #if page_nav == 'Login':
@@ -75,33 +116,13 @@ with st.sidebar:
     col1,col2=st.columns([1,1.65])
     login = col1.button("Login", help="Log in here")
     logout = col2.button("Logout", help="Log out here")
-    remember = st.checkbox("Remember me", help="Keep me logged in")
-
+    remember = st.checkbox("Remember me", help="Keep me logged in")      
+ 
 if login:
-    login_check=False
-    expire = datetime.datetime.now() + datetime.timedelta(hours=1,seconds=10)
-    cookie_manager.set("attempt", True, expires_at=expire, key="login_attempt")
-    for i in range(len(user_data)):
-        if user == user_data[i][0] and user_pw == user_data[i][1]:
-            login_check = True
-            admin_status=user_data[i][2]
-    if login_check == True:
-        cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
-        cookie_manager.set("user", user, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_user")
-        cookie_manager.set("status", admin_status, expires_at=datetime.datetime(year=2030, month=1, day=1), key="admin_status")
-        #logged_in = "true"
-        #if remember:
-        #    cookie_manager.set("keep_logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="remember")
-    else:
-        cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_false")
-        cookie_manager.delete("user")
-        logged_in = "false"
-
+    check_login(user, user_pw)
+        
 if logout:
-    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
-    cookie_manager.set("status", None, expires_at=datetime.datetime(year=2030, month=1, day=1), key="del_admin_status")
-    cookie_manager.delete("logged_in_user")
-    logged_in = "false"
+    logout_check()
          
 
 if logged_in == "true":
