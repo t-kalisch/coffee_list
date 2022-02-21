@@ -401,6 +401,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col1, col2 = st.columns([1,1])
     #-------------------------------------------------------------------------------------------------------------- total coffees (pie chart)
     if coffees_total:
+        col1, col2 = st.columns([1,1])
         col1.subheader("Total coffees")
 
         temp=[]
