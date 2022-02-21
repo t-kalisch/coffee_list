@@ -92,7 +92,7 @@ def check_login(user, user_pw):                         #login check
     if login_check == True:
         st.session_state.logged_in = "true"
         st.session_state.user_name = user
-        st.session_state.admin = admin_status
+        st.session_state.admin = str(admin_status)
         st.session_state.attempt = "false"
         if remember:
             cookie_manager.set("logged_in", True, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_true")
@@ -162,7 +162,7 @@ else:
 if logged_in == "true":
     if admin_status != "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
-    elif logged_in == "true" and admin_status == "1":
+    elif admin_status == "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
