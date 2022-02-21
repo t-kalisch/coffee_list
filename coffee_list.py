@@ -132,8 +132,10 @@ with st.sidebar:
     user = col1.text_input(label="", placeholder="Username", key="user")
     user_pw = col2.text_input(label="", type="password", placeholder="Password", key="user_pw")
     col1,col2=st.columns([1,1.65])
-    login = col1.button("Login", help="Log in here")
-    logout = col2.button("Logout", help="Log out here")
+    if logged_in == "true":
+        logout = col1.button("Logout", help="Log out here")
+    else:
+        login = col1.button("Login", help="Log in here")
     remember = st.checkbox("Remember me", help="Keep me logged in")      
  
 if login:
