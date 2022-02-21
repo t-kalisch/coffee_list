@@ -137,12 +137,14 @@ with st.sidebar:
     else:
         login = col1.button("Login", help="Log in here")
     remember = st.checkbox("Remember me", help="Keep me logged in")      
- 
-if login:
-    check_login(user, user_pw)
+
+if logged_in == "false":
+    if login:
+        check_login(user, user_pw)
         
-if logout:
-    logout_check()
+if logged_in == "true":
+    if logout:
+        logout_check()
          
 
 if logged_in == "true":
