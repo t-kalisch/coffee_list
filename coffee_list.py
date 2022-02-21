@@ -152,7 +152,7 @@ if logged_in == "true":
     if admin_status == "1":
         col2.write("  Status: Administrator")
     else:
-        col2.sidebar.write("  Member status: User") 
+        col2.write("  Member status: User") 
 else:
     st.title("Welcome to the future of coffee drinking")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
