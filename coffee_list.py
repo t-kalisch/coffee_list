@@ -319,7 +319,7 @@ else:
     col4.subheader(str(simple_data[5])+" data sets")
     col4.subheader(str(simple_data[6])+" diagrams")
 
-if cookie_manager.get(cookie="attempt") == "true" and cookie_manager.get(cookie="logged_in") == "false":
+if st.session_state.attempt == "true":
     st.write("-" * 34)
     st.warning("Incorrect username/password")
     
