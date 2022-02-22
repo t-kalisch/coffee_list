@@ -160,7 +160,9 @@ if logged_in == "true":
         year = col2.text_input("Year")
         holidays = col3.text_input("Number of holidays")
         #col2.write(". ")
-        sub_hol = col1.button("Submit", on_click = submit_holidays(st.session_state.user_name, month, year, holidays))
+        sub_hol = col1.button("Submit", help="Submit holidays")
+        if sub_hol:
+            submit_holidays(st.session_state.user_name, month, year, holidays)
         if admin_status == "1":
             st.write("-" * 34)
             st.subheader("Enter holidays for another person")
@@ -170,9 +172,11 @@ if logged_in == "true":
             holidays_admin = col3.date_input("Holidays", [])
             person_hol = col4.text_input("Person", placeholder = "User")
             if person_hol == "":
-                st.button("Submit holidays", on_click = submit_holidays(st.session_state.user_name, month, year, holidays))
+                sub_hol_ad = st.button("Submit holidays", help="Submit holidays for yourself")
             else:
-                st.button("Submit holidays", on_click = submit_holidays(person_hol, month, year, holidays))
+                sub_hol_ad = st.button("Submit holidays", help="Submit holidays for person"+person_hol)
+            if sub_hol_ad:
+                submit_holidays(st.session_state.user_name, month, year, holidays)
         
     if profile_nav == "Change username":                                            # Change username page
         st.subheader("**:adult:** Change username")
