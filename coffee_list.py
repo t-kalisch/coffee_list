@@ -376,8 +376,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     if coffees_monthly:
         st.subheader("Coffees per month") 
         
-        monthly_coffees = get_monthly_coffees(names, month_id_all)
-        df = pd.DataFrame(monthly_coffees, columns=names, index=months_all)    #coffees per month per person
+        monthly_coffees_all = get_monthly_coffees(names, month_id_all)
+        df = pd.DataFrame(monthly_coffees_all[0], columns=names, index=months_all)    #coffees per month per person
 
         fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
         fig1.update_traces(hovertemplate='%{y}')
@@ -388,7 +388,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         for i in range(len(months_all)):
              temp=[]
              temp.append(months_all[i])
-             temp.append(monthly_coffees_total[i])
+             temp.append(monthly_coffees_all[1][i])
              temp1.append(temp)
         
         columns=['months','total']
