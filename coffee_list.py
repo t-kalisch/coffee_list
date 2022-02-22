@@ -165,7 +165,11 @@ if logged_in == "true":
                 if sub_hol:
                     submit_holidays(person_hol, month, year, holidays)
 
-            st.write("-" * 34)          
+            st.write("-" * 34)   
+            st.subheader("All holidays")
+            up_hol = st.button("Update", help="Update holidays")
+            if up_hol:
+                get_all_holidays()
             all_holidays = get_all_holidays()
             names=get_members()
             columns=["Month","Total work days"]
@@ -173,7 +177,7 @@ if logged_in == "true":
                 columns.append(names[i])
 
             df=pd.DataFrame(all_holidays,columns=columns)
-            st.subheader("All holidays")
+
             st.dataframe(df, width=1000, height=1000)
   
         else:
