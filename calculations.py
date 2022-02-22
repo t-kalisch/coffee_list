@@ -203,8 +203,8 @@ def months_between(start_date, end_date):                   #method to get month
                 year += 1
             else:
                 month += 1
-			counter += 1
-			return counter
+            counter += 1
+    return counter
 
 #------------------------- getting work days per month per person ------------------------
 @st.cache
