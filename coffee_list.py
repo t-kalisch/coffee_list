@@ -256,9 +256,7 @@ if logged_in == "true":
         st.subheader("**:x:** Delete a coffee break")
         st.markdown("Please enter the extended ID of the break you want to delete.")
         last_break=1
-        st.write("penis")
         last_breaks=get_last_breaks(last_break)
-        st.write("döp")
         #st.write(last_breaks[len(last_breaks())-1][0])
         
         col1,col2,col3 = st.columns([1,0.5,3])
