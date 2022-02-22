@@ -32,16 +32,12 @@ def get_simple_data():
 	simple_data=[9, 7, 15, 1879, 720, 66, 12]
 	return simple_data
 
-@st.cache
-def get_monthly_coffees_total():
-	monthly_coffees_total=[75,25,59,88,163,196,197,150,127,206,184,144,163,103,32]
-	return monthly_coffees_total
 
-@st.cache
 def get_monthly_coffees(names, month_id):
 	cursor.execute("select * from monthly_coffees")
 	tmp=cursor.fetchall()
 	
+	monthly_coffees_all=[]
 	monthly_coffees=[]
 	total_monthly_coffees=[]
 	for i in range(len(month_id)):
@@ -52,8 +48,10 @@ def get_monthly_coffees(names, month_id):
 			total += tmp[j][i+2]
 		monthly_coffees.append(temp)
 		total_monthly_coffees.append(total)
-	
-	return monthly_coffees
+		
+	monthly_coffees_all.append(monthly_coffees)
+	monthly_coffees_all.append(total_monthly_coffees)
+	return monthly_coffees_all
 
 @st.cache
 def get_monthly_ratios():
