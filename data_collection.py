@@ -36,7 +36,7 @@ def submit_holidays(name, month_inp, year_inp, days_inp):
     cursor.execute("create table if not exists holidays (id int auto_increment, month int, work_days int, primary key(id))")            #creating holidays table
     
     if int(month_inp) > 12 or int(year_inp) < 2020:
-        st.warning("Invalid date: The date you entered does not exist or lies before the age of the coffee list!")
+        st.error("Invalid date: The date you entered does not exist or lies before the age of the coffee list!")
     else:
         if int(month_inp) < 10:
             month_id = int(year_inp+"0"+month_inp)
