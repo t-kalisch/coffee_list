@@ -262,8 +262,11 @@ if logged_in == "true":
             for i in range(len(user_data)):
                 if st.session_state.user_name == user_data[i][0] and admin_pw == user_data[i][1]:
                     change_profile_data(change_user, username_new, pw_new, change_status)
+                    done=True
                 else:
-                    st.warning("Incorrect password")
+                    done=False
+            if done == False:
+                st.warning("Incorrect password")
 
     if profile_nav == "Submit coffee break":                                        # Submit break page
         st.subheader("**:coffee:** Submit a coffee break")
