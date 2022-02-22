@@ -28,7 +28,8 @@ def get_user_data():
 	return user_data
 
 
-def get_simple_data()
+def get_simple_data():
+	return
 	
 
 @st.cache
