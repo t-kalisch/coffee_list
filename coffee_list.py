@@ -22,10 +22,6 @@ def get_manager():
 cookie_manager = get_manager()
 cookie_manager.get_all()
 
-
-def submit_holidays(user, month, year, holidays):
-    st.write("Submitted holidays: "+user+" "+str(month)+"/"+str(year)+", "+str(holidays))
-
 null = None
 user_data=get_user_data()
 simple_data=get_simple_data()
@@ -161,13 +157,15 @@ if logged_in == "true":
             person_hol = col3.text_input("Person", placeholder = "User")
             holidays_admin = col4.text_input("Number of holidays", placeholder=0)
             if person_hol == "":
-                sub_hol_ad = st.button("Submit holidays", help="Submit holidays for yourself")
+                sub_hol = st.button("Submit holidays", help="Submit holidays for yourself")
+                if sub_hol:
+                    submit_holidays(st.session_state.user_name, month, year, holidays)
             else:
-                sub_hol_ad = st.button("Submit holidays", help="Submit holidays for "+person_hol)
-            if sub_hol_ad:
-                submit_holidays(st.session_state.user_name, month, year, holidays)
-            st.write("-" * 34)
-            
+                sub_hol = st.button("Submit holidays", help="Submit holidays for "+person_hol)
+                if sub_hol:
+                    submit_holidays(person_hol, month, year, holidays)
+
+            st.write("-" * 34)          
             all_holidays = get_all_holidays()
             names=get_members()
             columns=["Month","Total work days"]
@@ -175,10 +173,9 @@ if logged_in == "true":
                 columns.append(names[i])
 
             df=pd.DataFrame(all_holidays,columns=columns)
-            st.markdown("All holidays")
+            st.subheader("All holidays")
             st.dataframe(df, width=1000, height=1000)
-            
-            
+  
         else:
             col1, col2, col3 = st.columns([0.5,1,2])
             month = col1.text_input("Month", placeholder=datetime.date.today().month)
