@@ -180,7 +180,7 @@ def get_months(first_date):
     db.close()
     return month_info
     
-@st.cache
+
 def months_between(start_date, end_date):                   #method to get months between two dates
     if start_date > end_date:
         raise ValueError(f"Start date {start_date} is not before end date {end_date}")
