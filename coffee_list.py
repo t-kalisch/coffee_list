@@ -170,7 +170,7 @@ if logged_in == "true":
             #up_hol = st.button("Update", help="Update holidays")
             #if up_hol:
             #    get_all_holidays(dateteime.datetime.now())
-            all_holidays = get_all_holidays(dateteime.datetime.now())
+            all_holidays = get_all_holidays(datetime.datetime.now())
             names=get_members()
             columns=["Month","Total work days"]
             for i in range(len(names)):
