@@ -166,7 +166,16 @@ if logged_in == "true":
                 sub_hol_ad = st.button("Submit holidays", help="Submit holidays for "+person_hol)
             if sub_hol_ad:
                 submit_holidays(st.session_state.user_name, month, year, holidays)
-                
+            st.write("-" * 34)
+            
+            
+            all_holidays = get_all_holidays()
+            st.write(all_holidays)
+            df=pd.DataFrame(last_breaks,columns=columns)
+            st.markdown("All holidays")
+            st.dataframe(df, width=1000, height=1000)
+            
+            
         else:
             col1, col2, col3 = st.columns([0.5,1,2])
             month = col1.text_input("Month", placeholder=datetime.date.today().month)
