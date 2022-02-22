@@ -275,11 +275,6 @@ if logged_in == "true":
         
     
     
-for i in range(15):
-    temp=[]
-    for j in range(len(monthly_coffees)):
-        temp.append(monthly_coffees[j][i])
-    monthly_coffees1.append(temp)
 
 for i in range(15):
     temp=[]
