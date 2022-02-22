@@ -139,21 +139,21 @@ with st.sidebar:
     remember = st.checkbox("Remember me", help="Keep me logged in")      
       
 if logged_in == "true":
-    if logout:
-        logout_check()
-else:
-    if login:
-        check_login(user, user_pw)         
-
-if logged_in == "true":
     st.title("Logged in as {}".format(logged_in_user))
     if admin_status == "1":
         col2.write("  Status: Administrator")
     else:
         col2.write("  Member status: User") 
+        
+    if logout:
+        logout_check()
 else:
     st.title("Welcome to the future of coffee drinking")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
+    
+    if login:
+        check_login(user, user_pw)         
+
 
     
 
