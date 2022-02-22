@@ -54,9 +54,9 @@ def write_simple_data():
 	cursor.execute("select count(*) from breaks")
 	breaks = cursor.fetchall()
 	cups = 0
+	for i in range(len(month_id)):
+		cups += coffees[1][i]
 	for i in range(len(names)):
-		for j in range(len(month_id)):
-			cups += coffees[0][i][j]
 		if coffees[0][i][len(month_id)-3] != 0 and coffees[0][i][len(month_id)-2] != 0:
 			act_dr += 1
 
