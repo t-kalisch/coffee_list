@@ -114,13 +114,13 @@ def check_login(user, user_pw):                         #login check
 
 #@st.cache(suppress_st_warning=True)       
 def logout_check():
+    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
+    cookie_manager.set("status", None, expires_at=datetime.datetime(year=2030, month=1, day=1), key="del_admin_status")
+    cookie_manager.set("user", None, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_user")
     st.session_state.attempt="false"
     st.session_state.logged_in = "false"
     st.session_state.user_name = None
     st.session_state.admin = "0"
-    cookie_manager.set("logged_in", False, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logout")
-    cookie_manager.set("status", None, expires_at=datetime.datetime(year=2030, month=1, day=1), key="del_admin_status")
-    cookie_manager.set("user", None, expires_at=datetime.datetime(year=2030, month=1, day=1), key="logged_in_user")
     logged_in = "false"
         
         
