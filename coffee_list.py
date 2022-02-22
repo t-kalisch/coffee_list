@@ -247,7 +247,7 @@ if logged_in == "true":
                         status_str="User"
         col1,col2 = st.columns([0.5,1.7])
         if status == -1:
-            user_status = col1.selectbox ("Change member status", (""), 0)
+            col1.selectbox ("Change member status", (""), 0)
         else: 
             user_status = col1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
@@ -255,18 +255,16 @@ if logged_in == "true":
         admin_pw = col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
         confirm = col1.button("Confirm")
         if confirm:
-            if status_str == user_status:
-                change_status = ""
+            if status == -1:
+                st.error("Wrong username entered")
             else:
-                change_status = user_status
-            st.write(change_status)
-            done=False
-            for i in range(len(user_data)):
-                if st.session_state.user_name == user_data[i][0] and admin_pw == user_data[i][1]:
-                    done = change_profile_data(change_user, username_new, pw_new, change_status)
-                    
-            if done == False:
-                st.warning("Incorrect password")
+                done=False
+                for i in range(len(user_data)):
+                    if st.session_state.user_name == user_data[i][0] and admin_pw == user_data[i][1]:
+                        done = change_profile_data(change_user, username_new, pw_new, user_status)
+
+                if done == False:
+                    st.warning("Incorrect password")
 
     if profile_nav == "Submit coffee break":                                        # Submit break page
         st.subheader("**:coffee:** Submit a coffee break")
