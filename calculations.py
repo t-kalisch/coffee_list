@@ -345,7 +345,8 @@ def calc_mad_corr(names, month_id, func):
     return round(mad_corr,2)
 
 #--------------------------- getting all holidays ------------------------------
-def get_all_holidays():
+@st.cache
+def get_all_holidays(timestamp):
 	cursor.execute("select * from holidays")
 	tmp=cursor.fetchall()
 	
