@@ -259,12 +259,11 @@ if logged_in == "true":
                 change_status = ""
             else:
                 change_status = user_status
+            done=False
             for i in range(len(user_data)):
                 if st.session_state.user_name == user_data[i][0] and admin_pw == user_data[i][1]:
-                    change_profile_data(change_user, username_new, pw_new, change_status)
-                    done=True
-                else:
-                    done=False
+                    done = change_profile_data(change_user, username_new, pw_new, change_status)
+                    
             if done == False:
                 st.warning("Incorrect password")
 
