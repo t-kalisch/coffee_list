@@ -242,7 +242,7 @@ if logged_in == "true":
         col1.button("Confirm")       
 
     if profile_nav == "Submit coffee break":                                        # Submit break page
-        st.subheader("Submit a coffee break")
+        st.subheader("**:coffee:** Submit a coffee break")
         st.markdown("Please enter the names and number of coffees for the break.")
         col1,col2,col3,col4,col5,col6,col7,col8 = st.columns([1,1,1,1,1,1,1,1])
         p1_coffees = col6.text_input("Person 1")
@@ -264,7 +264,7 @@ if logged_in == "true":
         col2.button("End break")
         
     if profile_nav == "Delete coffee break":                                        # Delete break page
-        st.subheader("Delete a coffee break")
+        st.subheader("**:x:** Delete a coffee break")
         st.markdown("Please enter the extended ID of the break you want to delete.")
         
         temp=[]
