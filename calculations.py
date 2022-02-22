@@ -177,8 +177,6 @@ def get_last_breaks(last_break):
 		temp.append(drinkers[len(drinkers)-i-1][3])
 		last_breaks.append(temp)
 
-		
-	st.write("öalkdfj")
 	return last_breaks
 
 
