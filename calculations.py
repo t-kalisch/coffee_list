@@ -3,8 +3,15 @@ import streamlit as st
 
 @st.cache
 def get_user_data():
-	user_data=[['TK', 'akstr!admin2',1],['PB','akstr!admin2',1],['NV',None,None],['DB',None,None],['FLG','baddragon',None],['SHK',None,None],['TB',None,None],['TT',None,None],['RS',None,None]]
-	return user_data
+    db = mysql.connect(user='PBTK', password='akstr!admin2',
+                        host='212.227.72.95',
+                        database='coffee_list')
+    cursor.db.cursor(buffered=True)
+	
+	cursor.execute("select * from members")
+	tmp=cursor.fetchall()
+	#user_data=[['TK', 'akstr!admin2',1],['PB','akstr!admin2',1],['NV',None,None],['DB',None,None],['FLG','baddragon',None],['SHK',None,None],['TB',None,None],['TT',None,None],['RS',None,None]]
+	return tmp
 
 @st.cache
 def get_simple_data():
@@ -131,6 +138,6 @@ def test_server_db():
     db.commit()
     db.close
 
-test_server_db()
+#test_server_db()
 
 
