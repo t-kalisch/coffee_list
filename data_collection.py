@@ -70,11 +70,11 @@ def change_profile_data(user_old, user, user_pw, admin_status):
 	st.write(user_old)
 	st.write(user_pw)
 	if user != "":
-		#cursor.execute("update members set name = "+user+" where name = '"+user_old+"'")
+		#cursor.execute("update members set name = '"+user+"' where name = '"+user_old+"'")
 		#cursor.execute("RENAME TABLE mbr_"+user_old.upper()+" TO mbr_"+user.upper())
 		user_old = user
 	if user_pw != "":
-		cursor.execute("update members set password = "+user_pw+" where name = '"+user_old+"'")
+		cursor.execute("update members set password = '"+user_pw+"' where name = '"+user_old+"'")
 	if admin_status != "":
 		if admin_status == "User":
 			cursor.execute("update members set admin = null where name = '"+user_old+"'")
