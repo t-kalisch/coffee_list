@@ -225,6 +225,7 @@ if logged_in == "true":
                 if pw_new == "" or conf_pw == "":
                     st.error("You cannot enter an empty password")
                 else:
+                    done=False
                     for i in range(len(user_data)):
                         if st.session_state.user_name == user_data[i][0] and curr_pw == user_data[i][1]:
                             done = change_profile_data(st.session_state.user_name, "", pw_new, st.session_state.admin)
