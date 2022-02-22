@@ -178,7 +178,7 @@ if logged_in == "true":
             st.button("Submit holidays")
         
     if profile_nav == "Change username":                                            # Change username page
-        st.subheader("**:boy:** Change username")
+        st.subheader("**:adult:** Change username")
         if admin_status != "1":
             st.markdown("Please enter your current username, password and new username.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
@@ -216,7 +216,7 @@ if logged_in == "true":
             col2.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
             col2.button("Confirm")        
  
-    if profile_nav == "Change profile data":
+    if profile_nav == "**:adult:****:closed_lock_with_key:** Change profile data":
         st.subheader("Change the profile of a member")
         st.markdown("You can enter a new username and password for a member, or change their member status.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
