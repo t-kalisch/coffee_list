@@ -152,6 +152,7 @@ else:
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
     if login:
+        st.write(get_user_data())
         check_login(user, user_pw)         
 
 
