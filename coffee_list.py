@@ -159,7 +159,7 @@ else:
 
 if logged_in == "true":
     if admin_status != "1":
-        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
+        profile_nav = st.sidebar.selectbox("Profile Options", ("**:chart_with_upwards_trend:** Show diagrams","**:calendar:** Enter holidays","**:boy:** Change username","**:closed_lock_with_key:** Change password"), 0)
     elif admin_status == "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
     
