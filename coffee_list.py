@@ -293,7 +293,7 @@ if logged_in == "true":
             if del_id != "":
                 clear_one_break(del_id)
             else:
-                col1.warning("Please enter a break ID")
+                st.warning("Please enter a break ID")
     
 
 for i in range(15):
