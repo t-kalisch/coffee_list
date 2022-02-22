@@ -257,7 +257,7 @@ if logged_in == "true":
         st.markdown("Please enter the extended ID of the break you want to delete.")
         last_break=1
         last_breaks=get_last_breaks(last_break)
-        st.write(last_breaks[len(len(last_breaks)-1][0])
+        st.write(last_breaks[len(last_breaks)-1][0])
         
         col1,col2,col3 = st.columns([1,0.5,3])
         col1.text_input("Extended ID of break", placeholder=last_breaks[len(last_breaks)-1][0])
