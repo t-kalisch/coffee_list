@@ -137,17 +137,282 @@ def get_prizes():
 	prizes = [['202103', 4, 'Kaffeemeister', 40], ['202103', 2, 'Hotshot', 25], ['202103', 4, 'Genosse', 10], ['202104', 3, 'Kaffeemeister', 40], ['202104', 1, 'Hotshot', 25], ['202104', 4, 'Genosse', 10], ['202105', 3, 'Kaffeemeister', 40], ['202105', 1, 'Hotshot', 25], ['202105', 3, 'Genosse', 10], ['202106', 2, 'Kaffeemeister', 40], ['202106', 3, 'Hotshot', 25], ['202106', 0, 'Genosse', 10], ['202107', 2, 'Kaffeemeister', 40], ['202107', 4, 'Hotshot', 25], ['202107', 1, 'Genosse', 10], ['202108', 3, 'Kaffeemeister', 40], ['202108', 5, 'Hotshot', 25], ['202108', 0, 'Genosse', 10], ['202109', 4, 'Kaffeemeister', 40], ['202109', 5, 'Hotshot', 25], ['202109', 4, 'Genosse', 10], ['202110', 0, 'Kaffeemeister', 40], ['202110', 0, 'Hotshot', 25], ['202110', 0, 'Genosse', 10], ['202111', 0, 'Kaffeemeister', 40], ['202111', 3, 'Hotshot', 25], ['202111', 0, 'Genosse', 10], ['202112', 0, 'Kaffeemeister', 40], ['202112', 1, 'Hotshot', 25], ['202112', 4, 'Genosse', 10], ['202201', 1, 'Kaffeemeister', 40], ['202201', 5, 'Hotshot', 25], ['202201', 0, 'Genosse', 10]]
 	return prizes
 
-def test_server_db():
-    db = mysql.connect(user='PBTK', password='akstr!admin2',
-                        host='212.227.72.95',
-                        database='coffee_list')
-    cursor.db.cursor(buffered=True)
+#----------------------------- getting all months from start date to now ---------------------------------
+def get_months(first_date):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+    
+    month_info=[]
+    months=[]
+    month_id=[]
+
+    cursor.execute("SELECT max(id_ext) FROM breaks")        #getting month names from beginning to current
+    temp=cursor.fetchone()
+    temp=list(temp)
+
+    last_date=datetime.date(int(temp[0][0:4]),int(temp[0][4:6]),int(temp[0][6:8]))
+    for month in months_between(first_date,last_date):
+        if(month.month<10):
+            month_id.append(str(month.year)+"0"+str(month.month))
+        else:
+            month_id.append(str(month.year)+str(month.month))
+        months.append(month.strftime("%B")[0:3]+" '"+month.strftime("%Y")[2:4])
+    month_info.append(months)
+    month_info.append(month_id)
+    
+    db.close()
+    return month_info
+    
+    
+def months_between(start_date, end_date):                   #method to get months between two dates
+    if start_date > end_date:
+        raise ValueError(f"Start date {start_date} is not before end date {end_date}")
+    else:
+        year = start_date.year
+        month = start_date.month
+
+        while (year, month) <= (end_date.year, end_date.month):
+            yield datetime.date(year, month, 1)
+            # Move to the next month.  If we're at the end of the year, wrap around
+            # to the start of the next.
+            #
+            # Example: Nov 2017
+            #       -> Dec 2017 (month += 1)
+            #       -> Jan 2018 (end of year, month = 1, year += 1)
+            #
+            if month == 12:
+                month = 1
+                year += 1
+            else:
+                month += 1
+
+#------------------------- getting work days per month per person ------------------------
+def get_work_days(names, month_id):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    cursor.execute("select * from holidays")            #getting holidays
+    tmp = cursor.fetchall()
+
+    workdays=[]
+    for i in range(len(month_id)):
+        temp=[]
+        for j in range(len(names)):
+            if tmp[i][j+3] == None:
+                temp.append(tmp[i][2])
+            else:
+                temp.append(tmp[i][2]-tmp[i][j+3])
+        workdays.append(temp)
+    return workdays
+
+#------------------------ getting functionals from database ------------------
+def get_functionals():
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    cursor.execute("select name from func_param")
+    tmp=cursor.fetchall()
+
+    func_names=[]
+    for i in range(len(tmp)):
+        func_names.append(tmp[i][0])
+ 
+    return sorted(func_names, key=str.lower)
+
+#------------------------- getting all functional parameters -------------------
+def get_parameters():
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    cursor.execute("select * from func_param")
+    tmp = cursor.fetchall()
+
+    parameters=[]
+    for i in range(len(tmp)):
+        temp=[]
+        for j in range(8):
+            temp.append(tmp[i][j+1])
+        parameters.append(temp)
+    
+    return parameters
 
 
-    cursor.execute("create table if not exists test (id int auto_increment, name varchar(5), primary key(id))")
+def get_active_func():
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    cursor.execute("select active_func from update_status")
+    func = cursor.fetchall()
+    return func[0][0]
+
+#-------------------------- calculating standard deviation of deviations etc ---------------------------------
+def variance(data, ddof=0):
+    n = len(data)
+    mean = sum(data) / n
+    return sum((x - mean) ** 2 for x in data) / (n - ddof)
+
+def stdev(data):
+    var = variance(data)
+    std_dev = math.sqrt(var)
+    return std_dev
+
+#------------------------- getting the MAD for given functional ---------------------------------------------------
+def calc_mad_corr(names, month_id, func):
+    func_data = calc_exp_values_dev(names, month_id, func)
+
+    ratio =  0.2
+
+    total_mad=0
+    total_stdev=0
+    counter=0
+    for i in range(len(func_data[1])):
+        for j in range(len(names)):
+             counter += 1
+             total_mad += abs(func_data[1][i][j])
+    mad = total_mad/counter
+    counter=0
+    for i in range(len(func_data[2])):
+        for j in range(len(names)):
+            if func_data[2][i-1][j] != 0 and func_data[2][i][j] != 0:
+                counter += 1
+                total_stdev += func_data[2][i][j]
+    m_stdev = total_stdev/counter
+
+    mad_corr = ratio * mad + (1-ratio) * m_stdev
+    
+    return round(mad_corr,2)
+
+
+#--------------------------- checking if database is up to date ----------------
+def check_update_status():
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    cursor.execute("select update_date from update_status")
+    tmp = cursor.fetchall()
+
+    if datetime.date.today() > tmp[0][0]:
+        print("Database not up to date")
+        update_database(tmp[0][0].month)
+        
+    else:
+        print("Database up to date")
+    
+    db.commit()
+    db.close
+    
+#------------------------- updates database -------------------------------------
+def update_database(month):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    print("Recalculating ", end="", flush=True)
+    cursor.execute("update update_status set update_date = curdate()")
+
+    names = get_members()
+    month_id_all = get_months(datetime.date(2020,11,1))[1]
+    month_id_daily = get_months(datetime.date(2021,3,8))[1]
+
+    update="simple"     #keyword for variation function
+
+    cursor.execute("select active_func from update_status")         #getting functional currently in use
+    functional=cursor.fetchall()[0][0]
+    
+    write_monthly_coffees(names,month_id_all, update)
+    print("...", end="", flush=True)
+    write_total_coffees(names)
+    print("...", end="", flush=True)
+    write_correlation(names)
+    print("..", end="", flush=True)
+    write_weekly_coffees_breaks(names, month_id_daily, update)
+    print(".", end="", flush=True)
+    write_perc_breaks(names, month_id_daily, update)
+    print(".", end="", flush=True)
+    if datetime.date.today().month != month:    #checking for new month
+        write_exp_values_dev(names, month_id_all, update)
+        calc_dynamic_functional(names,month_id)
+        print("..", end="", flush=True)
+    write_variation_factor(names, month_id_daily,update)
+    print(".")
+
+
+    
+    print("Database was successfully updated")
+    
     db.commit()
     db.close
 
-#test_server_db()
+
+#------------------------- updates database -------------------------------------
+def manual_update():
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    print("Recalculating ", end="", flush=True)
+    cursor.execute("update update_status set update_date = curdate()")
+
+    names = get_members()
+    month_id_all = get_months(datetime.date(2020,11,1))[1]
+    month_id_daily = get_months(datetime.date(2021,3,8))[1]
+
+    update="full"     #keyword for variation function
+
+    cursor.execute("select active_func from update_status")         #getting functional currently in use
+    func_selected=cursor.fetchall()[0][0]
+    
+    write_monthly_coffees(names,month_id_all, update)
+    print("...", end="", flush=True)
+    write_total_coffees(names)
+    print("...", end="", flush=True)
+    write_correlation(names)
+    print("..", end="", flush=True)
+    write_weekly_coffees_breaks(names, month_id_daily, update)
+    print(".", end="", flush=True)
+    write_perc_breaks(names, month_id_daily, update)
+    print(".", end="", flush=True)
+    write_exp_values_dev(names, month_id_all, func_selected, update)
+    print("..", end="", flush=True)
+    write_variation_factor(names, month_id_daily,update)
+    print(".")
+    
+    print("Database was successfully updated")
+    
+    db.commit()
+    db.close
+
+
+def test():    
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    cursor.execute("select * from monthly_coffees")
+    print(cursor.fetchall())
+
+#test()
+
+#calc_polynomial_functional(get_members(), get_months(datetime.date(2020,11,1))[1])
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
+check_update_status()        #------------------------------------------------------- updating database to current day ---------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
