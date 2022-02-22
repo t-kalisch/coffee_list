@@ -159,12 +159,12 @@ else:
 
 if logged_in == "true":
     if admin_status != "1":
-        profile_nav = st.sidebar.selectbox("Profile Options", ("**:chart_with_upwards_trend:** Show diagrams","**:calendar:** Enter holidays","**:boy:** Change username","**:closed_lock_with_key:** Change password"), 0)
+        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
     elif admin_status == "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
-        st.subheader("Enter holidays")
+        st.subheader("**:calendar:** Enter holidays")
         col1, col2 = st.columns([2,1])
         holidays = col1.date_input("Please enter your holidays", [])
         col2.write(". ")
@@ -178,7 +178,7 @@ if logged_in == "true":
             st.button("Submit holidays")
         
     if profile_nav == "Change username":                                            # Change username page
-        st.subheader("Change username")
+        st.subheader("**:boy:** Change username")
         if admin_status != "1":
             st.markdown("Please enter your current username, password and new username.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
@@ -197,7 +197,7 @@ if logged_in == "true":
             user_change = col2.button("Confirm")
         
     if profile_nav == "Change password":                                            # Change password page
-        st.subheader("Change password")
+        st.subheader("**:closed_lock_with_key:** Change password")
         if admin_status != "1":
             st.markdown("You can change your password here.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
