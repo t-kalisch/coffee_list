@@ -250,8 +250,11 @@ def submit_holidays(name, month_inp, year_inp, days_inp):
 
         cursor.execute("select "+name.upper()+" from holidays where month = "+str(month_id))
         tmp=cursor.fetchall()
-        cursor.execute("update holidays set "+name.upper()+" = "+str(int(days_inp)+int(tmp[0][0]))+" where month like "+str(month_id))
-        messagebox.showinfo("Holidays saved", "Your holidays have successfully been saved.")
+	if tmp[0][0] == None:
+		 cursor.execute("update holidays set "+name.upper()+" = "+str(int(days_inp))+" where month like "+str(month_id))
+	else:
+        	cursor.execute("update holidays set "+name.upper()+" = "+str(int(days_inp)+tmp[0][0])+" where month like "+str(month_id))
+        st.success("The holidays have successfully been saved.")
 
     db.commit()
 
