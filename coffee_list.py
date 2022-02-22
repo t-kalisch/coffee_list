@@ -169,7 +169,7 @@ if logged_in == "true":
             y_admin = col2.text_input("Year")
             holidays_admin = col3.date_input("Holidays", [])
             person_hol = col4.text_input("Person", placeholder = "User")
-            if person_hol = "":
+            if person_hol == "":
                 st.button("Submit holidays", on_click = submit_holidays(st.session_state.user_name, month, year, holidays))
             else:
                 st.button("Submit holidays", on_click = submit_holidays(person_hol, month, year, holidays))
