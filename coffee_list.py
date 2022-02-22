@@ -205,7 +205,7 @@ if logged_in == "true":
             col2.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
             col2.button("Confirm")        
  
-    if profile_nav == "Change profile data":
+    if profile_nav == "Change profile data":                                          # Change profile data page
         st.subheader("**:closed_lock_with_key:** Change the profile of a member")
         st.markdown("You can enter a new username and password for a member, or change their member status.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
