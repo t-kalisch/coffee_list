@@ -376,7 +376,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     if coffees_monthly:
         st.subheader("Coffees per month") 
         
-        monthly_coffees = get_monthly_coffees()#names, month_id_all)
+        monthly_coffees = get_monthly_coffees(names, month_id_all)
         df = pd.DataFrame(monthly_coffees, columns=names, index=months_all)    #coffees per month per person
 
         fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
