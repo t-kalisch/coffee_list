@@ -345,10 +345,18 @@ def calc_mad_corr(names, month_id, func):
     return round(mad_corr,2)
 
 #--------------------------- getting all holidays ----------------
-def get_all_holidays():
+def get_all_holidays(names, month_id):
 	cursor.execute("select * from holidays")
 	tmp=cursor.fetchall()
-	return tmp
+	
+	holidays=[]
+	for i in range(len(month_id)):
+		temp=[]
+		for j in range(len(names)+2):
+			temp.append(tmp[i][j+1])
+		holidays.append(temp)
+   
+	return holidays
 
 
 #--------------------------- checking if database is up to date ----------------
