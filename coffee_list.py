@@ -154,15 +154,18 @@ if logged_in == "true":
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
         st.subheader("**:calendar:** Enter holidays")
-        col1, col2 = st.columns([2,1])
-        holidays = col1.date_input("Please enter your holidays", [])
-        col2.write(". ")
-        sub_hol = col2.button("Submit", on_click = submit_holidays(holidays))
+        col1, col2, col3 = st.columns([0.5,1,2])
+        #holidays = col1.date_input("Please enter your holidays", [])
+        month = col1.text_input("Month")
+        year = col2.text_input("Year"
+        holidays = col3.text_input("Number of holidays")
+        #col2.write(". ")
+        sub_hol = col1.button("Submit", on_click = submit_holidays(holidays))
         if admin_status == "1":
             st.write("-" * 34)
             st.subheader("Enter holidays for another person")
-            col1,col2 = st.columns([1,3])
             col1.text_input("Person", placeholder = "User")
+            col1, col2, col3 = st.columns([0.5,1,2])
             holidays_admin = col2.date_input("Holidays", [])
             st.button("Submit holidays")
         
