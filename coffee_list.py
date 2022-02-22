@@ -216,13 +216,13 @@ if logged_in == "true":
             curr_pw = col2.text_input("Current password", type="password", placeholder = "Old password")
             col2.write("-" * 34)
             col1,col2,col3 = st.columns([0.5,1,0.7])
-            new_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
+            pw_new = col2.text_input("Choose a new password", type="password", placeholder = "New password")
             conf_pw = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
             pw_change = col2.button("Save new password")
-            if new_pw != conf_pw:
+            if pw_new != conf_pw:
                 st.error("The entered new passwords differ from each other")
             if pw_change:
-                if new_pw == "" or conf_pw == "":
+                if pw_new == "" or conf_pw == "":
                     st.error("You cannot enter an empty password")
                 else:
                     for i in range(len(user_data)):
