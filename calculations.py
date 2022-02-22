@@ -163,12 +163,17 @@ def get_last_breaks(last_break):
 	breaks=cursor.fetchall()
 	cursor.execute("select * from drinkers order by id_ext desc limit 10")
 	drinkers=cursor.fetchall()
-	st.write(breaks)
-	st.write(drinkers)
+
 	last_breaks=[]
-	#for i in range(len(breaks)):
-	#	last_breaks.append(
-	
+	for i in range(len(breaks)):
+		temp=[]
+		date=str(breaks[i][2]+"."+breaks[i][3]+"."+breaks[i][4])
+		temp.append(breaks[i][1])
+		temp.append(date)
+		temp.append(drinkers[i][2])
+		temp.append(drinkers[i][3])
+		last_breaks.append(temp)
+	st.write(last_breaks)
 	return last_breaks
 
 
