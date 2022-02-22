@@ -47,7 +47,7 @@ def get_monthly_coffees(names, month_id):
 	for i in range(len(month_id)):
 		total=0
 		temp=[]
-		for i in range(len(names)):
+		for j in range(len(names)):
 			temp.append(tmp[j][i+2])
 			total += tmp[j][i+2]
 		monthly_coffees.append(temp)
