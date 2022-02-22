@@ -344,6 +344,12 @@ def calc_mad_corr(names, month_id, func):
     
     return round(mad_corr,2)
 
+#--------------------------- getting all holidays ----------------
+def get_all_holidays():
+	cursor.execute("select * from holidays")
+	tmp=cursor.fetchall()
+	return tmp
+
 
 #--------------------------- checking if database is up to date ----------------
 def check_update_status():
