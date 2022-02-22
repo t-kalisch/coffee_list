@@ -167,10 +167,10 @@ if logged_in == "true":
 
             st.write("-" * 34)   
             st.subheader("All holidays")
-            up_hol = st.button("Update", help="Update holidays")
-            if up_hol:
-                get_all_holidays()
-            all_holidays = get_all_holidays()
+            #up_hol = st.button("Update", help="Update holidays")
+            #if up_hol:
+            #    get_all_holidays(dateteime.datetime.now())
+            all_holidays = get_all_holidays(dateteime.datetime.now())
             names=get_members()
             columns=["Month","Total work days"]
             for i in range(len(names)):
