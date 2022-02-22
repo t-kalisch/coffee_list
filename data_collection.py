@@ -244,7 +244,7 @@ def change_profile_data(user_old, user, user_pw, admin_status):
 			st.write("updated to admin")
 	st.success("The selected profile data have successfully been changed")
 	db.commit()
-	return done
+	return True
 
 
 
