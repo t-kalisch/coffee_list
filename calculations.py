@@ -56,8 +56,8 @@ def write_simple_data():
 	cups = 0
 	for i in range(len(names)):
 		for j in range(len(month_id)):
-			cups += coffees[i][j]
-		if coffees[i][len(month_id)-3] != 0 and coffees[i][len(month_id)-2] != 0:
+			cups += coffees[0][i][j]
+		if coffees[0][i][len(month_id)-3] != 0 and coffees[0][i][len(month_id)-2] != 0:
 			act_dr += 1
 
 	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")	#updating simple_data table
