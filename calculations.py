@@ -158,6 +158,8 @@ def get_members():
     return names
 
 
+
+#----------------------------- getting last 10 breaks from database ---------------------------------
 def get_last_breaks(last_break):
 	cursor.execute("select * from breaks order by id_ext desc limit 10")
 	breaks=cursor.fetchall()
@@ -167,11 +169,11 @@ def get_last_breaks(last_break):
 	last_breaks=[]
 	for i in range(len(breaks)):
 		temp=[]
-		date=str(breaks[i][2])+"."+str(breaks[i][3])+"."+str(breaks[i][4])
-		temp.append(breaks[i][1])
+		date=str(breaks[len(breaks)-i-1][2])+"."+str(breaks[len(breaks)-i-1][3])+"."+str(breaks[len(breaks)-i-1][4])
+		temp.append(breaks[len(breaks)-i-1][1])
 		temp.append(date)
-		temp.append(drinkers[i][2])
-		temp.append(drinkers[i][3])
+		temp.append(drinkers[len(drinkers)-i-1][2])
+		temp.append(drinkers[len(drinkers)-i-1][3])
 		last_breaks.append(temp)
 	st.write(last_breaks)
 	return last_breaks
