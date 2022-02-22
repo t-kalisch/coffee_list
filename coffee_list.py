@@ -29,9 +29,7 @@ def submit_holidays(holidays):
 null = None
 user_data=get_user_data()
 simple_data=get_simple_data()
-monthly_coffees_total=get_monthly_coffees_total()
-#monthly_coffees1=[]
-#monthly_coffees=get_monthly_coffees()
+
 monthly_ratios=get_monthly_ratios()
 total_coffees=get_total_coffees()
 corr_tot=get_corr()
