@@ -36,15 +36,14 @@ def get_simple_data():
 def write_simple_data():
 	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value int, primary key(id))")
 	cursor.execute("select * from simple_data")
-	tmp = cursor.fetchall()
-	if tmp == []:
-		cursor.execute("insert into simple data (parameter) values (drinkers)")
-		cursor.execute("insert into simple data (parameter) values (act_dr)")
-		cursor.execute("insert into simple data (parameter) values (months)")
-		cursor.execute("insert into simple data (parameter) values (breaks)")
-		cursor.execute("insert into simple data (parameter) values (cups)")
-		cursor.execute("insert into simple data (parameter) values (data_sets, 9000)")
-		cursor.execute("insert into simple data (parameter, value) values (diagrams, 22)")
+	if cursor.fetchall() == []:
+		cursor.execute("insert into simple_data (parameter) values (drinkers)")
+		cursor.execute("insert into simple_data (parameter) values (act_dr)")
+		cursor.execute("insert into simple_data (parameter) values (months)")
+		cursor.execute("insert into simple_data (parameter) values (breaks)")
+		cursor.execute("insert into simple_data (parameter) values (cups)")
+		cursor.execute("insert into simple_data (parameter) values (data_sets, 9000)")
+		cursor.execute("insert into simple_data (parameter, value) values (diagrams, 22)")
 	
 	coffees = get_monthly_coffees()
 	names = get_members()
