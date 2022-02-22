@@ -58,10 +58,11 @@ def write_simple_data():
 	for i in range(len(names)):
 		if coffees[0][len(month_id)-3][i] != 0 and coffees[0][len(month_id)-2][i] != 0:
 			act_dr += 1
-
+	st.write("test")
 	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")	#updating simple_data table
 	cursor.execute("update simple_data set value = "+str(act_dr)+" where parameter = 'acr_dr'")
 	cursor.execute("update simple_data set value = "+str(len(month_id))+" where parameter = 'months'")
+	st.write("pesds")
 	cursor.execute("update simple_data set value = "+str(breaks[0][0])+" where parameter = 'breaks'")
 	cursor.execute("update simple_data set value = "+str(cups)+" where parameter = 'cups'")
 	db.commit()
