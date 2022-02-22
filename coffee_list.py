@@ -30,8 +30,8 @@ null = None
 user_data=get_user_data()
 simple_data=get_simple_data()
 monthly_coffees_total=get_monthly_coffees_total()
-monthly_coffees1=[]
-monthly_coffees=get_monthly_coffees()
+#monthly_coffees1=[]
+#monthly_coffees=get_monthly_coffees()
 monthly_ratios=get_monthly_ratios()
 total_coffees=get_total_coffees()
 corr_tot=get_corr()
@@ -377,8 +377,9 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
-        st.subheader("Coffees per month")                           
-        df = pd.DataFrame(monthly_coffees1, columns=names, index=months_all)    #coffees per month per person
+        st.subheader("Coffees per month") 
+        monthly_coffees = get_monthly_coffees(names, month_id_all)
+        df = pd.DataFrame(monthly_coffees, columns=names, index=months_all)    #coffees per month per person
 
         fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
         fig1.update_traces(hovertemplate='%{y}')
