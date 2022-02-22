@@ -23,7 +23,7 @@ cookie_manager = get_manager()
 cookie_manager.get_all()
 
 
-def submit_holidays(user, month, year holidays):
+def submit_holidays(user, month, year, holidays):
     st.write("Submitted holidays: "+user+" "+str(month)+"/"+str(year)+", "+str(holidays))
 
 null = None
