@@ -173,7 +173,7 @@ def get_months(first_date):
             month_id.append(str(month.year)+"0"+str(month.month))
         else:
             month_id.append(str(month.year)+str(month.month))
-	months.append(month.strftime("%B")[0:3]+" '"+month.strftime("%Y")[2:4])
+        months.append(month.strftime("%B")[0:3]+" '"+month.strftime("%Y")[2:4])
     month_info.append(months)
     month_info.append(month_id)
     
