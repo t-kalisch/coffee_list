@@ -138,7 +138,7 @@ with st.sidebar:
         login = col1.button("Login", help="Log in here")
     remember = st.checkbox("Remember me", help="Keep me logged in")      
       
-if st.session_state.logged_in == "true":
+if logged_in == "true":
     st.title("Logged in as {}".format(logged_in_user))
     if admin_status == "1":
         col2.write("  Status: Administrator")
