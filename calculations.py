@@ -169,11 +169,11 @@ def get_months(first_date):
     last_date=datetime.date(int(temp[0][0:4]),int(temp[0][4:6]),int(temp[0][6:8]))
     #for month in months_between(first_date,last_date):
     for i in range(months_between(first_date,last_date)):
-		if(month.month<10):
-			month_id.append(str(month.year)+"0"+str(month.month))
-		else:
-			month_id.append(str(month.year)+str(month.month))
-		months.append(month.strftime("%B")[0:3]+" '"+month.strftime("%Y")[2:4])
+	if(month.month<10):
+		month_id.append(str(month.year)+"0"+str(month.month))
+	else:
+		month_id.append(str(month.year)+str(month.month))
+	months.append(month.strftime("%B")[0:3]+" '"+month.strftime("%Y")[2:4])
     month_info.append(months)
     month_info.append(month_id)
     
