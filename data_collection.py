@@ -188,7 +188,7 @@ def clear_one_break(del_id):
         cursor.execute("DELETE FROM breaks WHERE id_ext='"+del_ID+"'")
         st.success("Break "+del_id+" has successfully been deleted.")
     else:
-        st.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
+        col1.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
 		
     db.commit()
 
