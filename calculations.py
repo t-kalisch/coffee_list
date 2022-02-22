@@ -160,6 +160,7 @@ def get_members():
 
 
 #----------------------------- getting last 10 breaks from database ---------------------------------
+#@st.cache
 def get_last_breaks(last_break):
 	cursor.execute("select * from breaks order by id_ext desc limit 10")
 	breaks=cursor.fetchall()
@@ -175,10 +176,10 @@ def get_last_breaks(last_break):
 		temp.append(drinkers[len(drinkers)-i-1][2])
 		temp.append(drinkers[len(drinkers)-i-1][3])
 		last_breaks.append(temp)
-	st.write(last_breaks)
+
+		
+	st.write("öalkdfj")
 	return last_breaks
-
-
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
