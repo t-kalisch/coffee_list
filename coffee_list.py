@@ -290,8 +290,10 @@ if logged_in == "true":
         col3.dataframe(df, width=600, height=500)
         
         if delete:
-            clear_one_break(del_id)
-    
+            if del_id != "":
+                clear_one_break(del_id)
+            else:
+                st.warning("Please enter a break ID")
     
 
 for i in range(15):
