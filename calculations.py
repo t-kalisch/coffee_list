@@ -34,7 +34,7 @@ def get_simple_data():
 
 @st.cache
 def write_simple_data():
-	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value int, primary key(id))")
+	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value int, primary key(id))")		#setting up table
 	cursor.execute("select * from simple_data")
 	if cursor.fetchall() == []:
 		cursor.execute("insert into simple_data (parameter) values ('drinkers')")
@@ -45,10 +45,11 @@ def write_simple_data():
 		cursor.execute("insert into simple_data (parameter, value) values ('data_sets', 9000)")
 		cursor.execute("insert into simple_data (parameter, value) values ('diagrams', 22)")
 	
-	coffees = get_monthly_coffees()
+
 	names = get_members()
+	month_id = get_months(datetime.date(2020,11,1))[1]
+	coffees = get_monthly_coffees(names, month_id)
 	acr_dr = 0
-	months = get_months(datetime.date(2020,11,1))[0]
 	cursor.execute("select count(*) from breaks")
 	breaks = cursor.fetchall()
 	cups = 0
