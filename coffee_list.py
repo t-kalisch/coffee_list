@@ -169,7 +169,7 @@ if logged_in == "true":
             col1, col2, col3, col4 = st.columns([0.5,1,1,1])
             m_admin = col1.text_input("Month", key="m_ad", placeholder=datetime.date.today().month)
             y_admin = col2.text_input("Year", key="y_ad", placeholder=datetime.date.today().year)
-            holidays_admin = col3.text_input("Number of holidays", placeholder=0)
+            holidays_admin = col3.text_input("Number of holidays", key="hol_adm", placeholder=0)
             person_hol = col4.text_input("Person", placeholder = "User")
             if person_hol == "":
                 sub_hol_ad = st.button("Submit holidays", help="Submit holidays for yourself")
