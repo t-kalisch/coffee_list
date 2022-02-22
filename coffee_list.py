@@ -213,12 +213,23 @@ if logged_in == "true":
         if admin_status != "1":
             st.markdown("You can change your password here.")
             col1,col2,col3 = st.columns([0.5,1,0.7])
-            curr_user = col2.text_input("Current password", type="password", placeholder = "Old password")
+            curr_pw = col2.text_input("Current password", type="password", placeholder = "Old password")
             col2.write("-" * 34)
             col1,col2,col3 = st.columns([0.5,1,0.7])
-            user_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
-            new_user = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
+            new_pw = col2.text_input("Choose a new password", type="password", placeholder = "New password")
+            conf_pw = col2.text_input("Repeat the new password", type="password", placeholder = "Repeat password")
             pw_change = col2.button("Save new password")
+            if new_pw != conf_pw:
+                st.error("The entered new passwords differ from each other")
+            if pw_change:
+                if new_pw == "" or conf_pw == "":
+                    st.error("You cannot enter an empty password")
+                else:
+                    for i in range(len(user_data)):
+                        if st.session_state.user_name == user_data[i][0] and curr_pw == user_data[i][1]:
+                            done = change_profile_data(st.session_state.user_name, "", pw_new, st.session_state.admin)
+                    if done == False:
+                        st.warning("Incorrect password")
         if admin_status == "1":
             st.markdown("Change password for another person")
             col1,col2,col3 = st.columns([0.5,1,0.7])
@@ -262,7 +273,6 @@ if logged_in == "true":
                 for i in range(len(user_data)):
                     if st.session_state.user_name == user_data[i][0] and admin_pw == user_data[i][1]:
                         done = change_profile_data(change_user, username_new, pw_new, user_status)
-
                 if done == False:
                     st.warning("Incorrect password")
 
