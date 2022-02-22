@@ -27,11 +27,17 @@ def get_user_data():
 	#db.close()
 	return user_data
 
-@st.cache
-def get_simple_data():
-	simple_data=[9, 7, 15, 1879, 720, 66, 12]
-	return simple_data
 
+def get_simple_data()
+	
+
+@st.cache
+def write_simple_data():
+	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value(int), primary key(id))")
+	
+	coffees = get_monthly_coffees()
+	return simple_data
+write_simple_data()
 
 def get_monthly_coffees(names, month_id):
 	cursor.execute("select * from monthly_coffees")
