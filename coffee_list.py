@@ -174,7 +174,7 @@ if logged_in == "true":
             if person_hol == "":
                 sub_hol_ad = st.button("Submit holidays", help="Submit holidays for yourself")
             else:
-                sub_hol_ad = st.button("Submit holidays", help="Submit holidays for person"+person_hol)
+                sub_hol_ad = st.button("Submit holidays", help="Submit holidays for "+person_hol)
             if sub_hol_ad:
                 submit_holidays(st.session_state.user_name, month, year, holidays)
         
