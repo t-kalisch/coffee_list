@@ -49,6 +49,7 @@ def write_simple_data():
 	names = get_members()
 	month_id = get_months(datetime.date(2020,11,1))[1]
 	coffees = get_monthly_coffees(names, month_id)								#calculating simple data from different tables
+	st.write(coffees)
 	acr_dr = 0
 	cursor.execute("select count(*) from breaks")
 	breaks = cursor.fetchall()
