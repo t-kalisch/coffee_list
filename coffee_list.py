@@ -168,10 +168,13 @@ if logged_in == "true":
                 submit_holidays(st.session_state.user_name, month, year, holidays)
             st.write("-" * 34)
             
-            
             all_holidays = get_all_holidays()
-            st.write(all_holidays)
-            df=pd.DataFrame(last_breaks,columns=columns)
+            names=get_members()
+            columns=["Month","Total work days"]
+            for i in range(len(names)):
+                columns.append(names[i])
+
+            df=pd.DataFrame(all_holidays,columns=columns)
             st.markdown("All holidays")
             st.dataframe(df, width=1000, height=1000)
             
