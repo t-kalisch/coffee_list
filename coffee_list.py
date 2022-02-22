@@ -332,8 +332,11 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     
     names = get_members()
     month_info=get_months(datetime.date(2021,3,8))
-    months=month_info[0]
-    month_id=month_info[1]
+    months_dly=month_info[0]
+    month_id_dly=month_info[1]
+    month_info=get_months(datetime.date(2020,11,1))
+    months_all=month_info[0]
+    month_id_all=month_info[1]
     
     
     st.write("-" * 34)
@@ -375,7 +378,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
         st.subheader("Coffees per month")                           
-        df = pd.DataFrame(monthly_coffees1, columns=names, index=months)    #coffees per month per person
+        df = pd.DataFrame(monthly_coffees1, columns=names, index=months_all)    #coffees per month per person
 
         fig1 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
         fig1.update_traces(hovertemplate='%{y}')
@@ -383,9 +386,9 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.plotly_chart(fig1, use_container_width=True)
 
         temp1=[]
-        for i in range(len(months)):
+        for i in range(len(months_all)):
              temp=[]
-             temp.append(months[i])
+             temp.append(months_all[i])
              temp.append(monthly_coffees_total[i])
              temp1.append(temp)
         
