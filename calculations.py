@@ -35,10 +35,36 @@ def get_simple_data():
 @st.cache
 def write_simple_data():
 	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value int, primary key(id))")
+	cursor.execute("select * from simple_data")
+	if cursor.fetchall[0][0] == []:
+		cursor.execute("insert into simple data (parameter) values (drinkers)")
+		cursor.execute("insert into simple data (parameter) values (act_dr)")
+		cursor.execute("insert into simple data (parameter) values (months)")
+		cursor.execute("insert into simple data (parameter) values (breaks)")
+		cursor.execute("insert into simple data (parameter) values (cups)")
+		cursor.execute("insert into simple data (parameter) values (data_sets, 9000)")
+		cursor.execute("insert into simple data (parameter, value) values (diagrams, 22)")
 	
 	coffees = get_monthly_coffees()
+	names = get_members()
+	acr_dr = 0
+	months = get_months(datetime.date(2020,11,1))[0]
+	cursor.execute("select count(*) from breaks")
+	breaks = cursor.fetchall()
+	cups = 0
+	for i in range(len(names)):
+		for j in range(len(months)):
+			cups += coffees[i][j]
+		if coffees[i][len(months)-3] != 0 and coffees[i][len(months)-2] != 0:
+			act_dr += 1
+
+	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")
+	cursor.execute("update simple_data set value = "+str(act_dr)+" where parameter = 'acr_dr'")
+	cursor.execute("update simple_data set value = "+str(len(months))+" where parameter = 'months'")
+	cursor.execute("update simple_data set value = "+str(breaks[0][0])+" where parameter = 'breaks'")
+	cursor.execute("update simple_data set value = "+str(cups)+" where parameter = 'cups'")
 	return simple_data
-write_simple_data()
+
 
 def get_monthly_coffees(names, month_id):
 	cursor.execute("select * from monthly_coffees")
@@ -476,7 +502,7 @@ def manual_update():
 
 #calc_polynomial_functional(get_members(), get_months(datetime.date(2020,11,1))[1])
 
-
+def write(simple_data)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------
 check_update_status()        #------------------------------------------------------- updating database to current day ---------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------
