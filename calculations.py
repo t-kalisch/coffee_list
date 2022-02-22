@@ -167,7 +167,7 @@ def get_last_breaks(last_break):
 	last_breaks=[]
 	for i in range(len(breaks)):
 		temp=[]
-		date=str(breaks[i][2]+"."+str(breaks[i][3])+"."+str(breaks[i][4]))
+		date=str(breaks[i][2])+"."+str(breaks[i][3])+"."+str(breaks[i][4])
 		temp.append(breaks[i][1])
 		temp.append(date)
 		temp.append(drinkers[i][2])
