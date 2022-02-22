@@ -167,7 +167,8 @@ def get_months(first_date):
     temp=list(temp)
 
     last_date=datetime.date(int(temp[0][0:4]),int(temp[0][4:6]),int(temp[0][6:8]))
-    for month in months_between(first_date,last_date):
+    #for month in months_between(first_date,last_date):
+	for i in range(months_between(first_date,last_date)):
         if(month.month<10):
             month_id.append(str(month.year)+"0"+str(month.month))
         else:
@@ -186,7 +187,8 @@ def months_between(start_date, end_date):                   #method to get month
     else:
         year = start_date.year
         month = start_date.month
-
+	
+		counter=0
         while (year, month) <= (end_date.year, end_date.month):
             yield datetime.date(year, month, 1)
             # Move to the next month.  If we're at the end of the year, wrap around
@@ -201,6 +203,8 @@ def months_between(start_date, end_date):                   #method to get month
                 year += 1
             else:
                 month += 1
+			counter += 1
+			return counter
 
 #------------------------- getting work days per month per person ------------------------
 @st.cache
@@ -412,17 +416,6 @@ def manual_update():
     db.commit()
     db.close
 
-
-def test():    
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
-
-    cursor.execute("select * from monthly_coffees")
-    print(cursor.fetchall())
-
-#test()
 
 #calc_polynomial_functional(get_members(), get_months(datetime.date(2020,11,1))[1])
 
