@@ -42,7 +42,7 @@ def write_simple_data():
 		cursor.execute("insert into simple_data (parameter) values ('months')")
 		cursor.execute("insert into simple_data (parameter) values ('breaks')")
 		cursor.execute("insert into simple_data (parameter) values ('cups')")
-		cursor.execute("insert into simple_data (parameter) values ('data_sets', 9000)")
+		cursor.execute("insert into simple_data (parameter, value) values ('data_sets', 9000)")
 		cursor.execute("insert into simple_data (parameter, value) values ('diagrams', 22)")
 	
 	coffees = get_monthly_coffees()
