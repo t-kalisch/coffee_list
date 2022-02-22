@@ -354,7 +354,7 @@ def get_all_holidays():
 		temp=[]
 		for j in range(len(tmp[i])-1):
 			if tmp[i][j+1] == None:
-				temp.append(None)
+				temp.append(0)
 			else:
 				temp.append(tmp[i][j+1])
 		holidays.append(temp)
