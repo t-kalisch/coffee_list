@@ -52,8 +52,6 @@ def get_monthly_coffees(names, month_id):
 			total += tmp[j][i+2]
 		monthly_coffees.append(temp)
 		total_monthly_coffees.append(total)
-	st.write(monthly_coffees)
-	st.write(total_monthly_coffees)
 	
 	return monthly_coffees
 
