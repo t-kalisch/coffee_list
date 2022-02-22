@@ -152,10 +152,10 @@ if logged_in == "true":
         st.subheader("**:calendar:** Enter holidays")
         if admin_status == "1":
             col1, col2, col3, col4 = st.columns([0.5,1,1,1])
-            m_admin = col1.text_input("Month", placeholder=datetime.date.today().month)
-            y_admin = col2.text_input("Year", placeholder=datetime.date.today().year)
+            month = col1.text_input("Month", placeholder=datetime.date.today().month)
+            year = col2.text_input("Year", placeholder=datetime.date.today().year)
             person_hol = col3.text_input("Person", placeholder = "User")
-            holidays_admin = col4.text_input("Number of holidays", placeholder=0)
+            holidays = col4.text_input("Number of holidays", placeholder=0)
             if person_hol == "":
                 sub_hol = st.button("Submit holidays", help="Submit holidays for yourself")
                 if sub_hol:
