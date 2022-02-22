@@ -226,6 +226,23 @@ def submit_holidays(name, month_inp, year_inp, days_inp):
 
     db.commit()
 
+    #------------------- Changing a user's profile data --------------------------------------
+def change_profile_data(user_old, user, user_pw, admin_status):
+	if user != "":
+		#cursor.execute("update members set name = "+user+" where name = "+user_old)
+		#cursor.execute("RENAME TABLE mbr_"+user_old.upper()+" TO mbr_"+user.upper())
+		user_old = user
+	if user_pw != "":
+		cursor.execute("update members set password = "+user_pw+" where name = "+user_old)
+	if admin_status != "":
+		if admin_status == "User":
+			cursor.execute("update members set admin = null where name = "+user_old)
+		elif admin_status == "Admin":
+			cursor.execute("update members set admin = 1 where name = "+user_old)
+
+
+
+
     #------------------- deleting the whole database --------------------------------------
 def clear_database():
     db = mysql.connect(user='PBTK', password='akstr!admin2',
