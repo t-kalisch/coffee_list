@@ -121,7 +121,7 @@ def get_prizes():
 	return prizes
 
 def test_server_db():
-    db = mysql.connect(user='root', password='4aZq5A4Di!',
+    db = mysql.connect(user='PBTK', password='akstr!admin2',
                         host='212.227.72.95',
                         database='coffee_list')
     cursor.db.cursor(buffered=True)
