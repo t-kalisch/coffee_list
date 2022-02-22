@@ -14,7 +14,7 @@ db = mysql.connect(user='PBTK', password='akstr!admin2',
 cursor=db.cursor(buffered=True)
 
 
-@st.cache
+
 def get_user_data():
 	#db = mysql.connect(user='PBTK', password='akstr!admin2',
         #                host='212.227.72.95',
