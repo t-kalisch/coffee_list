@@ -255,12 +255,11 @@ if logged_in == "true":
         admin_pw = col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
         confirm = col1.button("Confirm")
         if confirm:
-            st.write(status_str)
-            st.write(user_status)
             if status_str == user_status:
                 change_status = ""
             else:
                 change_status = user_status
+            st.write(change_status)
             done=False
             for i in range(len(user_data)):
                 if st.session_state.user_name == user_data[i][0] and admin_pw == user_data[i][1]:
