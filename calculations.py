@@ -69,15 +69,6 @@ def get_names():
 	return names
 
 @st.cache
-def get_months():
-	months = ["Nov '20","Dec '20", "Jan '21", "Feb '21", "Mar '21", "Apr '21", "May '21", "Jun '21", "Jul '21", "Aug '21", "Sep '21", "Oct '21", "Nov '21", "Dec '21", "Jan '22"]
-	month_id = ['202011', '202012', '202101', '202102', '202103', '202104', '202105', '202106', '202107', '202108', '202109', '202110', '202111', '202112', '202201']
-	months_total=[]
-	months_total.append(months)
-	months_total.append(month_id)
-	return months_total
-
-@st.cache
 def get_cumulated_coffees():
 	cumulated_coffees = [[19,28,44,63,92,121,153,183,197,238,277,312,349,372,372],[15,21,27,47,75,95,119,144,173,195,227,261,296,314,314],[13,19,31,47,72,107,135,172,203,230,266,294,315,328,328],[10,13,20,32,59,96,133,148,170,214,224,230,235,242,242],[18,19,37,58,92,127,162,188,209,252,294,324,360,382,382],[0,0,0,0,19,47,70,79,85,101,123,140,166,183,183],[0,0,0,0,0,12,30,38,43,56,58,58,58,58,58],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,3,3,3]]
 	return cumulated_coffees
@@ -137,7 +128,30 @@ def get_prizes():
 	prizes = [['202103', 4, 'Kaffeemeister', 40], ['202103', 2, 'Hotshot', 25], ['202103', 4, 'Genosse', 10], ['202104', 3, 'Kaffeemeister', 40], ['202104', 1, 'Hotshot', 25], ['202104', 4, 'Genosse', 10], ['202105', 3, 'Kaffeemeister', 40], ['202105', 1, 'Hotshot', 25], ['202105', 3, 'Genosse', 10], ['202106', 2, 'Kaffeemeister', 40], ['202106', 3, 'Hotshot', 25], ['202106', 0, 'Genosse', 10], ['202107', 2, 'Kaffeemeister', 40], ['202107', 4, 'Hotshot', 25], ['202107', 1, 'Genosse', 10], ['202108', 3, 'Kaffeemeister', 40], ['202108', 5, 'Hotshot', 25], ['202108', 0, 'Genosse', 10], ['202109', 4, 'Kaffeemeister', 40], ['202109', 5, 'Hotshot', 25], ['202109', 4, 'Genosse', 10], ['202110', 0, 'Kaffeemeister', 40], ['202110', 0, 'Hotshot', 25], ['202110', 0, 'Genosse', 10], ['202111', 0, 'Kaffeemeister', 40], ['202111', 3, 'Hotshot', 25], ['202111', 0, 'Genosse', 10], ['202112', 0, 'Kaffeemeister', 40], ['202112', 1, 'Hotshot', 25], ['202112', 4, 'Genosse', 10], ['202201', 1, 'Kaffeemeister', 40], ['202201', 5, 'Hotshot', 25], ['202201', 0, 'Genosse', 10]]
 	return prizes
 
+
+#----------------------------------------- getting all members from database ---------------------------------------
+@st.cache
+def get_members():
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    names=[]
+
+    cursor.execute("select name from members")              #getting all members tables
+    mbrs=cursor.fetchall()
+    mbrs=list(mbrs)
+    for i in range(len(mbrs)):
+        names.append(mbrs[i][0])
+    db.close()
+    return names
+
+
+
+
 #----------------------------- getting all months from start date to now ---------------------------------
+@st.cache
 def get_months(first_date):
     db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
     host='212.227.72.95',
@@ -165,7 +179,7 @@ def get_months(first_date):
     db.close()
     return month_info
     
-    
+@st.cache
 def months_between(start_date, end_date):                   #method to get months between two dates
     if start_date > end_date:
         raise ValueError(f"Start date {start_date} is not before end date {end_date}")
@@ -189,6 +203,7 @@ def months_between(start_date, end_date):                   #method to get month
                 month += 1
 
 #------------------------- getting work days per month per person ------------------------
+@st.cache
 def get_work_days(names, month_id):
     db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
     host='212.227.72.95',
@@ -210,6 +225,7 @@ def get_work_days(names, month_id):
     return workdays
 
 #------------------------ getting functionals from database ------------------
+@st.cache
 def get_functionals():
     db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
     host='212.227.72.95',
