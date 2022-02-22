@@ -282,14 +282,15 @@ if logged_in == "true":
         last_breaks=get_last_breaks(last_break)
         
         col1,col2,col3 = st.columns([1,0.5,3])
-        col1.text_input("Extended ID of break", placeholder=last_breaks[len(last_breaks)-1][0])
-        col1.button("Delete break")
+        del_id = col1.text_input("Extended ID of break", placeholder=last_breaks[len(last_breaks)-1][0])
+        delete = col1.button("Delete break")
         columns=['Extended ID','Date','Drinkers','Coffees']
         df=pd.DataFrame(last_breaks,columns=columns)
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
         
-        
+        if delete:
+            clear_one_break(del_id)
     
     
 
