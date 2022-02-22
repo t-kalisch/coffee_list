@@ -239,6 +239,7 @@ def change_profile_data(user_old, user, user_pw, admin_status):
 			cursor.execute("update members set admin = null where name = "+user_old)
 		elif admin_status == "Admin":
 			cursor.execute("update members set admin = 1 where name = "+user_old)
+	st.success("The selected profile data have successfully been changed")
 
 
 
