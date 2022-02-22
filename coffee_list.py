@@ -1,22 +1,16 @@
 from collections import namedtuple
-#import altair as alt
 import math
 import pandas as pd
 import streamlit as st
 import numpy as npy
-#import matplotlib.pyplot as plt
 import datetime
 from datetime import date
 import plotly
-#import plotly.graph_objects as go
 import plotly.express as px
-#import streamlit_echarts as echarts
 import mysql.connector as mysql
 import extra_streamlit_components as stx
 from data_collection import *
 from calculations import *
-#from cookie_manager import *
-#import change_password
 
 
 st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
