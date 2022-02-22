@@ -179,50 +179,18 @@ def user_pw_database_search(sfycheck_fld,user_inp,pw_inp,status):
         return
             
     #---------------------- deleting a break by knowing id_ext ----------------
-def clear_ONE_break():
-    input_fld = Tk()
-    input_fld.geometry("600x100")
-    input_fld.title("Deleting a break from the databank")
-    frame_ifld = LabelFrame(input_fld, width= 600, height=100, bd = 0)
-    frame_ifld.place (x=0, y= 30)
-    header_ifld=Label(input_fld, text="Please enter the coffee break ID you want to delete:", fg="red", font=("Helvetica", 14))
-    header_ifld.place(x=70, y = 10)
-    id_inp=ttk.Entry(frame_ifld, text="", width=20)
-    id_inp.place(x=220, y = 30)
-    conf_delete_break=ttk.Button(frame_ifld, text="Delete this break", command=lambda: conf_break_delete(input_fld,id_inp) )
-    conf_delete_break.place(x=350, y=28)
-    input_fld.bind('<Return>', (lambda event: conf_break_delete(input_fld,id_inp)))
-        
-def conf_break_delete(input_fld,id_inp):
-    #print(str(id_inp.get()).upper())
-    del_ID=[]
-    del_ID.append(str(id_inp.get()).upper())
-    del_ID=str(del_ID[0])
-    print("Coffee break deleted: "+del_ID)
+def clear_one_break(del_id):
 
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-                              host='127.0.0.1',
-                              database='coffee_list')
-    cursor=db.cursor(buffered=True)
-    
-    cursor.execute("use coffee_list")
-    cursor.execute("SELECT * FROM breaks WHERE id_ext='"+del_ID+"'")
-    del_break=""
+    cursor.execute("SELECT * FROM breaks WHERE id_ext='"+del_id+"'")
     del_break=cursor.fetchall()
-    #print(del_break)
-    
+
     if del_break != []:
         cursor.execute("DELETE FROM breaks WHERE id_ext='"+del_ID+"'")
-
-        input_fld.destroy()
-        messagebox.showinfo("Deletion status", "This break has successfully been deleted.")
-             
+        st.success("Break "+del_id+" has successfully been deleted.")
     else:
-        input_fld.destroy()
-        messagebox.showinfo("Deletion status", "This break does not exist, therefore nothing was deleted.")
-    
+        st.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
+		
     db.commit()
-    db.close
 
 #----------------------- holiday input ----------------------------------------
 def submit_holidays(name, month_inp, year_inp, days_inp):
