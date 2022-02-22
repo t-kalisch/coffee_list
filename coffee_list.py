@@ -169,7 +169,7 @@ if logged_in == "true":
             st.write("-" * 34)
             
             
-            all_holidays = get_all_holidays(names, month_id)
+            all_holidays = get_all_holidays()
             st.write(all_holidays)
             df=pd.DataFrame(last_breaks,columns=columns)
             st.markdown("All holidays")
