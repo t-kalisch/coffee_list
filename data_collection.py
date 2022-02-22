@@ -227,7 +227,7 @@ def conf_break_delete(input_fld,id_inp):
 #----------------------- holiday input ----------------------------------------
 def submit_holidays(name, month_inp, year_inp, days_inp):
     cursor.execute("create table if not exists holidays (id int auto_increment, month int, work_days int, primary key(id))")            #creating holidays table
-    st.write(int(days_inp))
+    
     if int(month_inp) > 12 or int(year_inp) < 2020:
         st.warning("Invalid date: The date you entered does not exist or lies before the age of the coffee list!")
     else:
@@ -250,7 +250,7 @@ def submit_holidays(name, month_inp, year_inp, days_inp):
 
         cursor.execute("select "+name.upper()+" from holidays where month = "+str(month_id))
         tmp=cursor.fetchall()
-        cursor.execute("update holidays set "+name.upper()+" = "+str(int(days_inp)+tmp[0][0])+" where month like "+str(month_id))
+        cursor.execute("update holidays set "+name.upper()+" = "+str(int(days_inp)+int(tmp[0][0]))+" where month like "+str(month_id))
         messagebox.showinfo("Holidays saved", "Your holidays have successfully been saved.")
 
     db.commit()
