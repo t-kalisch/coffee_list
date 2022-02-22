@@ -264,7 +264,7 @@ if logged_in == "true":
         columns=['Extended ID','Date','Drinkers','Coffees']
         df=pd.DataFrame(last_breaks,columns=columns)
         col3.markdown("Last 10 breaks")
-        col3.dataframe(df, width=600, height=500)
+        col3.dataframe(df, use_container_width=True)#width=600, height=500)
         
         
     
