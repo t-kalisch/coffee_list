@@ -43,10 +43,7 @@ total_coffees=get_total_coffees()
 corr_tot=get_corr()
 perc_p_m=get_perc_p_m()
 perc_tot=get_perc_tot()
-names = get_members()
-month_info=get_months(datetime.date(2021,3,8))
-months=month_info[0]
-month_id=month_info[1]
+
 cumulated_coffees1=[]
 cumulated_coffees=get_cumulated_coffees()
 weeks=get_weeks()
@@ -338,6 +335,13 @@ with st.sidebar:
 
 
 if logged_in == "true" and profile_nav == "Show diagrams":
+    
+    names = get_members()
+    month_info=get_months(datetime.date(2021,3,8))
+    months=month_info[0]
+    month_id=month_info[1]
+    
+    
     st.write("-" * 34)
     #-------------------------------------------------------------------------------------------------------------- coffee prize history (scatter + bar chart)
     if prizes:
