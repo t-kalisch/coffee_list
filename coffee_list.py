@@ -148,7 +148,7 @@ if logged_in == "true":
     if logout:
         logout_check()
 else:
-    st.title("Welcome to the future of coffee drinking")
+    st.title("Welcome to the future of coffee drinking **:coffee:**")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
     if login:
