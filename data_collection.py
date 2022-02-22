@@ -2,9 +2,6 @@ import math
 import re
 import mysql.connector as mysql
 #import csv
-#from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
 from calculations import *
 
 
