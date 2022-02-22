@@ -8,20 +8,24 @@ import pandas as pd
 from plotly import *
 import plotly.express as px
 
-
+db = mysql.connect(user='PBTK', password='akstr!admin2',
+		host='212.227.72.95',
+		database='coffee_list')
+cursor=db.cursor(buffered=True)
 
 
 @st.cache
 def get_user_data():
-	db = mysql.connect(user='PBTK', password='akstr!admin2',
-                        host='212.227.72.95',
-                        database='coffee_list')
-	cursor=db.cursor(buffered=True)
+	#db = mysql.connect(user='PBTK', password='akstr!admin2',
+        #                host='212.227.72.95',
+        #                database='coffee_list')
+	#cursor=db.cursor(buffered=True)
 	
 	cursor.execute("select name, password, admin from members")
-	tmp=cursor.fetchall()
+	user_data=cursor.fetchall()
 	#user_data=[['TK', 'akstr!admin2',1],['PB','akstr!admin2',1],['NV',None,None],['DB',None,None],['FLG','baddragon',None],['SHK',None,None],['TB',None,None],['TT',None,None],['RS',None,None]]
-	return tmp
+	#db.close()
+	return user_data
 
 @st.cache
 def get_simple_data():
@@ -35,7 +39,9 @@ def get_monthly_coffees_total():
 
 @st.cache
 def get_monthly_coffees():
-	monthly_coffees = [[19, 9, 16, 19, 29, 31, 32, 30, 14, 41, 39, 34, 37, 24, 10], [15, 6, 6, 20, 29, 20, 24, 25, 29, 22, 32, 30, 35, 18, 12], [13, 6, 12, 16, 25, 35, 28, 37, 31, 27, 36, 30, 22, 14, 0], [10, 3, 7, 12, 27, 36, 37, 15, 22, 44, 10, 6, 4, 7, 1], [18, 1, 18, 21, 34, 35, 35, 26, 21, 43, 43, 27, 36, 22, 9], [0, 0, 0, 0, 19, 27, 23, 9, 5, 16, 22, 17, 26, 17, 0], [0, 0, 0, 0, 0, 12, 18, 8, 5, 13, 2, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0]]
+	cursor.execute("select * from monthly_coffees")
+	monthly_coffees=cursor.fetchall()
+	#monthly_coffees = [[19, 9, 16, 19, 29, 31, 32, 30, 14, 41, 39, 34, 37, 24, 10], [15, 6, 6, 20, 29, 20, 24, 25, 29, 22, 32, 30, 35, 18, 12], [13, 6, 12, 16, 25, 35, 28, 37, 31, 27, 36, 30, 22, 14, 0], [10, 3, 7, 12, 27, 36, 37, 15, 22, 44, 10, 6, 4, 7, 1], [18, 1, 18, 21, 34, 35, 35, 26, 21, 43, 43, 27, 36, 22, 9], [0, 0, 0, 0, 19, 27, 23, 9, 5, 16, 22, 17, 26, 17, 0], [0, 0, 0, 0, 0, 12, 18, 8, 5, 13, 2, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0]]
 	return monthly_coffees
 
 @st.cache
