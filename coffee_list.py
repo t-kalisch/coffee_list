@@ -233,25 +233,37 @@ if logged_in == "true":
         st.markdown("You can enter a new username and password for a member, or change their member status.")
         col1,col2,col3 = st.columns([0.5,1,0.7])
         change_user = col1.text_input("User", placeholder = "Username")
-        col2.text_input("New username", placeholder = "Username")
-        col2.text_input("New password", type = "password", placeholder = "Password")
+        username_new = col2.text_input("New username", placeholder = "Username")
+        pw_new = col2.text_input("New password", type = "password", placeholder = "Password")
         status=-1
         if change_user != "":
             for i in range(len(user_data)):
                 if user_data[i][0] == change_user:
                     if user_data[i][2] == 1:
                         status=1
+                        status_str="Admin"
                     else:
                         status=0
+                        status_str="User"
         col1,col2 = st.columns([0.5,1.7])
         if status == -1:
-            col1.selectbox ("Change member status", (""), 0)
+            user_status = col1.selectbox ("Change member status", (""), 0)
         else: 
-            col1.selectbox ("Change member status", ("User", "Admin"), status)
+            user_status = col1.selectbox ("Change member status", ("User", "Admin"), status)
         st.write("-" * 34)
         col1,col2 = st.columns([0.5,0.5])
-        col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
-        col1.button("Confirm")       
+        admin_pw = col1.text_input("Please enter your password to confirm", type = 'password', placeholder = "Password")
+        confirm = col1.button("Confirm")
+        if confirm:
+            if status_str == user_status:
+                change_status = ""
+            else:
+                change_status = user_status
+            for i in range(len(user_data)):
+                if st.session_state.user_name == user_data[i][0] and admin_pw == user_data[i][1]:
+                    change_profile_data(change_user, username_new, pw_new, change_status)
+                else:
+                    st.warning("Incorrect password")
 
     if profile_nav == "Submit coffee break":                                        # Submit break page
         st.subheader("**:coffee:** Submit a coffee break")
