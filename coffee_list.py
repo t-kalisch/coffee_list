@@ -167,8 +167,8 @@ if logged_in == "true":
             st.write("-" * 34)
             st.subheader("Enter holidays for another person")
             col1, col2, col3, col4 = st.columns([0.5,1,1,1])
-            m_admin = col1.text_input("Month")
-            y_admin = col2.text_input("Year")
+            m_admin = col1.text_input("Month", key="m_ad")
+            y_admin = col2.text_input("Year", key="y_ad")
             holidays_admin = col3.date_input("Holidays", [])
             person_hol = col4.text_input("Person", placeholder = "User")
             if person_hol == "":
