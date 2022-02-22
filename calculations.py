@@ -8,7 +8,7 @@ def get_user_data():
                         database='coffee_list')
 	cursor=db.cursor(buffered=True)
 	
-	cursor.execute("select (name,password,admin) from members")
+	cursor.execute("select name, password, admin from members")
 	tmp=cursor.fetchall()
 	#user_data=[['TK', 'akstr!admin2',1],['PB','akstr!admin2',1],['NV',None,None],['DB',None,None],['FLG','baddragon',None],['SHK',None,None],['TB',None,None],['TT',None,None],['RS',None,None]]
 	return tmp
