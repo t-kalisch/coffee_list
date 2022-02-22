@@ -154,18 +154,7 @@ if logged_in == "true":
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
         st.subheader("**:calendar:** Enter holidays")
-        col1, col2, col3 = st.columns([0.5,1,2])
-        #holidays = col1.date_input("Please enter your holidays", [])
-        month = col1.text_input("Month", placeholder=datetime.date.today().month)
-        year = col2.text_input("Year", placeholder=datetime.date.today().year)
-        holidays = col3.text_input("Number of holidays", placeholder=0)
-        #col2.write(". ")
-        sub_hol = col1.button("Submit", help="Submit holidays")
-        if sub_hol:
-            submit_holidays(st.session_state.user_name, month, year, holidays)
         if admin_status == "1":
-            st.write("-" * 34)
-            st.subheader("Enter holidays for another person")
             col1, col2, col3, col4 = st.columns([0.5,1,1,1])
             m_admin = col1.text_input("Month", key="m_ad", placeholder=datetime.date.today().month)
             y_admin = col2.text_input("Year", key="y_ad", placeholder=datetime.date.today().year)
@@ -176,6 +165,15 @@ if logged_in == "true":
             else:
                 sub_hol_ad = st.button("Submit holidays", help="Submit holidays for "+person_hol)
             if sub_hol_ad:
+                submit_holidays(st.session_state.user_name, month, year, holidays)
+                
+        else:
+            col1, col2, col3 = st.columns([0.5,1,2])
+            month = col1.text_input("Month", placeholder=datetime.date.today().month)
+            year = col2.text_input("Year", placeholder=datetime.date.today().year)
+            holidays = col3.text_input("Number of holidays", placeholder=0)
+            sub_hol = col1.button("Submit", help="Submit holidays")
+            if sub_hol:
                 submit_holidays(st.session_state.user_name, month, year, holidays)
         
     if profile_nav == "Change username":                                            # Change username page
