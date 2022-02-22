@@ -344,7 +344,7 @@ def calc_mad_corr(names, month_id, func):
     
     return round(mad_corr,2)
 
-#--------------------------- getting all holidays ----------------
+#--------------------------- getting all holidays ------------------------------
 def get_all_holidays():
 	cursor.execute("select * from holidays")
 	tmp=cursor.fetchall()
@@ -353,7 +353,10 @@ def get_all_holidays():
 	for i in range(len(tmp)):
 		temp=[]
 		for j in range(len(tmp[i])-1):
-			temp.append(tmp[i][j+1])
+			if tmp[i][j+1] == None:
+				temp.append(0)
+			else:
+				temp.append(tmp[i][j+1])
 		holidays.append(temp)
    
 	return holidays
