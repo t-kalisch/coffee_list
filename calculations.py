@@ -48,22 +48,23 @@ def write_simple_data():
 
 	names = get_members()
 	month_id = get_months(datetime.date(2020,11,1))[1]
-	coffees = get_monthly_coffees(names, month_id)
+	coffees = get_monthly_coffees(names, month_id)								#calculating simple data from different tables
 	acr_dr = 0
 	cursor.execute("select count(*) from breaks")
 	breaks = cursor.fetchall()
 	cups = 0
 	for i in range(len(names)):
-		for j in range(len(months)):
+		for j in range(len(month_id)):
 			cups += coffees[i][j]
-		if coffees[i][len(months)-3] != 0 and coffees[i][len(months)-2] != 0:
+		if coffees[i][len(month_id)-3] != 0 and coffees[i][len(month_id)-2] != 0:
 			act_dr += 1
 
-	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")
+	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")	#updating simple_data table
 	cursor.execute("update simple_data set value = "+str(act_dr)+" where parameter = 'acr_dr'")
-	cursor.execute("update simple_data set value = "+str(len(months))+" where parameter = 'months'")
+	cursor.execute("update simple_data set value = "+str(len(month_id))+" where parameter = 'months'")
 	cursor.execute("update simple_data set value = "+str(breaks[0][0])+" where parameter = 'breaks'")
 	cursor.execute("update simple_data set value = "+str(cups)+" where parameter = 'cups'")
+	db.commit()
 	return simple_data
 
 
