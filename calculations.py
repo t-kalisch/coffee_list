@@ -36,7 +36,8 @@ def get_simple_data():
 def write_simple_data():
 	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value int, primary key(id))")
 	cursor.execute("select * from simple_data")
-	if cursor.fetchall()[0][0] == []:
+	tmp = cursor.fetchall()
+	if tmp == []:
 		cursor.execute("insert into simple data (parameter) values (drinkers)")
 		cursor.execute("insert into simple data (parameter) values (act_dr)")
 		cursor.execute("insert into simple data (parameter) values (months)")
