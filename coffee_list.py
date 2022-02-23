@@ -456,6 +456,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
             temp1.append(total_coffees[i])
             temp.append(temp1)
         df = pd.DataFrame(temp, columns={"names","total"}, index=names)              #total coffees pie chart
+        st.write(df)
         fig3 = go.Figure(go.Pie(labels = names, values = total_coffees, sort=False, hole=.4))
         fig3.update_layout(title_font_size=24)
         col1.plotly_chart(fig3, use_container_width=True)
@@ -465,20 +466,10 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col2.subheader("Monthly ratios")
 
         monthly_ratios=get_monthly_ratio(names, month_id_all)
-        st.write(monthly_ratios)
+
         months_inv=[]
-        temp=[]
         for i in range(len(months_all)):
           months_inv.append(months_all[len(months_all)-i-1])
-        #  temp1=[]
-        #  temp1.append(months_all[len(months_all)-i-1])
-        #  for j in range(len(names)):
-        #     temp1.append(monthly_ratios[len(months_all)-i-1][j])
-        #  temp.append(temp1)
-        #temp2=[]
-        #temp2.append("months")
-        #for i in range(len(names)):
-        #  temp2.append(names[i])
 
         df_stack=pd.DataFrame(monthly_ratios, columns = names, index = months_inv)
         fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
