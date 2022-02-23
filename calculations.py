@@ -338,6 +338,7 @@ def get_correlation(names):
     corr_all=[]
     tot_coffees=[]
     temp = get_total_coffees(names)
+    st.write(temp)
     for i in range(len(names)):
         tot_coffees.append(temp[i][1])
 
