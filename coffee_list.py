@@ -466,12 +466,12 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 
         months_inv=[]
         temp=[]
-        for i in range(len(months)):
-          months_inv.append(months[len(months)-i-1])
+        for i in range(len(months_all)):
+          months_inv.append(months_all[len(months_all)-i-1])
           temp1=[]
-          temp1.append(months[len(months)-i-1])
+          temp1.append(months[len(months_all)-i-1])
           for j in range(len(names)):
-             temp1.append(monthly_ratios[j][len(months)-i-1])
+             temp1.append(monthly_ratios[j][len(months_all)-i-1])
           temp.append(temp1)
         temp2=[]
         temp2.append("months")
