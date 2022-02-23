@@ -1,7 +1,8 @@
+import streamlit as st
+st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
 from collections import namedtuple
 import math
 import pandas as pd
-import streamlit as st
 import numpy as npy
 import datetime
 from datetime import date
@@ -11,9 +12,6 @@ import mysql.connector as mysql
 import extra_streamlit_components as stx
 from data_collection import *
 from calculations import *
-
-
-st.set_page_config(page_title="Coffee list",page_icon="chart_with_upwards_trend",layout="wide")
 
 @st.cache(allow_output_mutation=True)
 def get_manager():
