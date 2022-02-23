@@ -448,7 +448,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col1.subheader("Total coffees")
 
         total_coffees = get_total_coffees(names)
-        st.write(total_coffees)
+        
         temp=[]
         for i in range(len(total_coffees)):
             temp1=[]
@@ -469,7 +469,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         for i in range(len(months_all)):
           months_inv.append(months_all[len(months_all)-i-1])
           temp1=[]
-          temp1.append(months[len(months_all)-i-1])
+          temp1.append(months_all[len(months_all)-i-1])
           for j in range(len(names)):
              temp1.append(monthly_ratios[j][len(months_all)-i-1])
           temp.append(temp1)
