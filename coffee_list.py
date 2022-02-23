@@ -585,20 +585,18 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Percentages of breaks")
         col5,col6 = st.columns([2,1])
 
-        perc_p_m=get_perc_breaks(names, month_id_dly)
-        #perc_tot=get_tot_br_p_m(month_id_dly)
-        st.write(perc_p_m)
-        df = pd.DataFrame(perc_p_m, columns=names, index=months_dly)
+        percentages=get_perc_breaks(names, month_id_dly)
+        percentage_total=percentages[0]
+        percentage=[]
+        for i in range(len(percentages)-1):
+            percentage.append(percentages[i+1])
+        
+        df = pd.DataFrame(percentage, columns=names, index=months_dly)
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig7.update_traces(hovertemplate='%{x}<br>%{y} %')
         col5.plotly_chart(fig7, use_container_width=True)
 
-        percentage_total=[]                                                                     # total percentages
-        for i in range(len(names)):
-            temp=[]
-            temp.append(round(perc_tot[i],1))
-            percentage_total.append(temp)
         df = pd.DataFrame(percentage_total, columns={'percentage'}, index=names)
 
         fig8 = px.bar(df, x='percentage', y=names, title="Total percentages of breaks", labels={"y":"", "count":"Percentage", "variable":"drinkers"}, text='percentage', text_auto=True, orientation='h')
