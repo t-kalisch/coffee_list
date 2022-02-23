@@ -162,12 +162,55 @@ def get_total_coffees(names):
     return coffees
 
 
+#-------------------------- writing total coffees into database
+def write_total_coffees(names):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
 
-@st.cache
-def get_monthly_ratios():
-	monthly_ratios = [[25.33,36.0,27.12,21.59,17.9,14.8,16.24,20.0,10.94,19.9,21.31,23.33,23.13,23.0,100],[20.0,24.0,10.17,22.73,17.28,10.2,12.18,16.67,22.66,10.68,17.49,22.67,21.88,18.0,0],[17.33,24.0,20.34,18.18,15.43,17.86,14.21,24.67,24.22,13.11,19.67,18.67,13.13,13.0,0],[13.33,12.0,11.86,13.64,16.67,18.88,18.78,10.0,17.19,21.36,5.46,4.0,3.13,7.0,0],[24.0,4.0,30.51,23.86,20.99,17.86,17.77,17.33,16.41,20.87,22.95,20.0,22.5,22.0,0],[0.0,0.0,0.0,0.0,11.73,14.29,11.68,6.0,4.69,7.77,12.02,11.33,16.25,17.0,0],[0.0,0.0,0.0,0.0,0.0,6.12,9.14,5.33,3.91,6.31,1.09,0.0,0.0,0.0,0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0]]
-	return monthly_ratios
 
+    cursor.execute("create table if not exists total_coffees (id int auto_increment, name varchar(3), coffees int, primary key(id))")
+    for i in range(len(names)):
+        cursor.execute("select count(*) from total_coffees where name like '"+names[i]+"'")     #does the name alreaedy exists?
+        tmp = cursor.fetchall()
+
+        if tmp[0][0] == 0:
+            cursor.execute("insert into total_coffees (name) values ('"+names[i]+"')")           #creating name if it doesn't exist
+
+        total=0
+        cursor.execute("select n_coffees from mbr_"+names[i])       #getting new data if update status not up to date
+        tmp=cursor.fetchall()
+        total=0
+        for j in range(len(tmp)):
+            total=total+tmp[j][0]
+        if i < 6:
+            cursor.execute("select "+names[i]+" from old_breaks")       #inserting old coffees from before March 8, 2021
+            tmp = cursor.fetchall()
+
+            for j in range(len(tmp)):
+                total=total+tmp[j][0]
+
+        cursor.execute("update total_coffees set coffees = "+str(total)+" where name = '"+names[i]+"'")
+
+    db.commit()
+
+
+
+#--------------------------- calculating monthly ratios from database -----------------------------
+def get_monthly_ratio(names, month_id):
+    
+    monthly_ratio=[]
+    monthly_coffees = get_monthly_coffees(names, month_id)
+    
+    for i in range(len(month_id)):
+        temp=[]
+        for j in range(len(names)):
+            ratio=100*monthly_coffees[0][i][j]/monthly_coffees[1][i]
+            temp.append(ratio)
+        monthly_ratio.append(temp)
+
+    return monthly_ratio
 
 @st.cache
 def get_corr():
