@@ -51,7 +51,7 @@ def write_simple_data():
 		cursor.execute("insert into simple_data (parameter) values ('breaks')")
 		cursor.execute("insert into simple_data (parameter) values ('cups')")
 		cursor.execute("insert into simple_data (parameter, value) values ('data_sets', 9000)")
-		cursor.execute("insert into simple_data (parameter, value) values ('diagrams', 22)")
+		cursor.execute("insert into simple_data (parameter, value) values ('diagrams', 18)")
 	
 	names = get_members()
 	month_id = get_months(datetime.date(2020,11,1))[1]
@@ -68,11 +68,13 @@ def write_simple_data():
 		if coffees[0][len(month_id)-3][i] != 0 and coffees[0][len(month_id)-2][i] != 0:
 			act_dr += 1
 			st.write(act_dr)
+	data_sets = len(names)*8+12
 	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")	#updating simple_data table
 	cursor.execute("update simple_data set value = "+str(act_dr)+" where parameter = 'acr_dr'")
 	cursor.execute("update simple_data set value = "+str(len(month_id))+" where parameter = 'months'")
 	cursor.execute("update simple_data set value = "+str(breaks[0][0])+" where parameter = 'breaks'")
 	cursor.execute("update simple_data set value = "+str(cups)+" where parameter = 'cups'")
+	cursor.execute("update simple_data set value = "+str(data_sets)+" where parameter = 'data_sets'")
 	db.commit()
 
 
