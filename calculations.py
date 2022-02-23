@@ -69,7 +69,7 @@ def write_simple_data():
 	db.commit()
 
 
-
+#----------------------------------------- getting monthly coffees from database --------------------------------------
 def get_monthly_coffees(names, month_id):
 	cursor.execute("select * from monthly_coffees")
 	tmp=cursor.fetchall()
@@ -713,7 +713,7 @@ def holiday_corrections(names, month_id):
 
 
 def get_cumulated_coffees(names, month_id):
-    all_coffees=get_monthly_coffees(names, month_id)         #getting monthly coffees
+    all_coffees=get_monthly_coffees(names, month_id)[0]         #getting monthly coffees
 
     coffees_cumulated=[]
 
