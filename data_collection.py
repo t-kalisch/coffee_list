@@ -24,7 +24,7 @@ def clear_one_break(del_id):
     del_break=cursor.fetchall()
 
     if del_break != []:
-        cursor.execute("DELETE FROM breaks WHERE id_ext='"+del_ID+"'")
+        cursor.execute("DELETE FROM breaks WHERE id_ext='"+del_id+"'")
         st.success("Break "+del_id+" has successfully been deleted.")
     else:
         st.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
