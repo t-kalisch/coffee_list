@@ -18,7 +18,6 @@ cursor=db.cursor(buffered=True)
 def get_user_data():
 	cursor.execute("select name, password, admin from members")
 	user_data=cursor.fetchall()
-	st.write(user_data)
 	return user_data
 
 
