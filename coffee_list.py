@@ -611,7 +611,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Social Score")
         col7,col8 = st.columns([2,1])
     
-        socialscore_total = get_social_score()
+        socialscore_total = get_social_score(names, month_id_dly)
         total = socialscore_total[0]
         socialscore=[]
         for i in range(len(socialscore_total[1])):
