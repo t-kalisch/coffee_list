@@ -586,8 +586,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col5,col6 = st.columns([2,1])
 
         perc_p_m=get_perc_breaks(names, month_id_dly)
-        perc_tot=get_tot_br_p_m(month_id_dly)
-        st.write(perc_tot)
+        #perc_tot=get_tot_br_p_m(month_id_dly)
+        st.write(perc_p_m)
         df = pd.DataFrame(perc_p_m, columns=names, index=months_dly)
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
