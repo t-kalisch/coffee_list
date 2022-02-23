@@ -51,6 +51,7 @@ admin_status=st.session_state.admin
 #@st.cache(suppress_st_warning=True)
 def check_login(user, user_pw):                         #login check
     login_check=False
+    user_data=get_user_data()
     for i in range(len(user_data)):
         if user == user_data[i][0] and user_pw == user_data[i][1]:
             login_check = True
