@@ -465,7 +465,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col2.subheader("Monthly ratios")
 
         monthly_ratios=get_monthly_ratio(names, month_id_all)
-        
+        st.write(monthly_ratios)
         months_inv=[]
         temp=[]
         for i in range(len(months_all)):
