@@ -16,15 +16,10 @@ cursor=db.cursor(buffered=True)
 
 
 def get_user_data():
-	#db = mysql.connect(user='PBTK', password='akstr!admin2',
-        #                host='212.227.72.95',
-        #                database='coffee_list')
-	#cursor=db.cursor(buffered=True)
 	
 	cursor.execute("select name, password, admin from members")
 	user_data=cursor.fetchall()
-	#user_data=[['TK', 'akstr!admin2',1],['PB','akstr!admin2',1],['NV',None,None],['DB',None,None],['FLG','baddragon',None],['SHK',None,None],['TB',None,None],['TT',None,None],['RS',None,None]]
-	#db.close()
+
 	return user_data
 
 
@@ -63,8 +58,6 @@ def write_simple_data():
 		cups += coffees[1][i]
 	act_dr = 0
 	for i in range(len(names)):
-		st.write(coffees[0][len(month_id)-3][i])
-		st.write(coffees[0][len(month_id)-2][i])
 		if coffees[0][len(month_id)-3][i] > 0:# and coffees[0][len(month_id)-2][i] > 0:
 			act_dr += 1
 		st.write(act_dr)
