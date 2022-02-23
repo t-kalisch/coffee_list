@@ -452,7 +452,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         temp=[]
         for i in range(len(total_coffees)):
             temp1=[]
-            temp1.append(names[i])
+            temp1.append(names)
             temp1.append(total_coffees[i])
             temp.append(temp1)
         df = pd.DataFrame(temp, columns={"names","total"}, index=names)              #total coffees pie chart
