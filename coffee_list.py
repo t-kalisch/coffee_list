@@ -25,7 +25,6 @@ user_data=get_user_data()
 simple_data=get_simple_data()
 
 monthly_ratios=get_monthly_ratios()
-total_coffees=get_total_coffees()
 corr_tot=get_corr()
 perc_p_m=get_perc_p_m()
 perc_tot=get_perc_tot()
@@ -447,12 +446,14 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col1, col2 = st.columns([1,1])
         col1.subheader("Total coffees")
 
-        temp=[]
-        for i in range(len(total_coffees)):
-            temp1=[]
-            temp1.append(names[i])
-            temp1.append(total_coffees[i])
-            temp.append(temp1)
+        total_coffees = get_total_coffees(names)
+        
+        #temp=[]
+        #for i in range(len(total_coffees)):
+        #    temp1=[]
+        #    temp1.append(names[i])
+        #    temp1.append(total_coffees[i])
+        #    temp.append(temp1)
         df = pd.DataFrame(temp, columns={"names","total"}, index=names)              #total coffees pie chart
         fig3 = go.Figure(go.Pie(labels = names, values = total_coffees, sort=False, hole=.4))
         fig3.update_layout(title_font_size=24)
