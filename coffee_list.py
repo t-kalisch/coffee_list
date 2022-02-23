@@ -470,17 +470,17 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         temp=[]
         for i in range(len(months_all)):
           months_inv.append(months_all[len(months_all)-i-1])
-          temp1=[]
-          temp1.append(months_all[len(months_all)-i-1])
-          for j in range(len(names)):
-             temp1.append(monthly_ratios[j][len(months_all)-i-1])
-          temp.append(temp1)
-        temp2=[]
-        temp2.append("months")
-        for i in range(len(names)):
-          temp2.append(names[i])
+        #  temp1=[]
+        #  temp1.append(months_all[len(months_all)-i-1])
+        #  for j in range(len(names)):
+        #     temp1.append(monthly_ratios[len(months_all)-i-1][j])
+        #  temp.append(temp1)
+        #temp2=[]
+        #temp2.append("months")
+        #for i in range(len(names)):
+        #  temp2.append(names[i])
 
-        df_stack=pd.DataFrame(temp, columns = temp2, index = months_inv)
+        df_stack=pd.DataFrame(monthly_ratios, columns = names, index = months_inv)
         fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
         fig4.update_layout(title_font_size=24, showlegend=False)
         fig4.update_traces(hovertemplate='%{y}<br>%{x} %')
