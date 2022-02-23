@@ -32,8 +32,6 @@ perc_tot=get_perc_tot()
 
 cumulated_coffees1=[]
 cumulated_coffees=get_cumulated_coffees()
-weeks=get_weeks()
-coffees_breaks_weekly=get_coffee_breaks_weekly()
 all_func=get_functionals()
 act_func=get_active_func()
 
@@ -523,9 +521,22 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     if c_b_weekly:
         st.subheader("Weekly breaks and coffees")
         columns=['Breaks','Coffees']
-        df = pd.DataFrame(coffees_breaks_weekly, columns=columns, index=weeks)
-        fig3 = px.line(df, labels={"variable":"", "index":"", "value":""})
-        fig3.update_layout(hovermode='x unified', legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
+        weekly_data = get_weekly_coffees_breaks(names)
+
+        weeks=[]
+        weekly_br_c=[]
+    
+        for i in range(len(weekly_data)):
+            temp=[]
+            weeks.append(weekly_data[i][0])
+            temp.append(weekly_data[i][1])
+            temp.append(weekly_data[i][2])
+            weekly_br_c.append(temp)
+
+        df = pd.DataFrame(weekly_br_c, columns=columns, index=weeks)              #weekly coffees/breaks
+
+        fig3 = px.line(df, title="Weekly coffee breaks and coffees", labels={"variable":"", "index":"", "value":"e"})
+        fig2.update_layout(title_font_size=24, hovermode="x unified", legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig3.update_traces(hovertemplate='%{y}')
         st.plotly_chart(fig3, use_container_width=True)
 
