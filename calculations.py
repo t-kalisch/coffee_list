@@ -28,8 +28,16 @@ def get_user_data():
 	return user_data
 
 
-def get_simple_data():
-	return
+def get_simple_data():							# getting simple data from database
+	cursor.execute("select (parameters, value) from simple_data")
+	tmp=cursor.fetchall()
+	simple_data=[]
+	for i in range(len(tmp[0])):
+		temp=[]
+		temp.append(tmp[0][i])
+		temp.append(tmp[1][i])
+		simple_data.append(temp)
+	return simple_data
 	
 
 @st.cache(suppress_st_warning=True)
@@ -401,11 +409,6 @@ def get_all_holidays(timestamp):
 
 #--------------------------- checking if database is up to date ----------------
 def check_update_status():
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
-
     cursor.execute("select update_date from update_status")
     tmp = cursor.fetchall()
 
@@ -416,15 +419,9 @@ def check_update_status():
     else:
         print("Database up to date")
     
-    db.commit()
-    db.close
     
 #------------------------- updates database -------------------------------------
 def update_database(month):
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
 
     print("Recalculating ", end="", flush=True)
     cursor.execute("update update_status set update_date = curdate()")
@@ -460,15 +457,10 @@ def update_database(month):
     print("Database was successfully updated")
     
     db.commit()
-    db.close
 
 
 #------------------------- updates database -------------------------------------
 def manual_update():
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
 
     print("Recalculating ", end="", flush=True)
     cursor.execute("update update_status set update_date = curdate()")
@@ -500,7 +492,6 @@ def manual_update():
     print("Database was successfully updated")
     
     db.commit()
-    db.close
 
 
 #calc_polynomial_functional(get_members(), get_months(datetime.date(2020,11,1))[1])
