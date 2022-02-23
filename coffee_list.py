@@ -663,7 +663,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- cumulated coffees monthly (line chart)
     if coffees_cumulated:
         st.subheader("Cumulated coffees")
-
+        
+        cumulated_coffees = get_cumulated_coffees(names, month_id_all)
         df = pd.DataFrame(cumulated_coffees1, columns=names, index=months)
         
         fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
