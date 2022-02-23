@@ -712,12 +712,21 @@ def holiday_corrections(names, month_id):
     return correction_factors
 
 
+def get_cumulated_coffees(names, month_id):
+    all_coffees=get_monthly_coffees(names, month_id)         #getting monthly coffees
 
-@st.cache
-def get_cumulated_coffees():
-	cumulated_coffees = [[19,28,44,63,92,121,153,183,197,238,277,312,349,372,372],[15,21,27,47,75,95,119,144,173,195,227,261,296,314,314],[13,19,31,47,72,107,135,172,203,230,266,294,315,328,328],[10,13,20,32,59,96,133,148,170,214,224,230,235,242,242],[18,19,37,58,92,127,162,188,209,252,294,324,360,382,382],[0,0,0,0,19,47,70,79,85,101,123,140,166,183,183],[0,0,0,0,0,12,30,38,43,56,58,58,58,58,58],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,3,3,3]]
-	return cumulated_coffees
+    coffees_cumulated=[]
 
+    for i in range(len(month_id)):
+        coffees=[]
+        if i > 0:
+            for j in range(len(names)):
+                    coffees.append(coffees_cumulated[i-1][j]+all_coffees[i][j])  #adding up monthly coffees
+        else:
+            for j in range(len(names)):
+                  coffees.append(all_coffees[i][j])
+        coffees_cumulated.append(coffees)
+    return coffees_cumulated
 
 
 #@st.cache
