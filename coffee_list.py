@@ -25,9 +25,6 @@ null = None
 user_data=get_user_data()
 simple_data=get_simple_data()
 
-
-cumulated_coffees1=[]
-cumulated_coffees=get_cumulated_coffees()
 all_func=get_functionals()
 act_func=get_active_func()
 
@@ -665,7 +662,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Cumulated coffees")
         
         cumulated_coffees = get_cumulated_coffees(names, month_id_all)
-        df = pd.DataFrame(cumulated_coffees1, columns=names, index=months)
+        df = pd.DataFrame(cumulated_coffees, columns=names, index=months)
         
         fig10 = px.line(df, title="Number of coffees per month per person", labels={"variable":"", "index":"", "value":"Number of coffees"})
         fig10.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
