@@ -152,12 +152,8 @@ def get_total_coffees(names):
 
     coffees=[]
     for i in range(len(names)):
-        temp=[]
         cursor.execute("select coffees from total_coffees where name like '"+names[i]+"'")
-        tmp = cursor.fetchall()
-        temp.append(names[i])
-        temp.append(tmp[0][0])
-        coffees.append(tmp[0][0])
+        coffees.append(cursor.fetchall()[0][0])
 
     return coffees
 
