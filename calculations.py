@@ -336,11 +336,7 @@ def write_weekly_coffees_breaks(names, month_id, update):
 #--------------------------- getting correlations between drinkers ------------------------------------
 def get_correlation(names):
     corr_all=[]
-    tot_coffees=[]
-    temp = get_total_coffees(names)
-    st.write(temp)
-    for i in range(len(names)):
-        tot_coffees.append(temp[i][1])
+    tot_coffees = get_total_coffees(names)
 
     corr_abs=[]
     corr_rel=[]
