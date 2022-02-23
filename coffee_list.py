@@ -462,10 +462,12 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         monthly_ratios=get_monthly_ratio(names, month_id_all)
 
         months_inv=[]
+        monthly_ratios_inv=[]
         for i in range(len(months_all)):
-          months_inv.append(months_all[len(months_all)-i-1])
+            months_inv.append(months_all[len(months_all)-i-1])
+            monthly_ratios_inv.append(monthly_ratios[len(monthly_ratios)-i-1])
 
-        df_stack=pd.DataFrame(monthly_ratios, columns = names, index = months_inv)
+        df_stack=pd.DataFrame(monthly_ratios_inv, columns = names, index = months_inv)
         fig4 = px.bar(df_stack, x=names, y = months_inv, barmode = 'relative', labels={"y":"", "value":"Percentage", "variable":"drinker"})#, text='value', text_auto=True)
         fig4.update_layout(title_font_size=24, showlegend=False)
         fig4.update_traces(hovertemplate='%{y}<br>%{x} %')
