@@ -536,7 +536,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df = pd.DataFrame(weekly_br_c, columns=columns, index=weeks)              #weekly coffees/breaks
 
         fig3 = px.line(df, title="Weekly coffee breaks and coffees", labels={"variable":"", "index":"", "value":"e"})
-        fig2.update_layout(title_font_size=24, hovermode="x unified", legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
+        fig3.update_layout(title_font_size=24, hovermode="x unified", legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig3.update_traces(hovertemplate='%{y}')
         st.plotly_chart(fig3, use_container_width=True)
 
