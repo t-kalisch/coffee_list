@@ -448,7 +448,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col1.subheader("Total coffees")
 
         total_coffees = get_total_coffees(names)
-        
+        st.write(total_coffees)
         temp=[]
         for i in range(len(total_coffees)):
             temp1=[]
