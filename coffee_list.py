@@ -654,15 +654,15 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.plotly_chart(fig10, use_container_width=True)
       
 
-col1, col2 = st.columns([1,1])
-col1.write("Session states:")
-col1.write(logged_in)
-col1.write(logged_in_user)
-col1.write(admin_status)
-col2.write("Cookies:")
-col2.write(cookie_manager.get(cookie="logged_in"))
-col2.write(cookie_manager.get(cookie="user"))
-col2.write(cookie_manager.get(cookie="status"))
+#col1, col2 = st.columns([1,1])
+#col1.write("Session states:")
+#col1.write(logged_in)
+#col1.write(logged_in_user)
+#col1.write(admin_status)
+#col2.write("Cookies:")
+#col2.write(cookie_manager.get(cookie="logged_in"))
+#col2.write(cookie_manager.get(cookie="user"))
+#col2.write(cookie_manager.get(cookie="status"))
     
 
 #st.write("# Cookie Manager")
