@@ -306,14 +306,6 @@ if logged_in == "true":
             else:
                 st.warning("Please enter a break ID")
     
-
-for i in range(15):
-    temp=[]
-    for j in range(len(cumulated_coffees)):
-        temp.append(cumulated_coffees[j][i])
-    cumulated_coffees1.append(temp)
-
-    
 if logged_in == "true":
     if profile_nav == "Show diagrams":
         st.markdown("You now have access to the coffee list.")
