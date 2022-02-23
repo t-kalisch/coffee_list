@@ -640,11 +640,11 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Coffees per work day")
         col7,col8 = st.columns([2,1])
         
-        total_cpwd = get_coffees_per_work_day(names, month_id_dly)
+        total_cpwd = get_coffees_per_work_day(names, month_id_all)
         total = total_cpwd[0]
         coffees_per_work_day = total_cpwd[1]
         
-        df = pd.DataFrame(coffees_per_work_day, columns = names, index = months_dly)
+        df = pd.DataFrame(coffees_per_work_day, columns = names, index = months_all)
     
         fig9 = px.line(df, title="Monthly coffees per work day", labels={"variable":"", "index":"", "value":"Number of coffees"})      #plotting monthly coffees
         fig9.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
