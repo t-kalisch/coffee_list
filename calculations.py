@@ -65,7 +65,7 @@ def write_simple_data():
 	for i in range(len(names)):
 		st.write(coffees[0][len(month_id)-3][i])
 		st.write(coffees[0][len(month_id)-2][i])
-		if coffees[0][len(month_id)-3][i] != 0 and coffees[0][len(month_id)-2][i] != 0:
+		if coffees[0][len(month_id)-3][i] > 0 and coffees[0][len(month_id)-2][i] > 0:
 			act_dr += 1
 			st.write(act_dr)
 	data_sets = len(names)*8+12
