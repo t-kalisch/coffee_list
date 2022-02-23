@@ -644,7 +644,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         total = total_cpwd[0]
         coffees_per_work_day = total_cpwd[1]
         
-        df = pd.DataFrame(coffees_per_work_day, columns = names, index = months)
+        df = pd.DataFrame(coffees_per_work_day, columns = names, index = months_dly)
     
         fig9 = px.line(df, title="Monthly coffees per work day", labels={"variable":"", "index":"", "value":"Number of coffees"})      #plotting monthly coffees
         fig9.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
