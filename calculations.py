@@ -409,6 +409,79 @@ def write_correlation(names):
 
 
 
+#----------------------------- getting the percentage of total breaks per month and in total per person ------------------------
+def get_perc_breaks(names, month_id):
+    percentage=[]
+    total_percentage=[]
+    cursor.execute("select * from percentage_breaks")
+    tmp = cursor.fetchall()
+
+    for i in range(len(tmp)):
+        temp=[]
+        for j in range(len(names)):
+            temp.append(float(tmp[i][j+2]))
+        percentage.append(temp)
+
+    return percentage
+
+#---------------------------- calculating total breaks per month ---------------------------------------------
+def get_tot_br_p_m(month_id):
+    total_breaks=[]
+    for i in range(len(month_id)):
+        cursor.execute("select count(id_ext) from breaks where id_ext like '"+str(month_id[i])+"%'")
+        tmp = cursor.fetchall()
+
+        for j in range(len(tmp)):
+            total_breaks.append(tmp[j][0])
+    return total_breaks
+
+
+#----------------------------- writing the percentage of total breaks per month and in total per person ------------------------
+def write_perc_breaks(names, month_id, update):
+    tot_breaks_pm = get_tot_br_p_m(month_id)
+    #cursor.execute("drop table if exists percentage_breaks")
+    cursor.execute("create table if not exists percentage_breaks (id int auto_increment, month varchar(6), primary key(id))")
+
+    for i in range(len(names)):                                              #writing total cofees per month into coffees
+        cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='percentage_breaks' AND column_name='"+names[i]+"'") #check if name is already in table
+        tmp = cursor.fetchall()
+        if tmp[0][0] == 0:
+            cursor.execute("alter table percentage_breaks add "+names[i]+" varchar(5)")
+
+    #cursor.execute("insert into percentage_breaks (month) values ('total')")
+   
+    percentage = []
+    if update =="full":                                                                 #updating whole table
+        for i in range(len(month_id)):  #writing total cofees per month into coffees
+            cursor.execute("select count(*) from percentage_breaks where month = "+month_id[i])
+            tmp = cursor.fetchall()
+            if tmp[0][0] == 0:
+                cursor.execute("insert into percentage_breaks (month) values ("+month_id[i]+")")
+            for j in range(len(names)):
+                cursor.execute("select count(id_ext) from mbr_"+names[j]+" where id_ext like '"+str(month_id[i])+"%'")
+                tmp=cursor.fetchall()
+                cursor.execute("update percentage_breaks set "+names[j]+" = "+str(round(100*tmp[0][0]/tot_breaks_pm[i],1))+" where month like '"+str(month_id[i])+"'")
+    elif update == "simple":                                                            #updating only last two months
+        for i in range(2):  #writing total cofees per month into coffees
+            cursor.execute("select count(*) from percentage_breaks where month = "+month_id[len(month_id)-2+i])
+            tmp = cursor.fetchall()
+            if tmp[0][0] == 0:
+                cursor.execute("insert into percentage_breaks (month) values ("+month_id[len(month_id)-2+i]+")")
+            for j in range(len(names)):
+                cursor.execute("select count(id_ext) from mbr_"+names[j]+" where id_ext like '"+str(month_id[len(month_id)-2+i])+"%'")
+                tmp=cursor.fetchall()
+                cursor.execute("update percentage_breaks set "+names[j]+" = "+str(round(100*tmp[0][0]/tot_breaks_pm[len(month_id)-2+i],1))+" where month like '"+str(month_id[len(month_id)-2+i])+"'")
+
+    total_breaks = get_total_breaks(names)
+    total = total_breaks[len(total_breaks)-1]
+
+    for i in range(len(names)):
+        cursor.execute("update percentage_breaks set "+names[i]+" = "+str(round(100*total_breaks[i]/total,1))+" where month like 'total'")
+        
+    db.commit()
+
+
+
 
 @st.cache
 def get_perc_p_m():
