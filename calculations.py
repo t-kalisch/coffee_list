@@ -333,10 +333,85 @@ def write_weekly_coffees_breaks(names, month_id, update):
     db.commit()
 
 
-@st.cache
-def get_corr():
-	corr_abs = [[[0, 257, 94, 126, 272, 140, 38, 0, 3], [258, 2, 77, 93, 229, 97, 31, 0, 3], [94, 77, 163, 64, 96, 67, 22, 1, 1], [130, 96, 66, 22, 140, 87, 43, 1, 1], [270, 226, 97, 134, 21, 139, 35, 1, 3], [139, 95, 67, 82, 139, 27, 18, 1, 2], [38, 31, 22, 39, 35, 18, 11, 0, 0], [0, 0, 1, 1, 1, 1, 0, 0, 0], [3, 3, 1, 1, 3, 2, 0, 0, 1]], [[0.0, 74.5, 28.1, 52.1, 66.8, 70.0, 65.5, 0.0, 75.0], [63.7, 0.6, 23.0, 38.4, 56.3, 48.5, 53.4, 0.0, 75.0], [23.2, 22.3, 48.7, 26.4, 23.6, 33.5, 37.9, 100.0, 25.0], [32.1, 27.8, 19.7, 9.1, 34.4, 43.5, 74.1, 100.0, 25.0], [66.7, 65.5, 29.0, 55.4, 5.2, 69.5, 60.3, 100.0, 75.0], [34.3, 27.5, 20.0, 33.9, 34.2, 13.5, 31.0, 100.0, 50.0], [9.4, 9.0, 6.6, 16.1, 8.6, 9.0, 19.0, 0.0, 0.0], [0.0, 0.0, 0.3, 0.4, 0.2, 0.5, 0.0, 0.0, 0.0], [0.7, 0.9, 0.3, 0.4, 0.7, 1.0, 0.0, 0.0, 25.0]]]
-	return corr_abs
+#--------------------------- getting correlations between drinkers ------------------------------------
+def get_correlation(names):
+    corr_all=[]
+    tot_coffees=[]
+    temp = get_total_coffees(names)
+    for i in range(len(names)):
+        tot_coffees.append(temp[i][1])
+
+    corr_abs=[]
+    corr_rel=[]
+    for i in range(len(names)):
+
+        cursor.execute("select "+names[i]+" from corr_abs")             #getting absolute correlation from table corr_abs
+        temp_abs=cursor.fetchall()
+
+        cursor.execute("select "+names[i]+" from corr_rel")             #getting relative correlation from table corr_rel
+        temp_rel=cursor.fetchall()
+
+        temp1=[]
+        temp2=[]
+        for j in range(len(names)):
+            temp1.append(temp_abs[j][0])
+            temp2.append(float(temp_rel[j][0]))
+        corr_abs.append(temp1)                              #writing into array
+        corr_rel.append(temp2)
+    corr_all.append(corr_abs)
+    corr_all.append(corr_rel)
+
+    return corr_all
+
+#--------------------------- writing correlations between drinkers into tables ------------------------------------
+def write_correlation(names):
+    #cursor.execute("drop table if exists corr_abs")
+    #cursor.execute("drop table if exists corr_rel")
+    cursor.execute("create table if not exists corr_abs (id int auto_increment, primary key(id))")
+    cursor.execute("create table if not exists corr_rel (id int auto_increment, primary key(id))")      #creating tables
+
+    tot_coffees=[]
+    temp = get_total_coffees(names)
+    for i in range(len(names)):
+        tot_coffees.append(temp[i][1])
+        cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='corr_abs' AND column_name='"+names[i]+"'") #check if name is already in table
+        tmp = cursor.fetchall()
+        
+        if tmp[0][0] == 0:
+            cursor.execute("alter table corr_abs add "+names[i]+" int")                     #creating name column if name is not in table
+            cursor.execute("insert into corr_abs ("+names[i]+") values ("+str(0)+")")       #inserting dummy values for table size
+        cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='corr_rel' AND column_name='"+names[i]+"'") #check if name is already in table
+        tmp = cursor.fetchall()
+        if tmp[0][0] == 0:       
+            cursor.execute("alter table corr_rel add "+names[i]+" varchar(5)")                     #creating name column if name is not in table
+            cursor.execute("insert into corr_rel ("+names[i]+") values ("+str(0)+")")       #inserting dummy values for table size
+
+    for i in range(len(names)):
+        cursor.execute("select id_ext from mbr_"+names[i])
+        all_breaks=cursor.fetchall()
+        for j in range(len(names)):
+            temp=[]
+            if i==j:
+                cursor.execute("select n_coffees from mbr_"+names[j]+" inner join break_sizes on mbr_"+names[j]+".id_ext = break_sizes.id_ext where break_sizes.size = 1")   #for self-correlation in the sense of lonely breaks
+                tmp=cursor.fetchall()
+                
+                for k in range(len(tmp)):
+                    temp.append(int(tmp[k][0]))
+            else:
+                for k in range(len(all_breaks)):
+                    cursor.execute("SELECT n_coffees from mbr_"+str(names[j])+" where id_ext = "+all_breaks[k][0])  #for correlation with other people
+                    tmp=cursor.fetchall()
+                    if len(tmp)>0:
+                        temp.append(tmp[0][0])
+            temp_abs1=0
+            for l in range(len(temp)):
+                temp_abs1=temp_abs1+temp[l]
+            cursor.execute("update corr_abs set "+names[j]+" = "+str(temp_abs1)+" where id = "+str(i+1))            #updating corr_abs table
+            cursor.execute("update corr_rel set "+names[j]+" = "+str(round(100*temp_abs1/tot_coffees[i],1))+"where id = "+str(i+1)) #updating corr_rel table
+    db.commit()
+
+
+
 
 @st.cache
 def get_perc_p_m():
