@@ -26,7 +26,6 @@ user_data=get_user_data()
 simple_data=get_simple_data()
 
 
-corr_tot=get_corr()
 perc_p_m=get_perc_p_m()
 perc_tot=get_perc_tot()
 
@@ -544,7 +543,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- absolute and relative correlations (bubble charts)
     if correlation:
         st.subheader("Correlation diagrams")
-        col3, col4 = st.columns([1,1])                        #setting up two columns for narrower charts 
+        col3, col4 = st.columns([1,1])                        #setting up two columns for narrower charts        
+        corr_tot=get_correlation(names)
         corr_abs_raw=corr_tot[0]
         corr_rel_raw=corr_tot[1]
         print(corr_tot)
