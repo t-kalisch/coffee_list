@@ -614,10 +614,10 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         socialscore_total = get_social_score(names, month_id_dly)
         total = socialscore_total[0]
         socialscore=[]
-        for i in range(len(socialscore_total[1])):
-            socialscore.append(socialscore_total[1][i])
+        #for i in range(len(socialscore_total[1])):
+        #    socialscore.append(socialscore_total[1][i])
         
-        df = pd.DataFrame(socialscore, columns=names, index=months_dly)                 #data frame for social score
+        df = pd.DataFrame(socialscore_total[1], columns=names, index=months_dly)                 #data frame for social score
 
         fig2 = px.line(df, title="Monthly social scores", labels={"variable":"", "index":"", "value":"Social score / a.u."})      #plotting social score
         fig2.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
