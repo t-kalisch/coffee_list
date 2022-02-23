@@ -479,22 +479,47 @@ def write_perc_breaks(names, month_id, update):
     db.commit()
 
 
+#---------------------------- calculating monthly and total coffees per work day ------------------------
+def get_coffees_per_work_day(names, month_id):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)    
+
+    coffees_per_work_day = []
+    
+    workdays = get_work_days(names, month_id)           #getting monthly work days
+    total_workdays=[]
+    total_p_w=[]
+
+    for i in range(len(names)):
+        total_workdays.append(0)                        #creating total workdays array
+    
+    cursor.execute("select * from monthly_coffees")     #getting monthly coffees
+    tmp = cursor.fetchall()
+    temp1=[]
+
+    for i in range(len(month_id)):
+        temp=[]
+        
+        for j in range(len(names)):
+            temp.append(round(tmp[j][i+2]/workdays[i][j],3))     #dividing monthly coffees by monthly work days
+            total_workdays[j]=total_workdays[j]+workdays[i][j] #getting total workdays per person
+        temp1.append(temp)
+    
+    cursor.execute("select coffees from total_coffees")
+    tmp=cursor.fetchall()
+    for i in range(len(names)):
+        total_p_w.append(round(tmp[i][0]/total_workdays[i],3))
+        
+    coffees_per_work_day.append(total_p_w)
+    coffees_per_work_day.append(temp1)
+        
+    return coffees_per_work_day
 
 
-@st.cache
-def get_perc_p_m():
-	perc_p_m = [[41.38,37.93,36.21,41.38,44.83,27.59,0.0,0.0,0.0],[43.66,28.17,49.3,52.11,49.3,39.44,16.9,0.0,0.0],[44.44,33.33,38.89,51.39,48.61,31.94,25.0,0.0,0.0],[46.88,39.06,57.81,23.44,40.63,14.06,12.5,0.0,0.0],[25.45,52.73,56.36,40.0,38.18,10.91,09.09,0.0,0.0],[61.19,32.84,40.3,65.67,64.18,23.88,19.4,0.0,0.0],[48.15,39.51,44.44,12.35,51.85,27.16,2.47,0.0,0.0],[56.45,54.84,45.16,9.68,48.39,27.42,0.0,0.0,0.0],[69.81,66.04,39.62,9.43,67.92,49.06,0.0,0.0,5.6],[62.16,48.65,35.14,18.92,59.46,45.95,0.0,3.2,0.0],[11,11,11,11,11,11,0,1,0]]
-	return perc_p_m
 
-@st.cache
-def get_perc_tot():
-	perc_tot = [49.4,42.1,44.7,33.4,51.0,29.0,11.0,0.0,0.0]
-	return perc_tot
 
-@st.cache
-def get_names():
-	names = ['TK','PB','NV','DB','FLG','SHK','TB','TT','RS']
-	return names
 
 @st.cache
 def get_cumulated_coffees():
@@ -502,10 +527,6 @@ def get_cumulated_coffees():
 	return cumulated_coffees
 
 
-@st.cache
-def get_coffees_per_work_day():
-	coffees_per_work_day_total = [[1.324, 1.158, 1.006, 0.785, 1.344, 0.654, 0.18, 0.006, 0.012], [[0.905, 0.714, 0.619, 0.476, 0.857, 0.0, 0.0, 0.0, 0.0], [0.529, 0.429, 0.3, 0.176, 0.071, 0.0, 0.0, 0.0, 0.0], [0.842, 0.316, 0.632, 0.368, 0.947, 0.0, 0.0, 0.0, 0.0], [0.95, 1.0, 0.8, 0.6, 1.05, 0.0, 0.0, 0.0, 0.0], [1.261, 1.261, 1.087, 1.174, 1.7, 0.826, 0.0, 0.0, 0.0], [1.55, 1.25, 1.75, 1.8, 1.944, 1.35, 1.2, 0.0, 0.0], [1.684, 1.263, 1.474, 1.947, 1.842, 1.211, 0.947, 0.0, 0.0], [1.429, 1.19, 1.762, 0.714, 1.238, 0.429, 0.381, 0.0, 0.0], [1.4, 1.381, 1.409, 1.294, 1.167, 0.238, 0.227, 0.0, 0.0], [1.864, 1.833, 1.227, 2.0, 1.955, 0.941, 0.591, 0.0, 0.0], [1.773, 1.455, 1.636, 0.769, 1.955, 1.0, 0.091, 0.0, 0.0], [1.571, 1.579, 1.429, 0.3, 1.688, 0.81, 0.0, 0.0, 0.0], [1.762, 1.667, 1.048, 0.19, 1.714, 1.238, 0.0, 0.0, 0.143], [1.6, 1.2, 0.667, 0.412, 1.375, 1.133, 0.0, 0.048, 0.0], [1.381, 1.476, 0.143, 0.048, 1.143, 0.762, 0.0, 0.0, 0.048]]]
-	return coffees_per_work_day_total
 
 @st.cache
 def get_social_score():
