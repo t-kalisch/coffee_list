@@ -29,7 +29,7 @@ def get_user_data():
 
 
 def get_simple_data():							# getting simple data from database
-	cursor.execute("select (parameters, value) from simple_data")
+	cursor.execute("select (parameter, value) from simple_data")
 	tmp=cursor.fetchall()
 	simple_data=[]
 	for i in range(len(tmp[0])):
