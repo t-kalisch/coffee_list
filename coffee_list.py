@@ -640,8 +640,9 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Coffees per work day")
         col7,col8 = st.columns([2,1])
         
-        total = get_coffees_per_work_day(names, month_id_dly)[0]
-        coffees_per_work_day = get_coffees_per_work_day()[1]
+        total_cpwd = get_coffees_per_work_day(names, month_id_dly)
+        total = total_cpwd[0]
+        coffees_per_work_day = total_cpwd[1]
         
         df = pd.DataFrame(coffees_per_work_day, columns = names, index = months)
     
