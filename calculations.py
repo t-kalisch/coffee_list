@@ -480,12 +480,7 @@ def write_perc_breaks(names, month_id, update):
 
 
 #---------------------------- calculating monthly and total coffees per work day ------------------------
-def get_coffees_per_work_day(names, month_id):
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)    
-
+def get_coffees_per_work_day(names, month_id):  
     coffees_per_work_day = []
     
     workdays = get_work_days(names, month_id)           #getting monthly work days
@@ -501,10 +496,9 @@ def get_coffees_per_work_day(names, month_id):
 
     for i in range(len(month_id)):
         temp=[]
-        
         for j in range(len(names)):
             temp.append(round(tmp[j][i+2]/workdays[i][j],3))     #dividing monthly coffees by monthly work days
-            total_workdays[j]=total_workdays[j]+workdays[i][j] #getting total workdays per person
+            total_workdays[j]=total_workdays[j]+workdays[i][j] 	 #getting total workdays per person
         temp1.append(temp)
     
     cursor.execute("select coffees from total_coffees")
@@ -518,6 +512,204 @@ def get_coffees_per_work_day(names, month_id):
     return coffees_per_work_day
 
 
+#----------------------------- calculating break sizes per month per person and total --------------------
+def get_break_sizes_per_month(names, month_id):
+    break_sizes=[]
+    break_sizes_total=[]
+    for i in range(len(month_id)):
+        #break_sizes.append(round(total/len(tmp),2))
+        temp=[]
+
+        for j in range(len(names)):
+            cursor.execute("select size from break_sizes inner join mbr_"+names[j]+" on break_sizes.id_ext = mbr_"+names[j]+".id_ext where mbr_"+names[j]+".id_ext like '"+str(month_id[i])+"%'")
+            tmp=cursor.fetchall()
+            #print(tmp)
+            total=0
+            for k in range(len(tmp)):
+                total = total + tmp[k][0]
+            if len(tmp) == 0:
+                temp.append(0)
+            else:
+                temp.append(round(total/len(tmp),2))
+                
+        cursor.execute("select size from break_sizes where id_ext like '"+str(month_id[i])+"%'")
+        tmp=cursor.fetchall()
+        #print(tmp)
+        total=0
+        for j in range(len(tmp)):
+            total = total + tmp[j][0]
+        break_sizes_total.append(round(total/len(tmp),2))
+        
+        break_sizes.append(temp)
+    break_sizes.append(break_sizes_total)
+    
+    return break_sizes
+
+
+#----------------------------- calculating variation factor -----------------------------------------------
+def write_variation_factor(names, month_id, update):
+    #cursor.execute("drop table if exists variation")
+    cursor.execute("create table if not exists variation (id int auto_increment, month char(6), primary key(id))")
+
+    for i in range(len(names)):
+        cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='variation' AND column_name='"+names[i]+"'") #check if name is already in table
+        tmp=cursor.fetchall()
+        if tmp[0][0] == 0:
+            cursor.execute("alter table variation add "+names[i]+" varchar(6)")
+
+    cursor.execute("SELECT max(id_ext) FROM breaks")  #getting month names from beginning to current
+    temp=cursor.fetchone()
+    temp=list(temp)
+    last_date=datetime.date(int(temp[0][0:4]),int(temp[0][4:6]),int(temp[0][6:8]))
+    if update == "full":
+        start_date=datetime.date(2021, 3, 8)
+    elif update == "simple":
+        start_year = str(month_id[len(month_id)-2])[0:4]
+        start_month = str(month_id[len(month_id)-2])[5:6]
+        start_date=datetime.date(int(start_year), int(start_month), 1)
+
+    if start_date > last_date:
+        raise ValueError(f"Start date {start_date} is not before end date {last_date}")
+    else:
+        curr_date = start_date
+        year = curr_date.year
+        month = curr_date.month
+        day = curr_date.day
+        delta_days = (last_date-start_date).days
+        var_daily=[]
+
+        
+        for i in range(delta_days+1):
+            
+            temp=[]
+            id_day = str(curr_date.year)
+            if curr_date.month < 10:
+                id_day = id_day + "0" + str(curr_date.month)
+            else:
+                id_day = id_day + str(curr_date.month)
+            if curr_date.day < 10:
+                id_day = id_day + "0" + str(curr_date.day)
+            else:
+                id_day = id_day + str(curr_date.day)
+            curr_date=curr_date+datetime.timedelta(days=1)
+            temp.append(id_day)
+            
+            var_total = 0
+            for j in range(len(names)):
+                cursor.execute("select count(*) from mbr_"+names[j]+" where id_ext like '"+str(id_day)+"%'")       
+                tmp = cursor.fetchall()
+
+                if tmp[0][0] > 0:
+                    var_total += 1                                      #total number of people who drank coffee per day
+            
+            for j in range(len(names)):
+                var = 0
+                for k in range(len(names)):                             #permutations of every person for every person who drank coffee per day
+                    if j != k:
+                        cursor.execute("select count(*) from mbr_"+names[j]+" inner join mbr_"+names[k]+" on mbr_"+names[j]+".id_ext = mbr_"+names[k]+".id_ext where mbr_"+names[j]+".id_ext like '"+str(id_day)+"%'")
+                        tmp = cursor.fetchall()
+
+                        if tmp[0][0] > 0:
+                            var += 1
+                
+                if var_total == 0 or var == 0:
+                    var = 0
+                else:
+                    var = (var+1)/(var_total)                                     #ratio of variation
+                temp.append(var)
+            var_daily.append(temp)
+
+        if update == "full":                                                                                 #updating everything
+            for i in range(len(month_id)):
+                cursor.execute("select count(*) from variation where month = "+str(month_id[i]))
+                tmp=cursor.fetchall()
+                if tmp[0][0] == 0:
+                    cursor.execute("insert into variation (month) values ('"+str(month_id[i])+"')")
+
+                for j in range(len(names)):
+                    temp=0
+                    temp1=0
+                    for k in range(len(var_daily)):
+                        if (var_daily[k][0])[0:6] == month_id[i]:
+                            temp=temp + var_daily[k][j+1]
+                            temp1 += 1
+                    cursor.execute("update variation set "+names[j]+" = "+str(round(temp/temp1,2))+" where month like '"+month_id[i]+"'")
+                
+        elif update == "simple":                                                                             #updating only last 2 months
+            for i in range(2):
+                cursor.execute("select count(*) from variation where month = "+str(month_id[len(month_id)-2+i]))
+                tmp=cursor.fetchall()
+                if tmp[0][0] == 0:
+                    cursor.execute("insert into variation (month) values ('"+str(month_id[len(month_id)-2+i])+"')")
+
+                for j in range(len(names)):
+                    temp=0
+                    temp1=0
+                    for k in range(len(var_daily)):
+                        if (var_daily[k][0])[0:6] == month_id[len(month_id)-2+i]:
+                            temp=temp + var_daily[k][j+1]
+                            temp1 += 1
+                    cursor.execute("update variation set "+names[j]+" = "+str(round(temp/temp1,2))+" where month like '"+month_id[len(month_id)-2+i]+"'")
+
+    db.commit()
+
+
+
+#-------------------------------------- calculating social scores -------------------------------------------------
+def get_social_score(names, month_id):
+    social_score=[]
+
+    cursor.execute("select * from variation")
+    variation = cursor.fetchall()
+    cursor.execute("select * from percentage_breaks")
+    percentage = cursor.fetchall()
+    corrections = holiday_corrections(names, month_id)
+    break_sizes = get_break_sizes_per_month(names, month_id)
+    #print(corrections)
+
+    for i in range(len(month_id)):
+        temp=[]
+        for j in range(len(names)):
+            temp.append(float(percentage[i+1][j+2])*break_sizes[i][j]*float(variation[i][j+2])*corrections[i][j])       #calculating social score per person per month
+        social_score.append(temp)
+
+    total=[]
+    for i in range(len(names)):
+        temp = 0
+        for j in range(len(month_id)):
+            temp = temp + social_score[j][i]                                                                            #calculating total social score
+        total.append(temp)
+        
+    max_value = max(total)
+    for i in range(len(names)):
+        total[i] = round(100*total[i]/max_value,1)                                                                      #normalising on max value
+
+    social_score_total=[]
+    social_score_total.append(total)
+    social_score_total.append(social_score)
+    return social_score_total
+
+
+#----- calculating all holiday corrections, namely recalculating factor for work days of month and damping factor -----
+def holiday_corrections(names, month_id):            
+    cursor.execute("select * from holidays where month > 202102")       #getting holidays
+    tmp = cursor.fetchall()
+
+    correction_factors=[]
+    total=[]
+    holidays=[]
+    for i in range(len(month_id)):
+        total.append(tmp[i][2])
+        temp1=[]
+        for j in range(len(names)):
+            if tmp[i][j+3] == None:
+                temp1.append(1)
+            else:
+                f_damp = (1-((tmp[i][j+3]/tmp[i][2])**2))               #damping function: f = 1 - (d_hol/t_tot)^2
+                p_wd = (total[i]-tmp[i][j+3])/total[i]                  #correction for holidays: d_tot-d_hol / d_tot
+                temp1.append(f_damp/p_wd)                               #scaling month according to holidays: 1/p_wd; multiplying with damping factor
+        correction_factors.append(temp1)
+    return correction_factors
 
 
 
@@ -527,11 +719,6 @@ def get_cumulated_coffees():
 	return cumulated_coffees
 
 
-
-@st.cache
-def get_social_score():
-	social_score_total = [[100.0, 80.4, 24.0, 37.7, 99.1, 50.8, 6.4, 0.1, 0.2], [[81.14399999999999, 68.10535, 10.831040000000002, 63.7146, 92.42434782608694, 27.048000000000005, 0.0, 0.0, 0.0], [118.28099999999999, 76.44780000000002, 67.98, 82.65937, 122.81499999999997, 72.568, 33.87852000000001, 0.0, 0.0], [91.85471999999999, 53.34992999999999, 28.52148, 97.36888, 95.41152, 39.09664, 23.25, 0.0, 0.0], [91.17360000000001, 61.19932000000001, 45.3152, 28.454399999999996, 85.07730000000001, 11.280000000000001, 7.5, 0.0, 0.0], [29.304600000000004, 81.81675, 46.6992, 58.57527272727273, 54.89687272727273, 4.947090909090909, 4.2588, 0.0, 0.0], [156.83787, 67.02525090909091, 40.84476, 153.5523, 148.42398, 34.67020909090909, 22.575779999999998, 0.0, 0.0], [97.36402000000001, 71.495, 35.43119999999999, 1.8718363636363635, 104.5008, 37.47071999999999, 0.5625, 0.0, 0.0], [95.79024, 95.41933333333333, 22.1996, 4.501891428571429, 85.82832761904761, 33.638400000000004, 0.0, 0.0, 0.0], [175.51908, 165.594, 32.187400000000004, 4.725, 161.7792, 108.17712, 0.0, 0.0, 2.73429], [107.14062857142859, 64.38528000000002, 12.5307, 12.521249999999998, 119.0085, 85.66513714285715, 0.0, 0.4821428571428571, 0.0], [150.4267142857143, 123.95040000000002, 1.7836199999999998, 0.162, 114.62267142857144, 66.816, 0.0, 0.0, 0.0]]]
-	return social_score_total
 
 #@st.cache
 def get_expectation_values():
