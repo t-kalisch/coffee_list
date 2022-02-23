@@ -60,7 +60,7 @@ def write_simple_data():
 	for i in range(len(names)):
 		if coffees[0][len(month_id)-3][i] > 0 and coffees[0][len(month_id)-2][i] > 0:
 			act_dr += 1
-		#st.write(act_dr)
+
 	data_sets = len(names)*8+12
 	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")	#updating simple_data table
 	cursor.execute("update simple_data set value = "+str(act_dr)+" where parameter = 'act_dr'")
@@ -92,15 +92,82 @@ def get_monthly_coffees(names, month_id):
 	monthly_coffees_all.append(total_monthly_coffees)
 	return monthly_coffees_all
 
+
+#----------------------------------------- wrtiting monthly coffees into database --------------------------------------
+def write_monthly_coffees(names, month_id, update):
+    all_coffees=[]
+    cursor.execute("create table if not exists monthly_coffees (id int auto_increment, name varchar(3), primary key(id))")
+
+    for i in range(len(names)):                                              #writing total cofees per month into coffees
+        cursor.execute("select count(name) from monthly_coffees where name = '"+names[i]+"'")
+        tmp = cursor.fetchall()
+        if tmp[0][0] == 0:
+            cursor.execute("insert into monthly_coffees (name) values ('"+names[i]+"')")
+
+        
+        coffees=[]
+        for j in range(len(month_id)):
+            total=0
+
+            cursor.execute("select n_coffees from mbr_"+names[i]+" where id_ext like '"+str(month_id[j])+"%'")
+            tmp=cursor.fetchall()
+            tmp=list(tmp)
+        
+            for k in range(len(tmp)):
+                total=total+tmp[k][0]
+            coffees.append(total)
+            if i < 6:                                                       #input from old breaks
+                if j < 5:
+                    cursor.execute("select "+names[i].upper()+" from old_breaks where id_ext like'"+str(month_id[j])+"%'")
+                    old_coffees=cursor.fetchall()
+                    old_coffees=list(old_coffees)
+                    coffees[j]=coffees[j]+old_coffees[0][0]
+        all_coffees.append(coffees)
+
+    if update == "full":
+        for i in range(len(month_id)):
+            cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='monthly_coffees' AND column_name='"+month_id[i]+"'") #check if name is already in table
+            tmp = cursor.fetchall()
+
+            if tmp[0][0] == 0:
+                cursor.execute("alter table monthly_coffees add `"+month_id[i]+"` int")                     #creating month column if month is not in table
+            for j in range(len(names)):
+                cursor.execute("update monthly_coffees set `"+month_id[i]+"` = "+str(all_coffees[j][i])+" where name = '"+names[j]+"'")    #always updating last two months
+    elif update == "simple":
+        for i in range(2):
+            cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='monthly_coffees' AND column_name='"+month_id[len(month_id)-2+1]+"'") #check if name is already in table
+            tmp = cursor.fetchall()
+
+            if tmp[0][0] == 0:
+                cursor.execute("alter table monthly_coffees add `"+month_id[len(month_id)-2+1]+"` int")                     #creating month column if month is not in table
+            for j in range(len(names)):
+                cursor.execute("update monthly_coffees set `"+month_id[i]+"` = "+str(all_coffees[j][i])+" where name = '"+names[j]+"'")    #always updating last two months
+
+    db.commit()
+    return all_coffees
+
+
+#-------------------------- getting total coffees from database
+def get_total_coffees(names):
+
+    coffees=[]
+    for i in range(len(names)):
+        temp=[]
+        cursor.execute("select coffees from total_coffees where name like '"+names[i]+"'")
+        tmp = cursor.fetchall()
+        temp.append(names[i])
+        temp.append(tmp[0][0])
+        coffees.append(temp)
+
+    return coffees
+
+
+
 @st.cache
 def get_monthly_ratios():
 	monthly_ratios = [[25.33,36.0,27.12,21.59,17.9,14.8,16.24,20.0,10.94,19.9,21.31,23.33,23.13,23.0,100],[20.0,24.0,10.17,22.73,17.28,10.2,12.18,16.67,22.66,10.68,17.49,22.67,21.88,18.0,0],[17.33,24.0,20.34,18.18,15.43,17.86,14.21,24.67,24.22,13.11,19.67,18.67,13.13,13.0,0],[13.33,12.0,11.86,13.64,16.67,18.88,18.78,10.0,17.19,21.36,5.46,4.0,3.13,7.0,0],[24.0,4.0,30.51,23.86,20.99,17.86,17.77,17.33,16.41,20.87,22.95,20.0,22.5,22.0,0],[0.0,0.0,0.0,0.0,11.73,14.29,11.68,6.0,4.69,7.77,12.02,11.33,16.25,17.0,0],[0.0,0.0,0.0,0.0,0.0,6.12,9.14,5.33,3.91,6.31,1.09,0.0,0.0,0.0,0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0]]
 	return monthly_ratios
 
-@st.cache
-def get_total_coffees():
-	total_coffees = [372, 314, 328, 242, 382, 183, 58, 1, 3]
-	return total_coffees
 
 @st.cache
 def get_corr():
