@@ -208,6 +208,131 @@ def get_monthly_ratio(names, month_id):
 
     return monthly_ratio
 
+
+#----------------------------- getting all weekly breaks and weekly coffees ------------------------------
+def get_weekly_coffees_breaks(names):
+    weekly_data=[]
+
+    cursor.execute("select week_id, breaks, coffees from weekly_data")
+    tmp = cursor.fetchall()
+
+    for i in range(len(tmp)):
+        temp=[]
+        temp.append(tmp[i][0])
+        temp.append(tmp[i][1])
+        temp.append(tmp[i][2])
+        weekly_data.append(temp)
+
+    return weekly_data
+
+#----------------------------- writing all weekly breaks and weekly coffees into table ------------------------------
+def write_weekly_coffees_breaks(names, month_id, update):
+    cursor.execute("create table if not exists weekly_data (id int auto_increment, week_id char(7), breaks int, coffees int, primary key(id))")
+
+    cursor.execute("SELECT max(id_ext) FROM breaks")  #getting month names from beginning to current
+    temp=cursor.fetchone()
+    temp=list(temp)
+    last_date=datetime.date(int(temp[0][0:4]),int(temp[0][4:6]),int(temp[0][6:8]))
+    if update == "full":
+        start_date=datetime.date(2021, 3, 8)
+    elif update == "simple":
+        start_year = str(month_id[len(month_id)-2])[0:4]
+        start_month = str(month_id[len(month_id)-2])[5:6]
+        start_date=datetime.date(int(start_year), int(start_month), 1)
+
+    if start_date > last_date:
+        raise ValueError(f"Start date {start_date} is not before end date {last_date}")
+    else:
+        curr_date = start_date
+        year = curr_date.year
+        month = curr_date.month
+        day = curr_date.day
+        delta_days = (last_date-start_date).days
+        weeknum_ids=[]
+        breaks_daily=[]
+        breaks_weekly=[]
+        coffees_daily=[]
+        coffees_weekly=[]
+        text_weekly=[]
+        weekly_data=[]
+
+        for i in range(delta_days+1):
+            id_day = str(curr_date.year)
+            if curr_date.month < 10:
+                id_day = id_day + "0" + str(curr_date.month)
+            else:
+                id_day = id_day + str(curr_date.month)
+            if curr_date.day < 10:
+                id_day = id_day + "0" + str(curr_date.day)
+            else:
+                id_day = id_day + str(curr_date.day)
+
+            weeknum = datetime.date(curr_date.year, curr_date.month, curr_date.day).isocalendar()[1]
+            
+            cursor.execute("select count(id_ext) from breaks where id_ext like '"+id_day+"%'")
+            tmp=cursor.fetchall()
+            temp=[]
+            if weeknum < 10:
+                temp.append(int(str(curr_date.year)+"0"+str(weeknum)))
+            else:
+                if weeknum > 10 and curr_date.month == 1:                                   #avoiding new year in last week
+                    temp.append(int(str(int(curr_date.year)-1)+str(weeknum)))
+                else:
+                    temp.append(int(str(curr_date.year)+str(weeknum)))
+            temp.append(tmp[0][0])
+            curr_date=curr_date+datetime.timedelta(days=1)
+            breaks_daily.append(temp)
+            
+            total=0
+            for j in range(len(names)):
+                cursor.execute("select n_coffees from mbr_"+names[j]+" where id_ext like '"+id_day+"%'")
+                tmp=cursor.fetchall()
+
+                for k in range(len(tmp)):
+                    total=total+tmp[k][0]
+                    
+            temp=[]
+            if weeknum < 10:
+                if int(str(curr_date.year)+"0"+str(weeknum)) not in weeknum_ids:
+                    weeknum_ids.append(int(str(curr_date.year)+"0"+str(weeknum)))
+                    text_weekly.append("0"+str(weeknum)+"/"+str(curr_date.year))
+                temp.append(int(str(curr_date.year)+"0"+str(weeknum)))
+            else:
+                if weeknum > 10 and curr_date.month == 1:                                   #avoiding new year in last week
+                    if int(str(int(curr_date.year)-1)+str(weeknum)) not in weeknum_ids:
+                        weeknum_ids.append(int(str(int(curr_date.year)-1)+str(weeknum)))
+                        text_weekly.append(str(weeknum)+"/"+str(int(curr_date.year)-1))
+                    temp.append(int(str(int(curr_date.year)-1)+str(weeknum)))
+                else:
+                    if int(str(curr_date.year)+str(weeknum)) not in weeknum_ids:
+                        weeknum_ids.append(int(str(curr_date.year)+str(weeknum)))
+                        text_weekly.append(str(weeknum)+"/"+str(curr_date.year))
+                    temp.append(int(str(curr_date.year)+str(weeknum)))
+            temp.append(total)
+            coffees_daily.append(temp)
+    
+    for i in range(len(weeknum_ids)):
+        total_breaks=0
+        total_coffees=0
+        for j in range(len(breaks_daily)):
+            if breaks_daily[j][0] == weeknum_ids[i]:
+                total_breaks=total_breaks+breaks_daily[j][1]
+            if coffees_daily[j][0] == weeknum_ids[i]:
+                total_coffees=total_coffees + coffees_daily[j][1]
+    
+        cursor.execute("select count(*) from weekly_data where week_id like '"+text_weekly[i]+"'")
+        tmp = cursor.fetchall()
+
+        if tmp[0][0] == 0:
+            cursor.execute("insert into weekly_data (week_id, breaks, coffees) values (%s, %s, %s)", (text_weekly[i], total_breaks, total_coffees))                     #inserting new week into table
+
+        if i > len(weeknum_ids)-3:                         #checking for last 2 months  (on first date of a month the data of previous day, aka previous month, also have to be updated)
+            cursor.execute("update weekly_data set breaks = "+str(total_breaks)+" where week_id = '"+text_weekly[i]+"'")    #always updating last two weeks
+            cursor.execute("update weekly_data set coffees = "+str(total_coffees)+" where week_id = '"+text_weekly[i]+"'")
+
+    db.commit()
+
+
 @st.cache
 def get_corr():
 	corr_abs = [[[0, 257, 94, 126, 272, 140, 38, 0, 3], [258, 2, 77, 93, 229, 97, 31, 0, 3], [94, 77, 163, 64, 96, 67, 22, 1, 1], [130, 96, 66, 22, 140, 87, 43, 1, 1], [270, 226, 97, 134, 21, 139, 35, 1, 3], [139, 95, 67, 82, 139, 27, 18, 1, 2], [38, 31, 22, 39, 35, 18, 11, 0, 0], [0, 0, 1, 1, 1, 1, 0, 0, 0], [3, 3, 1, 1, 3, 2, 0, 0, 1]], [[0.0, 74.5, 28.1, 52.1, 66.8, 70.0, 65.5, 0.0, 75.0], [63.7, 0.6, 23.0, 38.4, 56.3, 48.5, 53.4, 0.0, 75.0], [23.2, 22.3, 48.7, 26.4, 23.6, 33.5, 37.9, 100.0, 25.0], [32.1, 27.8, 19.7, 9.1, 34.4, 43.5, 74.1, 100.0, 25.0], [66.7, 65.5, 29.0, 55.4, 5.2, 69.5, 60.3, 100.0, 75.0], [34.3, 27.5, 20.0, 33.9, 34.2, 13.5, 31.0, 100.0, 50.0], [9.4, 9.0, 6.6, 16.1, 8.6, 9.0, 19.0, 0.0, 0.0], [0.0, 0.0, 0.3, 0.4, 0.2, 0.5, 0.0, 0.0, 0.0], [0.7, 0.9, 0.3, 0.4, 0.7, 1.0, 0.0, 0.0, 25.0]]]
@@ -233,15 +358,6 @@ def get_cumulated_coffees():
 	cumulated_coffees = [[19,28,44,63,92,121,153,183,197,238,277,312,349,372,372],[15,21,27,47,75,95,119,144,173,195,227,261,296,314,314],[13,19,31,47,72,107,135,172,203,230,266,294,315,328,328],[10,13,20,32,59,96,133,148,170,214,224,230,235,242,242],[18,19,37,58,92,127,162,188,209,252,294,324,360,382,382],[0,0,0,0,19,47,70,79,85,101,123,140,166,183,183],[0,0,0,0,0,12,30,38,43,56,58,58,58,58,58],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,3,3,3]]
 	return cumulated_coffees
 
-@st.cache
-def get_weeks():
-	weeks = ['10/2021', '11/2021', '12/2021', '13/2021', '14/2021', '15/2021', '16/2021', '17/2021', '18/2021', '19/2021', '20/2021', '21/2021', '22/2021', '23/2021', '24/2021', '25/2021', '26/2021', '27/2021', '28/2021', '29/2021', '30/2021', '31/2021', '32/2021', '33/2021', '34/2021', '35/2021', '36/2021', '37/2021', '38/2021', '39/2021', '40/2021', '41/2021', '42/2021', '43/2021', '44/2021', '45/2021', '46/2021', '47/2021', '48/2021', '49/2021', '50/2021', '51/2021', '52/2021', '01/2022', '02/2022', '03/2022', '04/2022']
-	return weeks
-
-@st.cache
-def get_coffee_breaks_weekly():
-	coffee_breaks_weekly = [[18, 42], [18, 38], [15, 46], [10, 14], [15, 32], [18, 50], [18, 62], [16, 46], [12, 44], [15, 45], [20, 52], [21, 44], [14, 40], [12, 30], [20, 44], [12, 26], [13, 34], [16, 30], [10, 22], [12, 23], [14, 40], [17, 44], [13, 42], [16, 51], [16, 53], [13, 31], [20, 43], [16, 46], [21, 44], [19, 46], [11, 28], [14, 31], [20, 43], [11, 31], [11, 36], [16, 42], [10, 38], [11, 33], [10, 33], [8, 25], [19, 40], [5, 19], [0, 0], [2, 3], [10, 24], [11, 37], [2, 7]]
-	return coffee_breaks_weekly
 
 @st.cache
 def get_coffees_per_work_day():
