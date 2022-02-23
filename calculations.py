@@ -157,7 +157,7 @@ def get_total_coffees(names):
         tmp = cursor.fetchall()
         temp.append(names[i])
         temp.append(tmp[0][0])
-        coffees.append(temp)
+        coffees.append(tmp[0][0])
 
     return coffees
 
