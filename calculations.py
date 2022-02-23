@@ -40,7 +40,7 @@ def get_simple_data():							# getting simple data from database
 	return simple_data
 	
 
-@st.cache(suppress_st_warning=True)
+#@st.cache(suppress_st_warning=True)
 def write_simple_data():
 	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value int, primary key(id))")		#setting up table
 	cursor.execute("select * from simple_data")
