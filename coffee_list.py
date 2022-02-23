@@ -26,9 +26,6 @@ user_data=get_user_data()
 simple_data=get_simple_data()
 
 
-perc_p_m=get_perc_p_m()
-perc_tot=get_perc_tot()
-
 cumulated_coffees1=[]
 cumulated_coffees=get_cumulated_coffees()
 all_func=get_functionals()
@@ -588,10 +585,10 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         st.subheader("Percentages of breaks")
         col5,col6 = st.columns([2,1])
 
-        months_from_march=[]
-        for i in range(len(months)-4):
-            months_from_march.append(months[i+4])
-        df = pd.DataFrame(perc_p_m, columns=names, index=months_from_march)
+        perc_p_m=get_perc_breaks(names, month_id_dly)
+        perc_tot=get_tot_br_p_m(month_id_dly)
+        st.write(perc_tot)
+        df = pd.DataFrame(perc_p_m, columns=names, index=months_dly)
         fig7 = px.line(df, title="Monthly percentages of breaks", labels={"variable":"", "index":"", "value":"Percentage"})
         fig7.update_layout(title_font_size=24, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig7.update_traces(hovertemplate='%{x}<br>%{y} %')
