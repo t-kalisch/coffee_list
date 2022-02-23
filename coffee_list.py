@@ -25,7 +25,7 @@ null = None
 user_data=get_user_data()
 simple_data=get_simple_data()
 
-monthly_ratios=get_monthly_ratios()
+
 corr_tot=get_corr()
 perc_p_m=get_perc_p_m()
 perc_tot=get_perc_tot()
@@ -464,6 +464,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- monthly ratios (stacked bar chart)
         col2.subheader("Monthly ratios")
 
+        monthly_ratios=get_monthly_ratio()
+        
         months_inv=[]
         temp=[]
         for i in range(len(months_all)):
