@@ -44,9 +44,7 @@ def write_simple_data():
 		cursor.execute("insert into simple_data (parameter) values ('cups')")
 		cursor.execute("insert into simple_data (parameter, value) values ('data_sets', 9000)")
 		cursor.execute("insert into simple_data (parameter, value) values ('diagrams', 22)")
-		db.commit()
 	
-
 	names = get_members()
 	month_id = get_months(datetime.date(2020,11,1))[1]
 	coffees = get_monthly_coffees(names, month_id)								#calculating simple data from different tables
@@ -57,19 +55,17 @@ def write_simple_data():
 		cups += coffees[1][i]
 	act_dr = 0
 	for i in range(len(names)):
+		st.write(coffees[0][len(month_id)-3][i])
+		st.write(coffees[0][len(month_id)-2][i])
 		if coffees[0][len(month_id)-3][i] != 0 and coffees[0][len(month_id)-2][i] != 0:
 			act_dr += 1
 	cursor.execute("update simple_data set value = "+str(len(names))+" where parameter = 'drinkers'")	#updating simple_data table
-	db.commit()
 	cursor.execute("update simple_data set value = "+str(act_dr)+" where parameter = 'acr_dr'")
-	db.commit()
 	cursor.execute("update simple_data set value = "+str(len(month_id))+" where parameter = 'months'")
-	db.commit()
 	cursor.execute("update simple_data set value = "+str(breaks[0][0])+" where parameter = 'breaks'")
-	db.commit()
 	cursor.execute("update simple_data set value = "+str(cups)+" where parameter = 'cups'")
 	db.commit()
-	return simple_data
+
 
 
 def get_monthly_coffees(names, month_id):
