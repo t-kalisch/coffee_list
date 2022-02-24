@@ -4,8 +4,8 @@ import mysql.connector as mysql
 #import csv
 from calculations import *
 
-conn = init_connection()
-cursor = conn.cursor()
+#db = init_connection()
+#cursor = db.cursor()
 
 status=""
 
