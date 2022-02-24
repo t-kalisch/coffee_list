@@ -462,7 +462,10 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         if admin_status == "1":
             st.subheader("Prediction Data")
             col7,col8 = st.columns([1,1])
-            act_func = col7.selectbox("Functional selector", all_func, 10)
+            for i in range(len(all_func)):
+                if all_func[i] == act_func:
+                    curr=i
+            act_func = col7.selectbox("Functional selector", all_func, curr)
         else:
             st.subheader("Prediction Data (active functional: "+act_func+")")
         col7,col8 = st.columns([1,1])
