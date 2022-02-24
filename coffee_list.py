@@ -324,7 +324,7 @@ if st.session_state.attempt == "true":
     
 with st.sidebar:
     act_func = get_active_func()
-    if logged_in == "true"
+    if logged_in == "true":
         if admin_status == "1":
             for i in range(len(all_func)):
                 if all_func[i] == act_func:
