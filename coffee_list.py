@@ -437,7 +437,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col7,col8 = st.columns([1,1])
         
         if admin_status != "1":
-        exp_values = get_expectation_values(names, month_id_all, act_func)
+            exp_values = get_expectation_values(names, month_id_all, act_func)
         stdev = get_stdev(names, month_id_all)
         
         max_values=[]
