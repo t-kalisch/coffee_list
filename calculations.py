@@ -1345,7 +1345,7 @@ def update_database(month):
 
     print("Recalculating ", end="", flush=True)
     cursor.execute("update update_status set update_date = curdate()")
-	cursor.execute("update update_status set update_time = now()")
+    cursor.execute("update update_status set update_time = now()")
 
     names = get_members()
     month_id_all = get_months(datetime.date(2020,11,1))[1]
@@ -1385,7 +1385,7 @@ def manual_update():
 
     print("Recalculating ", end="", flush=True)
     cursor.execute("update update_status set update_date = curdate()")
-	cursor.execute("update update_status set update_time = now()")
+    cursor.execute("update update_status set update_time = now()")
 	
     names = get_members()
     month_id_all = get_months(datetime.date(2020,11,1))[1]
