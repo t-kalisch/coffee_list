@@ -429,6 +429,7 @@ def calc_polynomial_functional(names, month_id):
 
 
 #----------------------------- writing expectation values, deviation and standard deviation into database -----------------------------
+@st.cache
 def write_exp_values_dev(names, month_id, functional, update):
     param=get_parameters()
     for i in range(len(param)):
