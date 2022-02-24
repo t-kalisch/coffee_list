@@ -7,7 +7,7 @@ from datetime import date
 import pandas as pd
 from plotly import *
 import plotly.express as px
-
+from calculations import *
 
 conn = init_connection()
 cursor = conn.cursor()
