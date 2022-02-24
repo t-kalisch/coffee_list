@@ -235,7 +235,6 @@ def get_expectation_values(names, month_id, func_selected):
     exp_values=[]
     for i in range(len(tmp[0])-2):
         exp_values.append(float(tmp[0][i+2]))
-    db.close()
     return exp_values
 
 #----------------------- getting standard deviations from database, does not recalculate if functional has been updated! ---
