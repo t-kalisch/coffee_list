@@ -14,9 +14,9 @@ import plotly.express as px
 def init_connection():
     return mysql.connector.connect(**st.secrets["mysql"])
 
+db = init_connection()
 
-conn = init_connection()
-cursor = conn.cursor()
+cursor = db.cursor(buffered=True)
 
 
 def get_user_data():
