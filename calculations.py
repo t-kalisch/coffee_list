@@ -508,7 +508,7 @@ def get_prizes(names, month_id, func_selected):
     social = get_social_score(names, month_id)[1]
 
     total_data=[]        
-    for i in range(len(month_id)):
+    for i in range(len(month_id)-1):
         temp_km=0
         name_km=""
         temp_hs=100
