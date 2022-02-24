@@ -26,7 +26,7 @@ user_data=get_user_data()
 simple_data=get_simple_data()
 
 all_func=get_functionals()
-act_func=get_active_func()
+
 
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in=cookie_manager.get(cookie="logged_in")
@@ -325,6 +325,11 @@ if st.session_state.attempt == "true":
     st.warning("Incorrect username/password")
     
 with st.sidebar:
+    if logged_in == "true" and admin_status == "1":
+            for i in range(len(all_func)):
+                if all_func[i] == act_func:
+                    curr=i
+            func_selected = st.selectbox("Functional selector", all_func, curr)
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
     coffees_total = st.checkbox("Total coffees / Monthly ratios")
@@ -424,14 +429,9 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     #-------------------------------------------------------------------------------------------------------------- expectation values and MAD (scatter chart and bar chart)
     if expectation_data:
         if admin_status == "1":
-            st.subheader("Prediction Data")
-            col7,col8 = st.columns([1,1])
-            for i in range(len(all_func)):
-                if all_func[i] == act_func:
-                    curr=i
-            act_func = col7.selectbox("Functional selector", all_func, curr)
-        else:
-            st.subheader("Prediction Data (active functional: "+act_func+")")
+            write_exp_values_dev(names, month_id_all, func_selected, "full")
+        act_func=get_active_func()
+        st.subheader("Prediction Data (active functional: "+act_func+")")
         col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values(names, month_id_all, act_func)
