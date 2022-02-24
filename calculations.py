@@ -8,11 +8,7 @@ import pandas as pd
 from plotly import *
 import plotly.express as px
 
-@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
-def init_connection():
-    return mysql.connector.connect(**st.secrets["mysql"])
 
-init_connection()
 
 
 
