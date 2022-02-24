@@ -1081,7 +1081,7 @@ def get_functionals():
 
 	    func_names=[]
 	    for i in range(len(tmp)):
-			func_names.append(tmp[i][0])
+		func_names.append(tmp[i][0])
  
 	    return sorted(func_names, key=str.lower)
 
