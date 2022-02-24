@@ -326,10 +326,9 @@ if st.session_state.attempt == "true":
     
 with st.sidebar:
     st.title("Available diagrams:")
-    prizes = st.checkbox("Coffee prize history")
     coffees_monthly = st.checkbox("Monthly coffees")
     coffees_total = st.checkbox("Total coffees / Monthly ratios")
-    expectation_data = st.checkbox("Expectation values")
+    expectation_data = st.checkbox("Expectation values / Coffee prize history")
     c_b_weekly = st.checkbox ("Weekly breaks and coffees")
     correlation = st.checkbox("Correlation")
     break_percentage = st.checkbox("Percentages of breaks")
@@ -353,41 +352,6 @@ if logged_in == "true" and profile_nav == "Show diagrams":
     
     
     st.write("-" * 34)
-    #-------------------------------------------------------------------------------------------------------------- coffee prize history (scatter + bar chart)
-    if prizes:
-        st.subheader("Prize history")
-        col1, col2 = st.columns([2,1])
-        prizes = get_prizes()
-        
-        
-        tickval_num=[]
-        total_prizes=[]
-        for i in range(len(names)):
-            tickval_num.append(i)
-            total=0
-            for j in range(len(prizes)):
-                if prizes[j][1] == i:
-                    total += 1
-            total_prizes.append(total)
-
-        columns=['Month','Persons','prize','sizes']
-        df = pd.DataFrame(prizes, columns=columns)
-
-        fig2 = px.scatter(df, x='Month', y='Persons', title="Coffee prize history ("+act_func+")", labels={"variable":"drinkers", "index":"", "value":"Winner"}, size='sizes', color='prize', color_discrete_sequence=['gold','black','red'])      #plotting social score
-        fig2.update_layout(title_font_size=24, yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), hovermode="x unified", xaxis=dict(tickmode = 'array', tickvals = month_id_dly, ticktext = months_dly))
-        fig2.update_traces(hovertemplate='%{y}')
-        col1.plotly_chart(fig2, use_container_width=True)
-
-
-        df = pd.DataFrame(total_prizes, columns={'Number of prizes'}, index=names)                #total number of prizes
-
-        fig8 = px.bar(df, x='Number of prizes', y=names, title="Total number of prizes", labels={"y":"", "count":"Social score", "variable":"drinkers"}, text='Number of prizes', text_auto=True, orientation='h')#.update_yaxes(categoryorder="total ascending")
-        fig8.update_layout(title_font_size=24, showlegend=False, )
-        fig8.update_traces(hovertemplate='%{y}: %{x}')
-        fig8.update_xaxes(showticklabels=False)
-        col2.plotly_chart(fig8, use_container_width=True)
-    
-    
     #-------------------------------------------------------------------------------------------------------------- monthly coffees, per person + total (line + bar chart)
     if coffees_monthly:
         st.subheader("Coffees per month") 
@@ -498,6 +462,43 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{x}<br>MAD = %{y}')
         col8.plotly_chart(fig8, use_container_width=True)
+        
+        
+        
+        #-------------------------------------------------------------------------------------------------------------- coffee prize history (scatter + bar chart)
+        st.subheader("Prize history")
+        col1, col2 = st.columns([2,1])
+        prizes = get_prizes(names, month_id_all, act_func))
+        
+        tickval_num=[]
+        total_prizes=[]
+        for i in range(len(names)):
+            tickval_num.append(i)
+            total=0
+            for j in range(len(prizes)):
+                if prizes[j][1] == i:
+                    total += 1
+            total_prizes.append(total)
+
+        columns=['Month','Persons','prize','sizes']
+        df = pd.DataFrame(prizes, columns=columns)
+
+        fig2 = px.scatter(df, x='Month', y='Persons', title="Coffee prize history ("+act_func+")", labels={"variable":"drinkers", "index":"", "value":"Winner"}, size='sizes', color='prize', color_discrete_sequence=['gold','black','red'])      #plotting social score
+        fig2.update_layout(title_font_size=24, yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), hovermode="x unified", xaxis=dict(tickmode = 'array', tickvals = month_id_dly, ticktext = months_dly))
+        fig2.update_traces(hovertemplate='%{y}')
+        col1.plotly_chart(fig2, use_container_width=True)
+
+
+        df = pd.DataFrame(total_prizes, columns={'Number of prizes'}, index=names)                #total number of prizes
+
+        fig8 = px.bar(df, x='Number of prizes', y=names, title="Total number of prizes", labels={"y":"", "count":"Social score", "variable":"drinkers"}, text='Number of prizes', text_auto=True, orientation='h')#.update_yaxes(categoryorder="total ascending")
+        fig8.update_layout(title_font_size=24, showlegend=False, )
+        fig8.update_traces(hovertemplate='%{y}: %{x}')
+        fig8.update_xaxes(showticklabels=False)
+        col2.plotly_chart(fig8, use_container_width=True)
+        
+        
+        
         
     #-------------------------------------------------------------------------------------------------------------- weekly coffees and breaks (line chart)
     if c_b_weekly:
