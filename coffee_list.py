@@ -342,7 +342,7 @@ with st.sidebar:
     soc_sc = st.checkbox("Social score")
     coffees_pwd = st.checkbox("Coffees per work day")
     coffees_cumulated = st.checkbox("Cumulated coffees")
-    id admin_status == "1":
+    if admin_status == "1":
         update_full = st.button("Update database", help="Click here to perform a full update of the database")
         if update_full:
             manual_update()
