@@ -9,7 +9,8 @@ from plotly import *
 import plotly.express as px
 
 
-
+conn = init_connection()
+cursor = conn.cursor()
 
 
 def get_user_data():
