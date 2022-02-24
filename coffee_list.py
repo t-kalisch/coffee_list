@@ -483,7 +483,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         columns=['Month','Persons','prize','sizes']
         df = pd.DataFrame(prizes, columns=columns)
 
-        fig2 = px.scatter(df, x='Month', y='Persons', title="Coffee prize history ("+act_func+")", labels={"variable":"drinkers", "index":"", "value":"Winner"}, size='sizes', color='prize', color_discrete_sequence=['gold','black','red'])      #plotting social score
+        fig2 = px.scatter(df, x='Month', y='Persons', title="Coffee prize history ("+act_func+")", labels={"variable":"", "index":"", "value":""}, size='sizes', color='prize', color_discrete_sequence=['gold','black','red'])      #plotting social score
         fig2.update_layout(title_font_size=24, yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), hovermode="x unified", xaxis=dict(tickmode = 'array', tickvals = month_id_dly, ticktext = months_dly), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig2.update_traces(hovertemplate='%{y}')
         col1.plotly_chart(fig2, use_container_width=True)
