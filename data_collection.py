@@ -4,11 +4,10 @@ import mysql.connector as mysql
 #import csv
 from calculations import *
 
+def init_connection():
+    return mysql.connector.connect(**st.secrets["mysql"])
 
-db = mysql.connect(user='PBTK', password='akstr!admin2',
-		host='212.227.72.95',
-		database='coffee_list')
-cursor=db.cursor(buffered=True)
+init_connection()
 
 
 status=""
