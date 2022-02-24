@@ -1034,7 +1034,7 @@ def get_social_score(names, month_id):
 def holiday_corrections(names, month_id):            
     cursor.execute("select * from holidays where month > 202102")       #getting holidays
     tmp = cursor.fetchall()
-
+    st.write(tmp)
     correction_factors=[]
     total=[]
     holidays=[]
