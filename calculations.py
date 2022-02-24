@@ -8,11 +8,14 @@ import pandas as pd
 from plotly import *
 import plotly.express as px
 
-db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-host='212.227.72.95',
-database='coffee_list')
-cursor=db.cursor(buffered=True) 
+@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
+def init_connection():
+	db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+	host='212.227.72.95',
+	database='coffee_list')
+	cursor=db.cursor(buffered=True) 
 
+init_connection()
 #@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 #def init_connection():
 #    return mysql.connector.connect(**st.secrets["mysql"])
@@ -237,13 +240,13 @@ def get_expectation_values(names, month_id, func_selected):
 
 #----------------------- getting standard deviations from database, does not recalculate if functional has been updated! ---
 def get_stdev(names, month_id):
-    cursor.execute("select * from exp_values_stdev where month = "+str(month_id[len(month_id)-1]))
-    tmp=cursor.fetchall()
+	cursor.execute("select * from exp_values_stdev where month = "+str(month_id[len(month_id)-1]))
+	tmp=cursor.fetchall()
     
-    stdev=[]
-    for i in range(len(names)):
-        stdev.append(float(tmp[0][i+2]))
-    return stdev
+	stdev=[]
+	for i in range(len(names)):
+		stdev.append(float(tmp[0][i+2]))
+	return stdev
 
 #------------------------- getting the MAD for every functional ---------------------------------------------------
 def get_mad(names, month_id):
