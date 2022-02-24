@@ -462,14 +462,13 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         if admin_status == "1":
             st.subheader("Prediction Data")
             col7,col8 = st.columns([1,1])
-            func_select = col7.selectbox("Functional selector", all_func, 10)
-            act_func = func_select
+            act_func = col7.selectbox("Functional selector", all_func, 10)
         else:
             st.subheader("Prediction Data (active functional: "+act_func+")")
         col7,col8 = st.columns([1,1])
         
-        exp_values = get_expectation_values()
-        stdev = get_stdev()
+        exp_values = get_expectation_values(names, month_id_all, act_func)
+        stdev = get_stdev(names, month_id_all)
         
         max_values=[]
         for i in range(len(names)):
