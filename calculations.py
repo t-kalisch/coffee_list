@@ -212,6 +212,345 @@ def get_monthly_ratio(names, month_id):
     return monthly_ratio
 
 
+
+#------------------ getting expectation values from database, maybe recalculating if functional has been updated ------
+def get_expectation_values(names, month_id, func_selected):
+    cursor.execute("select active_func from update_status")
+    tmp=cursor.fetchall()
+
+    if tmp[0][0] != func_selected:
+        update="full"
+
+        write_exp_values_dev(names, month_id, func_selected, update)
+        cursor.execute("update update_status set active_func = '"+func_selected+"'")
+        db.commit()
+
+        
+    cursor.execute("select * from exp_values where month = "+max(month_id))
+    tmp=cursor.fetchall()
+
+    exp_values=[]
+    for i in range(len(tmp[0])-2):
+        exp_values.append(float(tmp[0][i+2]))
+    db.close()
+    return exp_values
+
+#----------------------- getting standard deviations from database, does not recalculate if functional has been updated! ---
+def get_stdev(names, month_id):
+    cursor.execute("select * from exp_values_stdev where month = "+str(month_id[len(month_id)-1]))
+    tmp=cursor.fetchall()
+    
+    stdev=[]
+    for i in range(len(names)):
+        stdev.append(float(tmp[0][i+2]))
+    return stdev
+
+#------------------------- getting the MAD for every functional ---------------------------------------------------
+def get_mad(names, month_id):
+    param = get_parameters()
+
+    mad_total=[]
+    for i in range(len(param)):
+        for j in range(len(param[i])-1):
+            param[i][j+1] = float(param[i][j+1])
+        temp=[]
+        temp.append(param[i][0])
+        temp.append(calc_mad_corr(names, month_id, param[i]))
+        mad_total.append(temp)
+    return mad_total
+
+#-----------------------------calculating expectation values, deviation and standard deviation-----------------------------
+def calc_exp_values_dev(names, month_id, func):
+    coffees = get_coffees_per_work_day(names, month_id)[1]
+    workdays = get_work_days(names, month_id)
+
+    cursor.execute("select work_days from holidays")
+    total_wd = cursor.fetchall()
+
+    expectation_values=[]
+    deviation=[]
+    standard_dev=[]
+    total=[]
+
+    for i in range(len(month_id)):
+        temp_exp=[]
+        temp_dev=[]
+        temp_stdev=[]
+        for j in range(len(names)):
+            if i == 0:
+                if j < 5:
+                    exp_value = 10.71               #first month: average of all coffees drank
+                else:
+                    exp_value = 0.0
+            elif i == 1:
+                exp_value = coffees[i-1][j] * workdays[i][j]      #second month: coffees from first month scaled to second month
+            elif i == 2:
+                exp_value = (coffees[i-2][j]*0.33 + coffees[i][j]*0.67) * workdays[i][j]    #third month: 0.33*first month + 0.67*second month scaled to third month
+            elif i == 3 or i == 4:
+                exp_value = (coffees[i-3][j]*func[1] + coffees[i-2][j]*func[2] + coffees[i-1][j]*func[3]) * workdays[i][j]  #fourth and fifth month: complete original functional
+            else:
+                if month_id[i] > "202109" and names[j] == "TB":
+                    exp_value = 0.0
+                else:           #functional values per work day
+                    oF = coffees[i-3][j]*func[1] + coffees[i-2][j]*func[2] + coffees[i-1][j]*func[3]        #value of original functional
+                    cub = (coffees[i-3][j]-coffees[i-4][j]-(8*coffees[i-3][j] - coffees[i-2][j] - 7*coffees[i-4][j] - 2*(coffees[i-1][j] - 9/2*coffees[i-2][j] + 9*coffees[i-3][j] - 11/2*coffees[i-4][j]))/4 - (coffees[i-1][j] - 9/2*coffees[i-2][j] + 9*coffees[i-3][j] - 11/2*coffees[i-4][j])/3) * 64 + (8*coffees[i-3][j] - coffees[i-2][j] - 7*coffees[i-4][j] - 2*(coffees[i-1][j] - 9/2*coffees[i-2][j] + 9*coffees[i-3][j] - 11/2*coffees[i-4][j])) * 4 + (coffees[i-1][j] - 4.5*coffees[i-2][j] + 9*coffees[i-3][j] - 5.5*coffees[i-4][j]) * 4/3 + coffees[i-4][j] #value of cubic function
+                    sq = (coffees[i-3][j]-coffees[i-1][j]+2*coffees[i-2][j]-2*coffees[i-3][j])/2 * 9 + ((coffees[i-1][j]-coffees[i-3][j]+4*coffees[i-3][j]-4*coffees[i-2][j])/2) * 3 - coffees[i-3][j]              #value of squared function
+                    lin = (coffees[i-1][j]-coffees[i-2][j])*2+coffees[i-2][j]                               #value of linear function
+                    exp_value = (oF * func[4] + cub * func[5] + sq * func[6] + lin * func[7]) * workdays[i][j]    #from fifth month on: original functional with polynomial
+            temp_exp.append(exp_value)                                                      #setting up expectation value array
+            if not i == len(month_id)-1:         #skips the last month
+                temp_dev.append(exp_value-(coffees[i][j]*workdays[i][j]))                   #setting up deviation array
+                data=[]
+                for k in range(i):
+                    data.append(deviation[k][j])
+                if data != []:
+                    temp_stdev.append(stdev(data))
+        expectation_values.append(temp_exp)
+        if temp_dev != []:
+            deviation.append(temp_dev)
+        if temp_stdev != []:
+            standard_dev.append(temp_stdev)
+
+    total.append(expectation_values)
+    total.append(deviation)
+    total.append(standard_dev)
+
+    return total
+
+
+#----------------------------- calculating parameters for dynamic functional -----------------------------
+def calc_dynamic_functional(names, month_id):
+    step = 0.05
+    best_mad = 99999
+    func=['dynamic',0,0,0,1,0.0,0.0,0.0]
+    param=[0.0,0.0,0.0]
+    m_3 = 1
+    m_2 = 0
+    m_1 = 0
+    for i in range(int(1/step)+1):
+        m_3 = round(1 - (i*step),2)
+        for j in range(i+1):                            #permutating the 3 parameters in 0.05 steps (so that the sum is always 1)
+            m_2 = abs(round((1-m_3) - (j*step),2))
+            m_1 = abs(round(1-m_3-m_2,2))
+            func[1] = m_3
+            func[2] = m_2
+            func[3] = m_1
+            mad = calc_mad_corr(names, month_id, func)       #calculating MAD for given parameters
+            if mad < best_mad:
+                best_mad = mad
+                param[0] = m_3
+                param[1] = m_2
+                param[2] = m_1
+    
+    cursor.execute("update func_param set m_3 = "+str(param[0])+", m_2 = "+str(param[1])+", m_1 = "+str(param[2])+" where name = 'dynamic'")
+    #cursor.execute("update func_param set m_3 = "+str(param[0])+", m_2 = "+str(param[1])+", m_1 = "+str(param[2])+" where name = 'dynamicp'")
+    db.commit()
+
+
+#----------------------------- calculating parameters for dynamic functional of all parameters -----------------------------
+def calc_dynamic_all(names, month_id):
+    step = 0.05
+    best_mad = 99999
+    func=['dynamicp',0,0,0,1,0.0,0.0,0.0]
+    param=[0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+    m_3 = 1
+    m_2 = 0
+    m_1 = 0
+    print(datetime.datetime.now())
+    print("calculating...")
+    for i in range(int(1/step)+1):
+        m_3 = round(1 - (i*step),2)
+        func[1] = m_3
+        for j in range(i+1):                            #permutating the 3 parameters in 0.05 steps (so that the sum is always 1)
+            m_2 = abs(round((1-m_3) - (j*step),2))
+            m_1 = abs(round(1-m_3-m_2,2))
+            orig_func = 1
+            cub_func=0
+            sq_func=0
+            lin_func=0
+            func[2] = m_2
+            func[3] = m_1
+            print(func)
+            for k in range(int(1/step)+1):
+                orig_func = round(1 - (k*step),2)
+                func[4] = orig_func
+                
+                for l in range(k+1):
+                    cub_func = abs(round((1-orig_func) - (l*step),2))
+                    func[5] = cub_func
+                    for m in range(l+1):
+                        sq_func = abs(round((1-orig_func-cub_func) - (m*step),2))
+                        lin_func = abs(round(1- orig_func - cub_func - sq_func,2))
+                        func[6] = sq_func
+                        func[7] = lin_func
+                        
+                        mad = calc_mad_corr(names, month_id, func)       #calculating MAD for given parameters
+                        if mad < best_mad:
+                            best_mad = mad
+                            param[0] = m_3
+                            param[1] = m_2
+                            param[2] = m_1
+                            param[3] = orig_func
+                            param[4] = cub_func
+                            param[5] = sq_func
+                            param[6] = lin_func
+                            print("Found better values:", end=" ", flush=True)
+                            print(param, end=", ", flush=True)
+                            print(mad)
+    
+
+    cursor.execute("update func_param set m_3 = "+str(param[0])+", m_2 = "+str(param[1])+", m_1 = "+str(param[2])+", orig_func = "+str(param[3])+", cub_func = "+str(param[4])+", sq_func = "+str(param[5])+", lin_func = "+str(param[6])+" where name = 'dynamicp'")
+
+    db.commit()
+
+
+#----------------------------- calculating parameters for dynamic polynomial functional -----------------------------
+def calc_polynomial_functional(names, month_id):
+    step = 0.05
+    best_mad = 99999
+    func=['polypony',0,0,0,0,1,0.0,0.0]
+    param=[0.0,0.0,0.0]
+    cub = 1
+    sq = 0
+    lin = 0
+    for i in range(int(1/step)+1):
+        cub = round(1 - (i*step),2)
+        for j in range(i+1):                            #permutating the 3 parameters in 0.05 steps (so that the sum is always 1)
+            sq = abs(round((1-cub) - (j*step),2))
+            lin = abs(round(1-cub-sq,2))
+            func[5] = cub
+            func[6] = sq
+            func[7] = lin
+            mad = calc_mad_corr(names, month_id, func)       #calculating MAD for given parameters
+            if mad < best_mad:
+                best_mad = mad
+                param[0] = cub
+                param[1] = sq
+                param[2] = lin
+    
+    cursor.execute("update func_param set cub_func = "+str(param[0])+", sq_func = "+str(param[1])+", lin_func = "+str(param[2])+" where name = 'polypony'")
+    db.commit()
+
+
+
+#----------------------------- writing expectation values, deviation and standard deviation into database -----------------------------
+def write_exp_values_dev(names, month_id, functional, update):
+    param=get_parameters()
+    for i in range(len(param)):
+        if param[i][0] == functional:
+            func = param[i]                 #getting functional parameters for active functional
+    for i in range(len(func)-1):
+        func[i+1] = float(func[i+1])        #converting parameters to float
+
+
+    temp = calc_exp_values_dev(names, month_id, func)
+    exp_values = temp[0]
+    dev = temp[1]
+    stdev = temp[2]
+
+    #cursor.execute("drop table if exists exp_values")
+    #cursor.execute("drop table if exists exp_values_dev")
+    #cursor.execute("drop table if exists exp_values_stdev")
+    cursor.execute("create table if not exists exp_values (id int auto_increment, month int, primary key(id))")
+    cursor.execute("create table if not exists exp_values_dev (id int auto_increment, month int, primary key(id))")
+    cursor.execute("create table if not exists exp_values_stdev (id int auto_increment, month int, primary key(id))")
+    
+    for i in range(len(names)):
+        cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='exp_values' AND column_name='"+names[i]+"'") #check if name is already in table
+        tmp=cursor.fetchall()
+
+        if tmp[0][0] == 0:
+            cursor.execute("alter table exp_values add "+names[i]+" varchar(4)")
+            cursor.execute("alter table exp_values_dev add "+names[i]+" varchar(5)")
+            cursor.execute("alter table exp_values_stdev add "+names[i]+" varchar(4)")
+
+    if update == "full":
+        for i in range(len(month_id)):
+            cursor.execute("select count(*) from exp_values where month = "+str(month_id[i]))
+            tmp = cursor.fetchall()
+            if tmp[0][0] == 0:
+                cursor.execute("insert into exp_values (month) values ("+str(month_id[i])+")")      #creating month if not exists
+                cursor.execute("insert into exp_values_dev (month) values ("+str(month_id[i])+")")
+                cursor.execute("insert into exp_values_stdev (month) values ("+str(month_id[i])+")")
+            for j in range(len(names)):
+                cursor.execute("update exp_values set "+names[j]+" = "+str(round(exp_values[i][j],1))+" where month = "+str(month_id[i]))   #writes expectation value
+                if not i == len(month_id)-1:
+                    cursor.execute("update exp_values_dev set "+names[j]+" = "+str(round(dev[i][j],1))+" where month = "+str(month_id[i]))      #writes deviation of expectation value from actual value
+                    if not i == len(month_id)-2:
+                        cursor.execute("update exp_values_stdev set "+names[j]+" = "+str(round(stdev[i][j],1))+" where month = "+str(month_id[i+2]))    #writes standard deviations
+   
+    elif update == "simple":
+        cursor.execute("select count(*) from exp_values where month = "+str(month_id[len(month_id)-1]))
+        tmp = cursor.fetchall()
+        if tmp[0][0] == 0:
+            cursor.execute("insert into exp_values (month) values ("+str(month_id[len(month_id)-1])+")")      #creating month if not exists
+            for j in range(len(names)):
+                cursor.execute("update exp_values set "+names[j]+" = "+str(round(exp_values[len(month_id)-1][j],1))+" where month = "+str(month_id[len(month_id)-1]))
+                cursor.execute("update exp_values_dev set "+names[j]+" = "+str(round(dev[len(dev)-1][j],1))+" where month = "+str(month_id[len(month_id)-1]))      #calculates deviation of expectation value from actual value
+                cursor.execute("update exp_values_stdev set "+names[j]+" = "+str(round(stdev[len(stdev)-1][j],1))+" where month = "+str(month_id[len(month_id)-1]))
+    
+    db.commit()
+
+
+
+
+#----------------------------- getting the coffee prize history -----------------------------------------
+def get_prizes(names, month_id, func_selected):
+    cursor.execute("select active_func from update_status")
+    tmp=cursor.fetchall()
+
+    if tmp[0][0] != func_selected:
+        update="full"
+        write_exp_values_dev(names, month_id, func_selected, update)
+        cursor.execute("update update_status set active_func = '"+func_selected+"'")
+        db.commit()
+
+    cursor.execute("select * from monthly_coffees")
+    coffees=cursor.fetchall()
+    cursor.execute("select * from exp_values")
+    exp_values=cursor.fetchall()
+    social = get_social_score(names, month_id)[1]
+
+    total_data=[]        
+    for i in range(len(month_id)):
+        temp_km=0
+        name_km=""
+        temp_hs=100
+        name_hs=""
+        temp_gn=0
+        name_gn=""
+        for j in range(len(names)):
+            if coffees[j][i+6] > temp_km:
+                temp_km = coffees[j][i+6]
+                name_km = j
+            if coffees[j][i+6] > 0 and coffees[j][i+5] > 0 and abs(float(exp_values[i][j+2])-coffees[j][i+6]) < temp_hs:
+                temp_hs = abs(float(exp_values[i][j+2])-coffees[j][i+6])
+                name_hs = j
+            if social[i][j] > temp_gn:
+                temp_gn = social[i][j]
+                name_gn = j
+        temp=[]
+        temp.append(month_id[i])    
+        temp.append(name_km)
+        temp.append('Kaffeemeister')
+        temp.append(40)
+        total_data.append(temp)
+        temp=[]
+        temp.append(month_id[i])    
+        temp.append(name_hs)
+        temp.append('Hotshot')
+        temp.append(25)
+        total_data.append(temp)
+        temp=[]
+        temp.append(month_id[i])    
+        temp.append(name_gn)
+        temp.append('Genosse')
+        temp.append(10)
+        total_data.append(temp)
+        
+    return total_data
+
+
 #----------------------------- getting all weekly breaks and weekly coffees ------------------------------
 def get_weekly_coffees_breaks(names):
     weekly_data=[]
