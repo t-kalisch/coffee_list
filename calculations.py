@@ -1076,14 +1076,14 @@ def get_cumulated_coffees(names, month_id):
 
 #------------------------ getting functionals from database ------------------
 def get_functionals():
-	    cursor.execute("select name from func_param")
-	    tmp=cursor.fetchall()
+	cursor.execute("select name from func_param")
+	tmp=cursor.fetchall()
 
-	    func_names=[]
-	    for i in range(len(tmp)):
+	func_names=[]
+	for i in range(len(tmp)):
 		func_names.append(tmp[i][0])
  
-	    return sorted(func_names, key=str.lower)
+	return sorted(func_names, key=str.lower)
 
 #------------------------ getting active functional from database ------------------
 def get_active_func():
