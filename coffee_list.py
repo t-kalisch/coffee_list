@@ -479,7 +479,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
                 exp_values[i] = 0
             max_values.append(exp_values[i]+stdev[i])
         
-        mad_total = get_mad()
+        mad_total = get_mad(names, month_id_all)
         
         df = pd.DataFrame(exp_values, columns={'Number of coffees'}, index=names)                #expectation values with standard deviation
         df["e"] = stdev
