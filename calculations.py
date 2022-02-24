@@ -7,7 +7,13 @@ from datetime import date
 import pandas as pd
 from plotly import *
 import plotly.express as px
-from calculations import *
+
+
+
+@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
+def init_connection():
+    return mysql.connector.connect(**st.secrets["mysql"])
+
 
 conn = init_connection()
 cursor = conn.cursor()
