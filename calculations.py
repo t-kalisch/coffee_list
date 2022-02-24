@@ -8,17 +8,16 @@ import pandas as pd
 from plotly import *
 import plotly.express as px
 
-#db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-#host='212.227.72.95',
-#database='coffee_list')
-#cursor=db.cursor(buffered=True) 
+db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+host='212.227.72.95',
+database='coffee_list')
+cursor=db.cursor(buffered=True) 
 
-@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
-def init_connection():
-    return mysql.connector.connect(**st.secrets["mysql"])
-
-db = init_connection()
-cursor = db.cursor(buffered=True)
+#@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
+#def init_connection():
+#    return mysql.connector.connect(**st.secrets["mysql"])
+#db = init_connection()
+#cursor = db.cursor(buffered=True)
 
 
 def get_user_data():
