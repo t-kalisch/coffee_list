@@ -484,7 +484,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df = pd.DataFrame(prizes, columns=columns)
 
         fig2 = px.scatter(df, x='Month', y='Persons', title="Coffee prize history ("+act_func+")", labels={"variable":"drinkers", "index":"", "value":"Winner"}, size='sizes', color='prize', color_discrete_sequence=['gold','black','red'])      #plotting social score
-        fig2.update_layout(title_font_size=24, yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), hovermode="x unified", xaxis=dict(tickmode = 'array', tickvals = month_id_dly, ticktext = months_dly))
+        fig2.update_layout(title_font_size=24, yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), hovermode="x unified", xaxis=dict(tickmode = 'array', tickvals = month_id_dly, ticktext = months_dly), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
         fig2.update_traces(hovertemplate='%{y}')
         col1.plotly_chart(fig2, use_container_width=True)
 
@@ -492,7 +492,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df = pd.DataFrame(total_prizes, columns={'Number of prizes'}, index=names)                #total number of prizes
 
         fig8 = px.bar(df, x='Number of prizes', y=names, title="Total number of prizes", labels={"y":"", "count":"Social score", "variable":"drinkers"}, text='Number of prizes', text_auto=True, orientation='h')#.update_yaxes(categoryorder="total ascending")
-        fig8.update_layout(title_font_size=24, showlegend=False, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
+        fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{y}: %{x}')
         fig8.update_xaxes(showticklabels=False)
         col2.plotly_chart(fig8, use_container_width=True)
