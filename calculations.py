@@ -8,13 +8,6 @@ import pandas as pd
 from plotly import *
 import plotly.express as px
 
-#@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
-#def init_connection():
-#	db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql#
-#	host='212.227.72.95',
-#	database='coffee_list')
-#	return db.cursor(buffered=True) 
-
 
 #@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 def init_connection():
@@ -497,6 +490,7 @@ def write_exp_values_dev(names, month_id, functional, update):
 
 
 #----------------------------- getting the coffee prize history -----------------------------------------
+@st.cache
 def get_prizes(names, month_id, func_selected):
     cursor.execute("select active_func from update_status")
     tmp=cursor.fetchall()
