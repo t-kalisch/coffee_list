@@ -331,8 +331,8 @@ with st.sidebar:
                     curr=i
             func_selected = st.selectbox("Functional selector", all_func, curr)
         else:
-            act_func_l=list(act_func)
-            func_selected = st.selectbox("Active functional", list(act_func), 0)
+            act_func_l=[].appennd(act_func)
+            func_selected = st.selectbox("Active functional", act_func_l, 0)
 
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
