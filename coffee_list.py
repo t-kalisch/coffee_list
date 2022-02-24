@@ -21,10 +21,8 @@ def get_manager():
 cookie_manager = get_manager()
 cookie_manager.get_all()
 
-null = None
 user_data=get_user_data()
 simple_data=get_simple_data()
-
 all_func=get_functionals()
 
 
