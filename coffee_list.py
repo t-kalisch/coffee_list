@@ -471,7 +471,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         col7,col8 = st.columns([1,1])
         
         exp_values = get_expectation_values(names, month_id_all, act_func)
-        #stdev = get_stdev(names, month_id_all)
+        stdev = get_stdev(names, month_id_all)
         
         max_values=[]
         for i in range(len(names)):
@@ -482,7 +482,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         mad_total = get_mad()
         
         df = pd.DataFrame(exp_values, columns={'Number of coffees'}, index=names)                #expectation values with standard deviation
-        df["e"] = 0#stdev
+        df["e"] = stdev
 
         info = act_func
         fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values  ± σ for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
