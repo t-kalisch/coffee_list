@@ -13,9 +13,9 @@ def init_connection():
 	db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
 	host='212.227.72.95',
 	database='coffee_list')
-	cursor=db.cursor(buffered=True) 
+	return db.cursor(buffered=True) 
 
-init_connection()
+cursor = init_connection()
 #@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 #def init_connection():
 #    return mysql.connector.connect(**st.secrets["mysql"])
