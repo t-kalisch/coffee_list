@@ -480,7 +480,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
                     total += 1
             total_prizes.append(total)
 
-        columns=['Month','Persons','prize','sizes']
+        columns=['Month','Persons','','sizes']
         df = pd.DataFrame(prizes, columns=columns)
 
         fig2 = px.scatter(df, x='Month', y='Persons', title="Coffee prize history ("+act_func+")", labels={"variable":"", "index":"", "value":""}, size='sizes', color='prize', color_discrete_sequence=['gold','black','red'])      #plotting social score
