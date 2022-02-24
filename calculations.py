@@ -1345,6 +1345,7 @@ def update_database(month):
 
     print("Recalculating ", end="", flush=True)
     cursor.execute("update update_status set update_date = curdate()")
+	cursor.execute("update update_status set update_time = now()")
 
     names = get_members()
     month_id_all = get_months(datetime.date(2020,11,1))[1]
@@ -1384,14 +1385,16 @@ def manual_update():
 
     print("Recalculating ", end="", flush=True)
     cursor.execute("update update_status set update_date = curdate()")
-
+	cursor.execute("update update_status set update_time = now()")
+	
     names = get_members()
     month_id_all = get_months(datetime.date(2020,11,1))[1]
     month_id_daily = get_months(datetime.date(2021,3,8))[1]
 
     update="full"     #keyword for variation function
-
+	
     cursor.execute("select active_func from update_status")         #getting functional currently in use
+
     func_selected=cursor.fetchall()[0][0]
     
     write_monthly_coffees(names,month_id_all, update)
