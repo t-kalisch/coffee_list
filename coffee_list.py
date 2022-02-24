@@ -12,7 +12,7 @@ import mysql.connector as mysql
 import extra_streamlit_components as stx
 import plotly.graph_objects as go
 from data_collection import *
-from calculations import *
+#from calculations import *
 
 @st.cache(allow_output_mutation=True)
 def get_manager():
