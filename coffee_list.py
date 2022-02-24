@@ -323,13 +323,16 @@ if st.session_state.attempt == "true":
     st.warning("Incorrect username/password")
     
 with st.sidebar:
-    if logged_in == "true" and admin_status == "1":
-        act_func = get_active_func()
+    act_func = get_active_func()
+    if logged_in == "true"
+        if admin_status == "1":
+            for i in range(len(all_func)):
+                if all_func[i] == act_func:
+                    curr=i
+            func_selected = st.selectbox("Functional selector", all_func, curr)
+        else:
+            func_selected = st.selectbox("Active functional", act_func, 0)
 
-        for i in range(len(all_func)):
-            if all_func[i] == act_func:
-                curr=i
-        func_selected = st.selectbox("Functional selector", all_func, curr)
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
     coffees_total = st.checkbox("Total coffees / Monthly ratios")
@@ -432,14 +435,11 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         
     #-------------------------------------------------------------------------------------------------------------- expectation values and MAD (scatter chart and bar chart)
     if expectation_data:
-        if admin_status == "1":
-            exp_values = get_expectation_values(names, month_id_all, func_selected)
         act_func=get_active_func()
         st.subheader("Prediction Data (active functional: "+act_func+")")
         col7,col8 = st.columns([1,1])
         
-        if admin_status != "1":
-            exp_values = get_expectation_values(names, month_id_all, act_func)
+        exp_values = get_expectation_values(names, month_id_all, func_selected)
         stdev = get_stdev(names, month_id_all)
         
         max_values=[]
