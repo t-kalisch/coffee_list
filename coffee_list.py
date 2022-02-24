@@ -485,7 +485,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df["e"] = stdev
 
         info = act_func
-        fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values  ± σ for "+months[len(months)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
+        fig8 = px.scatter(df, x=names, y='Number of coffees', error_y='e', title="Exp. values  ± σ for "+months_all[len(months_all)-1], labels={"x":"", "y":"Number of coffees", "variable":"drinkers"}, text="Number of coffees")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(marker = dict(symbol = 'line-ew-open'), hovertemplate='%{x}: %{y}', textposition='middle right')
         fig8.update_yaxes(range=[0,max(max_values)+2])
