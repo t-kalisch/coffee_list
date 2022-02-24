@@ -327,12 +327,11 @@ if st.session_state.attempt == "true":
 with st.sidebar:
     if logged_in == "true" and admin_status == "1":
         act_func = get_active_func()
-        st.write(act_func)
-        st.write(all_func)
+
         for i in range(len(all_func)):
             if all_func[i] == act_func:
                 curr=i
-            func_selected = st.selectbox("Functional selector", all_func, curr)
+        func_selected = st.selectbox("Functional selector", all_func, curr)
     st.title("Available diagrams:")
     coffees_monthly = st.checkbox("Monthly coffees")
     coffees_total = st.checkbox("Total coffees / Monthly ratios")
