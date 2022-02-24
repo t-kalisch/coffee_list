@@ -331,7 +331,8 @@ with st.sidebar:
                     curr=i
             func_selected = st.selectbox("Functional selector", all_func, curr)
         else:
-            act_func_l=[].appennd(act_func)
+            act_func_l=[]
+            act_func_l.appennd(act_func)
             func_selected = st.selectbox("Active functional", act_func_l, 0)
 
     st.title("Available diagrams:")
