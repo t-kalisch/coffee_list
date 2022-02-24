@@ -468,7 +468,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         #-------------------------------------------------------------------------------------------------------------- coffee prize history (scatter + bar chart)
         st.subheader("Prize history")
         col1, col2 = st.columns([2,1])
-        prizes = get_prizes(names, month_id_all, act_func))
+        prizes = get_prizes(names, month_id_all, act_func)
         
         tickval_num=[]
         total_prizes=[]
