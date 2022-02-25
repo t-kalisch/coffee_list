@@ -12,10 +12,7 @@ import plotly.express as px
 #@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 def init_connection():
     return mysql.connect(**st.secrets["mysql"])
-#db = init_connection()
-#cursor = db.cursor(buffered=True)
 
-#db.close()
 def db_logout():
     db.close()
 
@@ -1290,7 +1287,7 @@ def get_work_days(names, month_id):
     return workdays
 
 #------------------------ getting functionals from database ------------------
-@st.cache
+#@st.cache
 def get_functionals():
     db = init_connection()
     cursor = db.cursor(buffered=True)
