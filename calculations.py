@@ -1441,10 +1441,10 @@ def update_database(month):
 
 
     
-    print("Database was successfully updated")
+	print("Database was successfully updated")
     
-    db.commit()
-    db.close()
+	db.commit()
+	db.close()
 
 #------------------------- updates database -------------------------------------
 def manual_update():
