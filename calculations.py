@@ -1328,7 +1328,7 @@ def calc_mad_corr(names, month_id, func):
     return round(mad_corr,2)
 
 #--------------------------- getting all holidays ------------------------------
-@st.cache
+#@st.cache
 def get_all_holidays(timestamp):
 	db = init_connection()
 	cursor = db.cursor(buffered=True)
