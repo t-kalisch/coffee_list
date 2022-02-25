@@ -746,7 +746,7 @@ def write_correlation(names):
 
     tot_coffees=[]
     temp = get_total_coffees(names)
-    print(temp)
+    
     for i in range(len(names)):
         tot_coffees.append(temp[i])
         cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='corr_abs' AND column_name='"+names[i]+"'") #check if name is already in table
@@ -1423,21 +1423,29 @@ def manual_update():
 		cursor.execute("select active_func from update_status")         #getting functional currently in use
 
 		func_selected=cursor.fetchall()[0][0]
-
+		prog_bar = st.progress(0)
 		write_monthly_coffees(names,month_id_all, update)
 		print("...", end="", flush=True)
+		prog_bar.progress(3)
 		write_total_coffees(names)
 		print("...", end="", flush=True)
+		prog_bar.progress(6)
 		write_correlation(names)
+		prog_bar.progress(8)
 		print("..", end="", flush=True)
+		prog_bar.progress(9)
 		write_weekly_coffees_breaks(names, month_id_daily, update)
 		print(".", end="", flush=True)
+		prog_bar.progress(10)
 		write_perc_breaks(names, month_id_daily, update)
 		print(".", end="", flush=True)
+		prog_bar.progress(11)
 		write_exp_values_dev(names, month_id_all, func_selected, update)
 		print("..", end="", flush=True)
+		prog_bar.progress(12)
 		write_variation_factor(names, month_id_daily,update)
 		print(".")
+		prog_bar.progress(13)
     
 	print("Database was successfully updated")
     
