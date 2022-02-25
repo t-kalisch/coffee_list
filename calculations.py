@@ -21,25 +21,28 @@ def db_logout():
 
 
 def get_user_data():
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	cursor.execute("select name, password, admin from members")
 	user_data=cursor.fetchall()
+	db.close()
 	return user_data
 
 
 def get_simple_data():							# getting simple data from database
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	cursor.execute("select value from simple_data")
 	simple_data=cursor.fetchall()
-	#simple_data=[]
-	#for i in range(len(tmp[0])):
-	#	temp=[]
-	#	temp.append(tmp[0][i])
-	#	temp.append(tmp[1][i])
-	#	simple_data.append(temp)
+
+	db.close()
 	return simple_data
 	
 
 #@st.cache(suppress_st_warning=True)
 def write_simple_data():
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	cursor.execute("create table if not exists simple_data (id int auto_increment, parameter varchar(10), value int, primary key(id))")		#setting up table
 	cursor.execute("select * from simple_data")
 	if cursor.fetchall() == []:
@@ -72,10 +75,13 @@ def write_simple_data():
 	cursor.execute("update simple_data set value = "+str(cups)+" where parameter = 'cups'")
 	cursor.execute("update simple_data set value = "+str(data_sets)+" where parameter = 'data_sets'")
 	db.commit()
+	db.close()
 
 
 #----------------------------------------- getting monthly coffees from database --------------------------------------
 def get_monthly_coffees(names, month_id):
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	cursor.execute("select * from monthly_coffees")
 	tmp=cursor.fetchall()
 	
@@ -93,11 +99,14 @@ def get_monthly_coffees(names, month_id):
 		
 	monthly_coffees_all.append(monthly_coffees)
 	monthly_coffees_all.append(total_monthly_coffees)
+	db.close()
 	return monthly_coffees_all
 
 
 #----------------------------------------- wrtiting monthly coffees into database --------------------------------------
 def write_monthly_coffees(names, month_id, update):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     all_coffees=[]
     cursor.execute("create table if not exists monthly_coffees (id int auto_increment, name varchar(3), primary key(id))")
 
@@ -147,26 +156,26 @@ def write_monthly_coffees(names, month_id, update):
                 cursor.execute("update monthly_coffees set `"+month_id[i]+"` = "+str(all_coffees[j][i])+" where name = '"+names[j]+"'")    #always updating last two months
 
     db.commit()
+    db.close()
     return all_coffees
 
 
 #-------------------------- getting total coffees from database
 def get_total_coffees(names):
-
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     coffees=[]
     for i in range(len(names)):
         cursor.execute("select coffees from total_coffees where name like '"+names[i]+"'")
         coffees.append(cursor.fetchall()[0][0])
-
+    db.close()
     return coffees
 
 
 #-------------------------- writing total coffees into database
 def write_total_coffees(names):
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
 
 
     cursor.execute("create table if not exists total_coffees (id int auto_increment, name varchar(3), coffees int, primary key(id))")
@@ -193,12 +202,13 @@ def write_total_coffees(names):
         cursor.execute("update total_coffees set coffees = "+str(total)+" where name = '"+names[i]+"'")
 
     db.commit()
-
+    db.commit()
 
 
 #--------------------------- calculating monthly ratios from database -----------------------------
 def get_monthly_ratio(names, month_id):
-    
+    db = init_connection()
+    cursor = db.cursor(buffered=True) 
     monthly_ratio=[]
     monthly_coffees = get_monthly_coffees(names, month_id)
     
@@ -208,13 +218,15 @@ def get_monthly_ratio(names, month_id):
             ratio=100*monthly_coffees[0][i][j]/monthly_coffees[1][i]
             temp.append(ratio)
         monthly_ratio.append(temp)
-
+    db.close()
     return monthly_ratio
 
 
 
 #------------------ getting expectation values from database, maybe recalculating if functional has been updated ------
 def get_expectation_values(names, month_id, func_selected):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("select active_func from update_status")
     tmp=cursor.fetchall()
 
@@ -232,16 +244,20 @@ def get_expectation_values(names, month_id, func_selected):
     exp_values=[]
     for i in range(len(tmp[0])-2):
         exp_values.append(float(tmp[0][i+2]))
+    db.close()
     return exp_values
 
 #----------------------- getting standard deviations from database, does not recalculate if functional has been updated! ---
 def get_stdev(names, month_id):
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	cursor.execute("select * from exp_values_stdev where month = "+str(month_id[len(month_id)-1]))
 	tmp=cursor.fetchall()
     
 	stdev=[]
 	for i in range(len(names)):
 		stdev.append(float(tmp[0][i+2]))
+	db.close()
 	return stdev
 
 #------------------------- getting the MAD for every functional ---------------------------------------------------
@@ -260,6 +276,8 @@ def get_mad(names, month_id):
 
 #-----------------------------calculating expectation values, deviation and standard deviation-----------------------------
 def calc_exp_values_dev(names, month_id, func):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     coffees = get_coffees_per_work_day(names, month_id)[1]
     workdays = get_work_days(names, month_id)
 
@@ -313,12 +331,14 @@ def calc_exp_values_dev(names, month_id, func):
     total.append(expectation_values)
     total.append(deviation)
     total.append(standard_dev)
-
+    db.close()
     return total
 
 
 #----------------------------- calculating parameters for dynamic functional -----------------------------
 def calc_dynamic_functional(names, month_id):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     step = 0.05
     best_mad = 99999
     func=['dynamic',0,0,0,1,0.0,0.0,0.0]
@@ -344,10 +364,13 @@ def calc_dynamic_functional(names, month_id):
     cursor.execute("update func_param set m_3 = "+str(param[0])+", m_2 = "+str(param[1])+", m_1 = "+str(param[2])+" where name = 'dynamic'")
     #cursor.execute("update func_param set m_3 = "+str(param[0])+", m_2 = "+str(param[1])+", m_1 = "+str(param[2])+" where name = 'dynamicp'")
     db.commit()
+    db.close()
 
 
 #----------------------------- calculating parameters for dynamic functional of all parameters -----------------------------
 def calc_dynamic_all(names, month_id):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     step = 0.05
     best_mad = 99999
     func=['dynamicp',0,0,0,1,0.0,0.0,0.0]
@@ -401,10 +424,12 @@ def calc_dynamic_all(names, month_id):
     cursor.execute("update func_param set m_3 = "+str(param[0])+", m_2 = "+str(param[1])+", m_1 = "+str(param[2])+", orig_func = "+str(param[3])+", cub_func = "+str(param[4])+", sq_func = "+str(param[5])+", lin_func = "+str(param[6])+" where name = 'dynamicp'")
 
     db.commit()
-
+    db.close()
 
 #----------------------------- calculating parameters for dynamic polynomial functional -----------------------------
 def calc_polynomial_functional(names, month_id):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     step = 0.05
     best_mad = 99999
     func=['polypony',0,0,0,0,1,0.0,0.0]
@@ -429,12 +454,14 @@ def calc_polynomial_functional(names, month_id):
     
     cursor.execute("update func_param set cub_func = "+str(param[0])+", sq_func = "+str(param[1])+", lin_func = "+str(param[2])+" where name = 'polypony'")
     db.commit()
-
+    db.close()
 
 
 #----------------------------- writing expectation values, deviation and standard deviation into database -----------------------------
 @st.cache
 def write_exp_values_dev(names, month_id, functional, update):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     param=get_parameters()
     for i in range(len(param)):
         if param[i][0] == functional:
@@ -490,13 +517,15 @@ def write_exp_values_dev(names, month_id, functional, update):
                 cursor.execute("update exp_values_stdev set "+names[j]+" = "+str(round(stdev[len(stdev)-1][j],1))+" where month = "+str(month_id[len(month_id)-1]))
     
     db.commit()
-
+    db.close()
 
 
 
 #----------------------------- getting the coffee prize history -----------------------------------------
 @st.cache
 def get_prizes(names, month_id, func_selected):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("select active_func from update_status")
     tmp=cursor.fetchall()
 
@@ -548,12 +577,14 @@ def get_prizes(names, month_id, func_selected):
         temp.append('Genosse')
         temp.append(10)
         total_data.append(temp)
-        
+    db.close()
     return total_data
 
 
 #----------------------------- getting all weekly breaks and weekly coffees ------------------------------
 def get_weekly_coffees_breaks(names):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     weekly_data=[]
 
     cursor.execute("select week_id, breaks, coffees from weekly_data")
@@ -565,11 +596,13 @@ def get_weekly_coffees_breaks(names):
         temp.append(tmp[i][1])
         temp.append(tmp[i][2])
         weekly_data.append(temp)
-
+    db.close()
     return weekly_data
 
 #----------------------------- writing all weekly breaks and weekly coffees into table ------------------------------
 def write_weekly_coffees_breaks(names, month_id, update):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("create table if not exists weekly_data (id int auto_increment, week_id char(7), breaks int, coffees int, primary key(id))")
 
     cursor.execute("SELECT max(id_ext) FROM breaks")  #getting month names from beginning to current
@@ -674,10 +707,12 @@ def write_weekly_coffees_breaks(names, month_id, update):
             cursor.execute("update weekly_data set coffees = "+str(total_coffees)+" where week_id = '"+text_weekly[i]+"'")
 
     db.commit()
-
+    db.close()
 
 #--------------------------- getting correlations between drinkers ------------------------------------
 def get_correlation(names):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     corr_all=[]
     tot_coffees = get_total_coffees(names)
 
@@ -700,11 +735,13 @@ def get_correlation(names):
         corr_rel.append(temp2)
     corr_all.append(corr_abs)
     corr_all.append(corr_rel)
-
+    db.close()
     return corr_all
 
 #--------------------------- writing correlations between drinkers into tables ------------------------------------
 def write_correlation(names):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     #cursor.execute("drop table if exists corr_abs")
     #cursor.execute("drop table if exists corr_rel")
     cursor.execute("create table if not exists corr_abs (id int auto_increment, primary key(id))")
@@ -749,11 +786,14 @@ def write_correlation(names):
             cursor.execute("update corr_abs set "+names[j]+" = "+str(temp_abs1)+" where id = "+str(i+1))            #updating corr_abs table
             cursor.execute("update corr_rel set "+names[j]+" = "+str(round(100*temp_abs1/tot_coffees[i],1))+"where id = "+str(i+1)) #updating corr_rel table
     db.commit()
+    db.close()
 
 
 
 #----------------------------- getting the percentage of total breaks per month and in total per person ------------------------
 def get_perc_breaks(names, month_id):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     percentage=[]
     total_percentage=[]
     cursor.execute("select * from percentage_breaks")
@@ -764,11 +804,13 @@ def get_perc_breaks(names, month_id):
         for j in range(len(names)):
             temp.append(float(tmp[i][j+2]))
         percentage.append(temp)
-
+    db.close()
     return percentage
 
 #---------------------------- calculating total breaks per month ---------------------------------------------
 def get_tot_br_p_m(month_id):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     total_breaks=[]
     for i in range(len(month_id)):
         cursor.execute("select count(id_ext) from breaks where id_ext like '"+str(month_id[i])+"%'")
@@ -776,11 +818,14 @@ def get_tot_br_p_m(month_id):
 
         for j in range(len(tmp)):
             total_breaks.append(tmp[j][0])
+    db.close()
     return total_breaks
 
 
 #----------------------------- writing the percentage of total breaks per month and in total per person ------------------------
 def write_perc_breaks(names, month_id, update):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     tot_breaks_pm = get_tot_br_p_m(month_id)
     #cursor.execute("drop table if exists percentage_breaks")
     cursor.execute("create table if not exists percentage_breaks (id int auto_increment, month varchar(6), primary key(id))")
@@ -822,10 +867,12 @@ def write_perc_breaks(names, month_id, update):
         cursor.execute("update percentage_breaks set "+names[i]+" = "+str(round(100*total_breaks[i]/total,1))+" where month like 'total'")
         
     db.commit()
-
+    db.close()
 
 #---------------------------- calculating monthly and total coffees per work day ------------------------
 def get_coffees_per_work_day(names, month_id):  
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     coffees_per_work_day = []
     
     workdays = get_work_days(names, month_id)           #getting monthly work days
@@ -853,12 +900,14 @@ def get_coffees_per_work_day(names, month_id):
         
     coffees_per_work_day.append(total_p_w)
     coffees_per_work_day.append(temp1)
-        
+    db.close()
     return coffees_per_work_day
 
 
 #----------------------------- calculating break sizes per month per person and total --------------------
 def get_break_sizes_per_month(names, month_id):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     break_sizes=[]
     break_sizes_total=[]
     for i in range(len(month_id)):
@@ -887,12 +936,14 @@ def get_break_sizes_per_month(names, month_id):
         
         break_sizes.append(temp)
     break_sizes.append(break_sizes_total)
-    
+    db.close()
     return break_sizes
 
 
 #----------------------------- calculating variation factor -----------------------------------------------
 def write_variation_factor(names, month_id, update):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     #cursor.execute("drop table if exists variation")
     cursor.execute("create table if not exists variation (id int auto_increment, month char(6), primary key(id))")
 
@@ -997,11 +1048,13 @@ def write_variation_factor(names, month_id, update):
                     cursor.execute("update variation set "+names[j]+" = "+str(round(temp/temp1,2))+" where month like '"+month_id[len(month_id)-2+i]+"'")
 
     db.commit()
-
+    db.close()
 
 
 #-------------------------------------- calculating social scores -------------------------------------------------
 def get_social_score(names, month_id):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     social_score=[]
 
     cursor.execute("select * from variation")
@@ -1032,11 +1085,14 @@ def get_social_score(names, month_id):
     social_score_total=[]
     social_score_total.append(total)
     social_score_total.append(social_score)
+    db.close()
     return social_score_total
 
 
 #----- calculating all holiday corrections, namely recalculating factor for work days of month and damping factor -----
-def holiday_corrections(names, month_id):            
+def holiday_corrections(names, month_id):   
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("select * from holidays where month > 202102")       #getting holidays
     tmp = cursor.fetchall()
     
@@ -1071,29 +1127,37 @@ def get_cumulated_coffees(names, month_id):
             for j in range(len(names)):
                   coffees.append(all_coffees[i][j])
         coffees_cumulated.append(coffees)
+    db.close()
     return coffees_cumulated
 
 
 
 #------------------------ getting functionals from database ------------------
 def get_functionals():
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	cursor.execute("select name from func_param")
 	tmp=cursor.fetchall()
 
 	func_names=[]
 	for i in range(len(tmp)):
 		func_names.append(tmp[i][0])
- 
+ 	db.close()
 	return sorted(func_names, key=str.lower)
 
 #------------------------ getting active functional from database ------------------
 def get_active_func():
+	    db = init_connection()
+	    cursor = db.cursor(buffered=True)
 	    cursor.execute("select active_func from update_status")
 	    func = cursor.fetchall()
+	    db.close()
 	    return func[0][0]
 
 #------------------------- getting all functional parameters -------------------
 def get_parameters():
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("select * from func_param")
     tmp = cursor.fetchall()
 
@@ -1103,17 +1167,15 @@ def get_parameters():
         for j in range(8):
             temp.append(tmp[i][j+1])
         parameters.append(temp)
-    
+    db.close()
     return parameters
 
 
 #----------------------------------------- getting all members from database ---------------------------------------
 @st.cache
 def get_members():
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
 
     names=[]
 
@@ -1130,6 +1192,8 @@ def get_members():
 #----------------------------- getting last 10 breaks from database ---------------------------------
 #@st.cache
 def get_last_breaks(last_break):
+	db = init_connection()
+ 	cursor = db.cursor(buffered=True)
 	cursor.execute("select * from breaks order by id_ext desc limit 10")
 	breaks=cursor.fetchall()
 	cursor.execute("select * from drinkers order by id_ext desc limit 10")
@@ -1144,7 +1208,7 @@ def get_last_breaks(last_break):
 		temp.append(drinkers[len(drinkers)-i-1][2])
 		temp.append(drinkers[len(drinkers)-i-1][3])
 		last_breaks.append(temp)
-
+	db.close()
 	return last_breaks
 
 
@@ -1153,10 +1217,8 @@ def get_last_breaks(last_break):
 #----------------------------- getting all months from start date to now ---------------------------------
 @st.cache
 def get_months(first_date):
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     
     month_info=[]
     months=[]
@@ -1209,11 +1271,9 @@ def months_between(start_date, end_date):                   #method to get month
 #------------------------- getting work days per month per person ------------------------
 @st.cache
 def get_work_days(names, month_id):
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
-
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
+	
     cursor.execute("select * from holidays")            #getting holidays
     tmp = cursor.fetchall()
 
@@ -1226,15 +1286,14 @@ def get_work_days(names, month_id):
             else:
                 temp.append(tmp[i][2]-tmp[i][j+3])
         workdays.append(temp)
+    db.close()
     return workdays
 
 #------------------------ getting functionals from database ------------------
 @st.cache
 def get_functionals():
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
 
     cursor.execute("select name from func_param")
     tmp=cursor.fetchall()
@@ -1242,15 +1301,13 @@ def get_functionals():
     func_names=[]
     for i in range(len(tmp)):
         func_names.append(tmp[i][0])
- 
+    db.close()
     return sorted(func_names, key=str.lower)
 
 #------------------------- getting all functional parameters -------------------
 def get_parameters():
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
 
     cursor.execute("select * from func_param")
     tmp = cursor.fetchall()
@@ -1261,18 +1318,17 @@ def get_parameters():
         for j in range(8):
             temp.append(tmp[i][j+1])
         parameters.append(temp)
-    
+    db.close()
     return parameters
 
 
 def get_active_func():
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
-    cursor=db.cursor(buffered=True)
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
 
     cursor.execute("select active_func from update_status")
     func = cursor.fetchall()
+    db.close()
     return func[0][0]
 
 #-------------------------- calculating standard deviation of deviations etc ---------------------------------
@@ -1315,6 +1371,8 @@ def calc_mad_corr(names, month_id, func):
 #--------------------------- getting all holidays ------------------------------
 @st.cache
 def get_all_holidays(timestamp):
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	cursor.execute("select * from holidays")
 	tmp=cursor.fetchall()
 	
@@ -1327,12 +1385,14 @@ def get_all_holidays(timestamp):
 			else:
 				temp.append(tmp[i][j+1])
 		holidays.append(temp)
-   
+   	db.close()
 	return holidays
 
 
 #--------------------------- checking if database is up to date ----------------
 def check_update_status():
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("select update_date from update_status")
     tmp = cursor.fetchall()
 
@@ -1342,11 +1402,12 @@ def check_update_status():
         
     else:
         print("Database up to date")
-    
+    db.close()
     
 #------------------------- updates database -------------------------------------
 def update_database(month):
-
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     print("Recalculating ", end="", flush=True)
 	with st.spinner("Updating database, please wait..."):
 		cursor.execute("update update_status set update_date = curdate()")
@@ -1383,11 +1444,12 @@ def update_database(month):
     print("Database was successfully updated")
     
     db.commit()
-
+    db.close()
 
 #------------------------- updates database -------------------------------------
 def manual_update():
-
+ 	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	print("Recalculating ", end="", flush=True)
 	with st.spinner("Updating database, please wait..."):
 		cursor.execute("update update_status set update_date = curdate()")
@@ -1418,10 +1480,10 @@ def manual_update():
 		write_variation_factor(names, month_id_daily,update)
 		print(".")
     
-    print("Database was successfully updated")
+	print("Database was successfully updated")
     
-    db.commit()
-
+	db.commit()
+	db.close()
 
 #calc_polynomial_functional(get_members(), get_months(datetime.date(2020,11,1))[1])
 
