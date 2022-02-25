@@ -1142,7 +1142,7 @@ def get_functionals():
 	func_names=[]
 	for i in range(len(tmp)):
 		func_names.append(tmp[i][0])
- 	db.close()
+	db.close()
 	return sorted(func_names, key=str.lower)
 
 #------------------------ getting active functional from database ------------------
