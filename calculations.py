@@ -519,7 +519,7 @@ def write_exp_values_dev(names, month_id, functional, update):
 
 
 #----------------------------- getting the coffee prize history -----------------------------------------
-@st.cache
+#@st.cache
 def get_prizes(names, month_id, func_selected):
     db = init_connection()
     cursor = db.cursor(buffered=True)
