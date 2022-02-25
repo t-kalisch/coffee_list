@@ -1385,7 +1385,7 @@ def get_all_holidays(timestamp):
 			else:
 				temp.append(tmp[i][j+1])
 		holidays.append(temp)
-   	db.close()
+	db.close()
 	return holidays
 
 
