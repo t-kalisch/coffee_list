@@ -455,7 +455,7 @@ def calc_polynomial_functional(names, month_id):
 
 
 #----------------------------- writing expectation values, deviation and standard deviation into database -----------------------------
-@st.cache
+#@st.cache
 def write_exp_values_dev(names, month_id, functional, update):
     db = init_connection()
     cursor = db.cursor(buffered=True)
