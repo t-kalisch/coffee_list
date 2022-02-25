@@ -15,7 +15,8 @@ work_days=[21, 20, 19, 20, 23, 20, 19, 21, 22, 22, 22, 21, 21, 21, 21, 20, 23, 1
             
     #---------------------- deleting a break by knowing id_ext ----------------
 def clear_one_break(del_id):
-
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("SELECT * FROM breaks WHERE id_ext='"+del_id+"'")
     del_break=cursor.fetchall()
 
@@ -26,9 +27,12 @@ def clear_one_break(del_id):
         st.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
 		
     db.commit()
+    db.close()
 
 #----------------------- holiday input ----------------------------------------
 def submit_holidays(name, month_inp, year_inp, days_inp):
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("create table if not exists holidays (id int auto_increment, month int, work_days int, primary key(id))")            #creating holidays table
     
     if int(month_inp) > 12 or int(year_inp) < 2020:
@@ -60,9 +64,12 @@ def submit_holidays(name, month_inp, year_inp, days_inp):
         st.success("The holidays have successfully been saved.")
 
     db.commit()
+    db.close()
 
     #------------------- Changing a user's profile data --------------------------------------
 def change_profile_data(user_old, user, user_pw, admin_status):
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 	if user != "":
 		#cursor.execute("update members set name = '"+user+"' where name = '"+user_old+"'")
 		#cursor.execute("RENAME TABLE mbr_"+user_old.upper()+" TO mbr_"+user.upper())
@@ -76,15 +83,14 @@ def change_profile_data(user_old, user, user_pw, admin_status):
 			cursor.execute("update members set admin = 1 where name = '"+user_old+"'")
 	st.success("The requested profile data have successfully been changed")
 	db.commit()
+	db.close()
 	return True
 
 
 
 def add_break_sizes():                                                      # inserting values of all breaks into break_sizes
-    db = mysql.connect(user='PBTK', password='akstr!admin2',
-                              host='127.0.0.1',
-                              database='coffee_list')
-    cursor=db.cursor()
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
     cursor.execute("use coffee_list")
 
     cursor.execute("Drop table if exists break_sizes")
