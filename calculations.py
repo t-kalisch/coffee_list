@@ -16,6 +16,10 @@ db = init_connection()
 cursor = db.cursor(buffered=True)
 
 
+def db_logout():
+    db.close()
+
+
 def get_user_data():
 	cursor.execute("select name, password, admin from members")
 	user_data=cursor.fetchall()
