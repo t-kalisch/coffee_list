@@ -1129,44 +1129,6 @@ def get_cumulated_coffees(names, month_id):
 
 
 
-#------------------------ getting functionals from database ------------------
-def get_functionals():
-	db = init_connection()
-	cursor = db.cursor(buffered=True)
-	cursor.execute("select name from func_param")
-	tmp=cursor.fetchall()
-
-	func_names=[]
-	for i in range(len(tmp)):
-		func_names.append(tmp[i][0])
-	db.close()
-	return sorted(func_names, key=str.lower)
-
-#------------------------ getting active functional from database ------------------
-def get_active_func():
-	    db = init_connection()
-	    cursor = db.cursor(buffered=True)
-	    cursor.execute("select active_func from update_status")
-	    func = cursor.fetchall()
-	    db.close()
-	    return func[0][0]
-
-#------------------------- getting all functional parameters -------------------
-def get_parameters():
-    db = init_connection()
-    cursor = db.cursor(buffered=True)
-    cursor.execute("select * from func_param")
-    tmp = cursor.fetchall()
-
-    parameters=[]
-    for i in range(len(tmp)):
-        temp=[]
-        for j in range(8):
-            temp.append(tmp[i][j+1])
-        parameters.append(temp)
-    db.close()
-    return parameters
-
 
 #----------------------------------------- getting all members from database ---------------------------------------
 #@st.cache
@@ -1287,7 +1249,6 @@ def get_work_days(names, month_id):
     return workdays
 
 #------------------------ getting functionals from database ------------------
-#@st.cache
 def get_functionals():
     db = init_connection()
     cursor = db.cursor(buffered=True)
@@ -1318,7 +1279,7 @@ def get_parameters():
     db.close()
     return parameters
 
-
+#------------------------- getting active functional from database -------------------
 def get_active_func():
     db = init_connection()
     cursor = db.cursor(buffered=True)
