@@ -1229,7 +1229,7 @@ def months_between(start_date, end_date):                   #method to get month
     #return counter
 
 #------------------------- getting work days per month per person ------------------------
-@st.cache
+#@st.cache
 def get_work_days(names, month_id):
     db = init_connection()
     cursor = db.cursor(buffered=True)
