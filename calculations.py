@@ -1174,7 +1174,7 @@ def get_last_breaks(last_break):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #----------------------------- getting all months from start date to now ---------------------------------
-@st.cache
+#@st.cache
 def get_months(first_date):
     db = init_connection()
     cursor = db.cursor(buffered=True)
