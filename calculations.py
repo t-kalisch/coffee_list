@@ -748,7 +748,7 @@ def write_correlation(names):
     temp = get_total_coffees(names)
     print(temp)
     for i in range(len(names)):
-        tot_coffees.append(temp[i][1])
+        tot_coffees.append(temp[i])
         cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='corr_abs' AND column_name='"+names[i]+"'") #check if name is already in table
         tmp = cursor.fetchall()
         
