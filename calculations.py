@@ -1406,10 +1406,10 @@ def check_update_status():
     
 #------------------------- updates database -------------------------------------
 def update_database(month):
-    db = init_connection()
-    cursor = db.cursor(buffered=True)
-    print("Recalculating ", end="", flush=True)
-    with st.spinner("Updating database, please wait..."):
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
+	print("Recalculating ", end="", flush=True)
+	with st.spinner("Updating database, please wait..."):
 		cursor.execute("update update_status set update_date = curdate()")
 		cursor.execute("update update_status set update_time = now()")
 
