@@ -1344,34 +1344,35 @@ def check_update_status():
 def update_database(month):
 
     print("Recalculating ", end="", flush=True)
-    cursor.execute("update update_status set update_date = curdate()")
-    cursor.execute("update update_status set update_time = now()")
+	with st.spinner("Updating database, please wait..."):
+		cursor.execute("update update_status set update_date = curdate()")
+		cursor.execute("update update_status set update_time = now()")
 
-    names = get_members()
-    month_id_all = get_months(datetime.date(2020,11,1))[1]
-    month_id_daily = get_months(datetime.date(2021,3,8))[1]
+		names = get_members()
+		month_id_all = get_months(datetime.date(2020,11,1))[1]
+		month_id_daily = get_months(datetime.date(2021,3,8))[1]
 
-    update="simple"     #keyword for variation function
+		update="simple"     #keyword for variation function
 
-    cursor.execute("select active_func from update_status")         #getting functional currently in use
-    functional=cursor.fetchall()[0][0]
-    
-    write_monthly_coffees(names,month_id_all, update)
-    print("...", end="", flush=True)
-    write_total_coffees(names)
-    print("...", end="", flush=True)
-    write_correlation(names)
-    print("..", end="", flush=True)
-    write_weekly_coffees_breaks(names, month_id_daily, update)
-    print(".", end="", flush=True)
-    write_perc_breaks(names, month_id_daily, update)
-    print(".", end="", flush=True)
-    if datetime.date.today().month != month:    #checking for new month
-        write_exp_values_dev(names, month_id_all, update)
-        calc_dynamic_functional(names,month_id)
-        print("..", end="", flush=True)
-    write_variation_factor(names, month_id_daily,update)
-    print(".")
+		cursor.execute("select active_func from update_status")         #getting functional currently in use
+		functional=cursor.fetchall()[0][0]
+
+		write_monthly_coffees(names,month_id_all, update)
+		print("...", end="", flush=True)
+		write_total_coffees(names)
+		print("...", end="", flush=True)
+		write_correlation(names)
+		print("..", end="", flush=True)
+		write_weekly_coffees_breaks(names, month_id_daily, update)
+		print(".", end="", flush=True)
+		write_perc_breaks(names, month_id_daily, update)
+		print(".", end="", flush=True)
+		if datetime.date.today().month != month:    #checking for new month
+			write_exp_values_dev(names, month_id_all, update)
+			calc_dynamic_functional(names,month_id)
+			print("..", end="", flush=True)
+		write_variation_factor(names, month_id_daily,update)
+		print(".")
 
 
     
@@ -1383,34 +1384,35 @@ def update_database(month):
 #------------------------- updates database -------------------------------------
 def manual_update():
 
-    print("Recalculating ", end="", flush=True)
-    cursor.execute("update update_status set update_date = curdate()")
-    cursor.execute("update update_status set update_time = now()")
-	
-    names = get_members()
-    month_id_all = get_months(datetime.date(2020,11,1))[1]
-    month_id_daily = get_months(datetime.date(2021,3,8))[1]
+	print("Recalculating ", end="", flush=True)
+	with st.spinner("Updating database, please wait..."):
+		cursor.execute("update update_status set update_date = curdate()")
+		cursor.execute("update update_status set update_time = now()")
 
-    update="full"     #keyword for variation function
-	
-    cursor.execute("select active_func from update_status")         #getting functional currently in use
+		names = get_members()
+		month_id_all = get_months(datetime.date(2020,11,1))[1]
+		month_id_daily = get_months(datetime.date(2021,3,8))[1]
 
-    func_selected=cursor.fetchall()[0][0]
-    
-    write_monthly_coffees(names,month_id_all, update)
-    print("...", end="", flush=True)
-    write_total_coffees(names)
-    print("...", end="", flush=True)
-    write_correlation(names)
-    print("..", end="", flush=True)
-    write_weekly_coffees_breaks(names, month_id_daily, update)
-    print(".", end="", flush=True)
-    write_perc_breaks(names, month_id_daily, update)
-    print(".", end="", flush=True)
-    write_exp_values_dev(names, month_id_all, func_selected, update)
-    print("..", end="", flush=True)
-    write_variation_factor(names, month_id_daily,update)
-    print(".")
+		update="full"     #keyword for variation function
+
+		cursor.execute("select active_func from update_status")         #getting functional currently in use
+
+		func_selected=cursor.fetchall()[0][0]
+
+		write_monthly_coffees(names,month_id_all, update)
+		print("...", end="", flush=True)
+		write_total_coffees(names)
+		print("...", end="", flush=True)
+		write_correlation(names)
+		print("..", end="", flush=True)
+		write_weekly_coffees_breaks(names, month_id_daily, update)
+		print(".", end="", flush=True)
+		write_perc_breaks(names, month_id_daily, update)
+		print(".", end="", flush=True)
+		write_exp_values_dev(names, month_id_all, func_selected, update)
+		print("..", end="", flush=True)
+		write_variation_factor(names, month_id_daily,update)
+		print(".")
     
     print("Database was successfully updated")
     
