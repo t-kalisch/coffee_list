@@ -1448,7 +1448,7 @@ def update_database(month):
 
 #------------------------- updates database -------------------------------------
 def manual_update():
- 	db = init_connection()
+	db = init_connection()
 	cursor = db.cursor(buffered=True)
 	print("Recalculating ", end="", flush=True)
 	with st.spinner("Updating database, please wait..."):
