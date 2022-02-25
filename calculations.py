@@ -15,7 +15,7 @@ def init_connection():
 db = init_connection()
 cursor = db.cursor(buffered=True)
 
-sb.close()
+db.close()
 def db_logout():
     db.close()
 
