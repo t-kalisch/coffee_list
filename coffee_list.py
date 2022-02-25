@@ -296,32 +296,8 @@ if logged_in == "true":
                 clear_one_break(del_id)
             else:
                 st.warning("Please enter a break ID")
-    
-if logged_in == "true":
-    if profile_nav == "Show diagrams":
-        st.markdown("You now have access to the coffee list.")
-        col1,col2,col3,col4 = st.columns([1,1,1,1])
-        col1.subheader(str(simple_data[0][0])+" drinkers")
-        col1.subheader(str(simple_data[1][0])+" active drinkers")
-        col2.subheader(str(simple_data[2][0])+" months of drinking")
-        col3.subheader(str(simple_data[3][0])+" coffee breaks")
-        col3.subheader(str(simple_data[4][0])+" cups of coffee")
-        col4.subheader(str(simple_data[5][0])+" data sets")
-        col4.subheader(str(simple_data[6][0])+" diagrams")
-else:
-    col1,col2,col3,col4 = st.columns([1,1,1,1])
-    col1.subheader(str(simple_data[0][0])+" drinkers")
-    col1.subheader(str(simple_data[1][0])+" active drinkers")
-    col2.subheader(str(simple_data[2][0])+" months of drinking")
-    col3.subheader(str(simple_data[3][0])+" coffee breaks")
-    col3.subheader(str(simple_data[4][0])+" cups of coffee")
-    col4.subheader(str(simple_data[5][0])+" data sets")
-    col4.subheader(str(simple_data[6][0])+" diagrams")
 
-if st.session_state.attempt == "true":
-    st.write("-" * 34)
-    st.warning("Incorrect username/password")
-    
+                
 with st.sidebar:
     act_func = get_active_func()
     if logged_in == "true":
@@ -350,6 +326,36 @@ if admin_status == "1":
     update_full = st.sidebar.button("Update database", help="Click here to perform a full update of the database")
     if update_full:
         manual_update()
+   
+
+
+                
+                
+if logged_in == "true":
+    if profile_nav == "Show diagrams":
+        st.markdown("You now have access to the coffee list.")
+        col1,col2,col3,col4 = st.columns([1,1,1,1])
+        col1.subheader(str(simple_data[0][0])+" drinkers")
+        col1.subheader(str(simple_data[1][0])+" active drinkers")
+        col2.subheader(str(simple_data[2][0])+" months of drinking")
+        col3.subheader(str(simple_data[3][0])+" coffee breaks")
+        col3.subheader(str(simple_data[4][0])+" cups of coffee")
+        col4.subheader(str(simple_data[5][0])+" data sets")
+        col4.subheader(str(simple_data[6][0])+" diagrams")
+else:
+    col1,col2,col3,col4 = st.columns([1,1,1,1])
+    col1.subheader(str(simple_data[0][0])+" drinkers")
+    col1.subheader(str(simple_data[1][0])+" active drinkers")
+    col2.subheader(str(simple_data[2][0])+" months of drinking")
+    col3.subheader(str(simple_data[3][0])+" coffee breaks")
+    col3.subheader(str(simple_data[4][0])+" cups of coffee")
+    col4.subheader(str(simple_data[5][0])+" data sets")
+    col4.subheader(str(simple_data[6][0])+" diagrams")
+
+if st.session_state.attempt == "true":
+    st.write("-" * 34)
+    st.warning("Incorrect username/password")
+   
     
 
 
