@@ -1125,7 +1125,7 @@ def get_cumulated_coffees(names, month_id):
             for j in range(len(names)):
                   coffees.append(all_coffees[i][j])
         coffees_cumulated.append(coffees)
-    db.close()
+    
     return coffees_cumulated
 
 
