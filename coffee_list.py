@@ -98,9 +98,9 @@ with st.sidebar:
     user_pw = col2.text_input(label="", type="password", placeholder="Password", key="user_pw")
     col1,col2=st.columns([1,1.65])
     if logged_in == "true":
-        logout = col1.button("Logout", help="Log out here")
+        logout = col1.button("Logout", help="Log out here", on_click=logout_check)
     else:
-        login = col1.button("Login", help="Log in here")
+        login = col1.button("Login", help="Log in here", on_click=check_login, args=(user, user_pw))
     remember = st.checkbox("Remember me", help="Keep me logged in")      
       
 if logged_in == "true":
@@ -110,14 +110,14 @@ if logged_in == "true":
     else:
         col2.write("  Member status: User") 
         
-    if logout:
-        logout_check()
+    #if logout:
+    #    logout_check()
 else:
     st.title("Welcome to the future of coffee drinking **:coffee:**")
     st.write("In order to get access to the visualised data you need to be logged in with your username and password.")
     
-    if login:
-        check_login(user, user_pw)         
+    #if login:
+    #    check_login(user, user_pw)         
 
 
     
