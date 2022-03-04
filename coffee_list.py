@@ -90,8 +90,6 @@ def logout_check():
         
         
 with st.sidebar:
-    #page_nav = st.selectbox('Page navigation', ("Login","Data visualisation"), 0)
-    #if page_nav == 'Login':
     
     col1,col2 = st.columns([1,1.65])
     user = col1.text_input(label="", placeholder="Username", key="user")
@@ -124,7 +122,8 @@ else:
 
 if logged_in == "true":
     if admin_status != "1":
-        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
+        #profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
+        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change password"), 0)
     elif admin_status == "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee break","Enter holidays","Change profile data"), 0)
     
