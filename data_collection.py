@@ -17,14 +17,18 @@ work_days=[21, 20, 19, 20, 23, 20, 19, 21, 22, 22, 22, 21, 21, 21, 21, 20, 23, 1
 def clear_one_break(del_id):
     db = init_connection()
     cursor = db.cursor(buffered=True)
-    cursor.execute("SELECT * FROM breaks WHERE id_ext='"+del_id+"'")
-    del_break=cursor.fetchall()
-
-    if del_break != []:
-        cursor.execute("DELETE FROM breaks WHERE id_ext='"+del_id+"'")
-        st.success("Break "+del_id+" has successfully been deleted.")
+    
+    if del_id == "":
+         st.warning("Please enter a break ID")
     else:
-        st.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
+        cursor.execute("SELECT * FROM breaks WHERE id_ext='"+del_id+"'")
+        del_break=cursor.fetchall()
+
+        if del_break != []:
+            cursor.execute("DELETE FROM breaks WHERE id_ext='"+del_id+"'")
+            st.success("Break "+del_id+" has successfully been deleted.")
+        else:
+           st.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
 		
     db.commit()
     db.close()
