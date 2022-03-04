@@ -14,7 +14,7 @@ work_days=[21, 20, 19, 20, 23, 20, 19, 21, 22, 22, 22, 21, 21, 21, 21, 20, 23, 1
 
             
     #---------------------- deleting a break by knowing id_ext ----------------
-def clear_one_break(del_id):
+def clear_one_break(del_id, test):
     db = init_connection()
     cursor = db.cursor(buffered=True)
     
