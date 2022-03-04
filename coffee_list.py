@@ -289,7 +289,7 @@ if logged_in == "true":
         df=pd.DataFrame(last_breaks,columns=columns)
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
-        delete = col1.button("Delete break", on_click=clear_one_break, args=del_id)
+        delete = col1.button("Delete break", on_click=clear_one_break, args=(del_id,""))
         
 
                 
