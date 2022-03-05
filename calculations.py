@@ -76,6 +76,7 @@ def write_simple_data():
 
 
 #----------------------------------------- getting monthly coffees from database --------------------------------------
+@st.cache(allow_output_mutation=True)
 def get_monthly_coffees(names, month_id):
 	db = init_connection()
 	cursor = db.cursor(buffered=True)
@@ -101,7 +102,6 @@ def get_monthly_coffees(names, month_id):
 
 
 #----------------------------------------- wrtiting monthly coffees into database --------------------------------------
-@st.cache(allow_output_mutation=True)
 def write_monthly_coffees(names, month_id, update):
     db = init_connection()
     cursor = db.cursor(buffered=True)
