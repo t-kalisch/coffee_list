@@ -26,6 +26,7 @@ def clear_one_break(del_id, test):
 
         if del_break != []:
             cursor.execute("DELETE FROM breaks WHERE id_ext='"+del_id+"'")
+            cursor.execute("update update_status set last_break = timestamp(subdate(current_date, 1))")
             st.success("Break "+del_id+" has successfully been deleted.")
         else:
            st.error("Break "+del_id+" does not exist, therefore nothing was deleted.")
