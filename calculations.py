@@ -270,6 +270,7 @@ def get_mad(names, month_id):
         temp.append(param[i][0])
         temp.append(calc_mad_corr(names, month_id, param[i]))
         mad_total.append(temp)
+    print(mad_total)
     return mad_total
 
 #-----------------------------calculating expectation values, deviation and standard deviation-----------------------------
