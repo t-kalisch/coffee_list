@@ -519,19 +519,14 @@ def write_exp_values_dev(names, month_id, functional, update):
 
 
 
-#----------------------------- getting the coffee prize history -----------------------------------------
-#@st.cache
-def get_prizes(names, month_id, func_selected):
-    db = init_connection()
-    cursor = db.cursor(buffered=True)
-    cursor.execute("select active_func from update_status")
-    tmp=cursor.fetchall()
+#----------------------------- writing the coffee prize history into database -----------------------------------------
+def write_prizes(names, month_id, update):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
 
-    if tmp[0][0] != func_selected:
-        update="full"
-        write_exp_values_dev(names, month_id, func_selected, update)
-        cursor.execute("update update_status set active_func = '"+func_selected+"'")
-        db.commit()
+    cursor.execute("create table if not exists prize_history (id int auto_increment, month int, Kaffeemeister varchar(3), Hotshot varchar(3), Genosse varchar(3), primary key(id))")
 
     cursor.execute("select * from monthly_coffees")
     coffees=cursor.fetchall()
@@ -539,42 +534,96 @@ def get_prizes(names, month_id, func_selected):
     exp_values=cursor.fetchall()
     social = get_social_score(names, month_id)[1]
 
+    if update == "full":   
+        for i in range(len(month_id)-1):
+            temp_km=0
+            name_km=""
+            temp_hs=100
+            name_hs=""
+            temp_gn=0
+            name_gn=""
+            for j in range(len(names)):
+                if coffees[j][i+6] > temp_km:
+                    temp_km = coffees[j][i+6]
+                    name_km = j
+                if coffees[j][i+6] > 0 and coffees[j][i+5] > 0 and abs(float(exp_values[i][j+2])-coffees[j][i+6]) < temp_hs:
+                    temp_hs = abs(float(exp_values[i][j+2])-coffees[j][i+6])
+                    name_hs = j
+                if social[i][j] > temp_gn:
+                    temp_gn = social[i][j]
+                    name_gn = j
+
+            cursor.execute("select count(*) from prize_history where month = "+month_id[i])
+            tmp=cursor.fetchall()
+            if tmp[0][0] == 0:
+                cursor.execute("insert into prize_history (month, Kaffeemeister, Hotshot, Genosse) values (%s, %s, %s, %s)", (int(month_id[i]), names[name_km], names[name_hs], names[name_gn]))
+
+            if i > len(month_id)-3:
+                cursor.execute("update prize_history set Kaffeemeister = '"+names[name_km]+"', Hotshot = '"+names[name_hs]+"', Genosse = '"+names[name_gn]+"' where month = "+month_id[i])
+    elif update == "simple":
+        for i in range(2):
+            temp_km=0
+            name_km=""
+            temp_hs=100
+            name_hs=""
+            temp_gn=0
+            name_gn=""
+            for j in range(len(names)):
+                if coffees[j][len(month_id)-1-i+6] > temp_km:
+                    temp_km = coffees[j][len(month_id)-1-i+6]
+                    name_km = j
+                if coffees[j][len(month_id)-1-i+6] > 0 and coffees[j][len(month_id)-1-i+5] > 0 and abs(float(exp_values[len(month_id)-1-i][j+2])-coffees[j][len(month_id)-1-i+6]) < temp_hs:
+                    temp_hs = abs(float(exp_values[len(month_id)-1-i][j+2])-coffees[j][len(month_id)-1-i+6])
+                    name_hs = j
+                if social[len(month_id)-1-i][j] > temp_gn:
+                    temp_gn = social[len(month_id)-1-i][j]
+                    name_gn = j
+            cursor.execute("select count(*) from prize_history where month = "+month_id[len(month_id)-1-i])
+            tmp=cursor.fetchall()
+            if tmp[0][0] == 0:
+                for i in range(3):
+                    cursor.execute("insert into prize_history (month, Kaffeemeister, Hotshot, Genosse) values (%s, %s, %s, %s)", (int(month_id[len(month_id)-1-i]), names[name_km], names[name_hs], names[name_gn]))
+
+            cursor.execute("update prize_history set Kaffeemeister = "+names[name_km]+", Hotshot = "+names[name_hs]+", Genosse = "+names[name_gn]+" where month = "+month_id[len(month_id)-1-i])
+    db.commit()
+    db.close()
+    #return total_data
+
+
+#----------------------------- getting the coffee prize history -----------------------------------------
+def get_prizes(names, month_id, func_selected):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+
+    cursor.execute("select active_func from update_status")
+    tmp=cursor.fetchall()
+
+    if tmp[0][0] != func_selected:
+        update="full"
+        write_exp_values_dev(names, month_id, func_selected, update)
+        write_prizes(names, month_id)
+        cursor.execute("update update_status set active_func = '"+func_selected+"'")
+        db.commit()
+
+    cursor.execute("select * from prize_history")
+    tmp=cursor.fetchall()
+    
+    prizes_sizes=[["Kaffeemeister", "Hotshot", "Genosse"],[40,25,10]]
     total_data=[]        
     for i in range(len(month_id)-1):
-        temp_km=0
-        name_km=""
-        temp_hs=100
-        name_hs=""
-        temp_gn=0
-        name_gn=""
-        for j in range(len(names)):
-            if coffees[j][i+6] > temp_km:
-                temp_km = coffees[j][i+6]
-                name_km = j
-            if coffees[j][i+6] > 0 and coffees[j][i+5] > 0 and abs(float(exp_values[i][j+2])-coffees[j][i+6]) < temp_hs:
-                temp_hs = abs(float(exp_values[i][j+2])-coffees[j][i+6])
-                name_hs = j
-            if social[i][j] > temp_gn:
-                temp_gn = social[i][j]
-                name_gn = j
-        temp=[]
-        temp.append(month_id[i])    
-        temp.append(name_km)
-        temp.append('Kaffeemeister')
-        temp.append(40)
-        total_data.append(temp)
-        temp=[]
-        temp.append(month_id[i])    
-        temp.append(name_hs)
-        temp.append('Hotshot')
-        temp.append(25)
-        total_data.append(temp)
-        temp=[]
-        temp.append(month_id[i])    
-        temp.append(name_gn)
-        temp.append('Genosse')
-        temp.append(10)
-        total_data.append(temp)
+        for j in range(3):
+            temp = []
+            temp.append(str(tmp[i][1]))
+            for k in range(len(names)):
+                if names[k] == tmp[i][2+j]:
+                    temp.append(k)
+            temp.append(prizes_sizes[0][j])
+            temp.append(prizes_sizes[1][j])
+            total_data.append(temp)
+ 
     db.close()
     return total_data
 
@@ -1444,10 +1493,13 @@ def manual_update():
 		prog_bar.progress(11)
 		write_exp_values_dev(names, month_id_all, func_selected, update)
 		print("..", end="", flush=True)
-		prog_bar.progress(12)
+		prog_bar.progress(13)
+		write_prizes(names, month_id_daily, update)
+		print("..", end="", flush=True)
+		prog_bar.progress(15)
 		write_variation_factor(names, month_id_daily,update)
 		print(".")
-		prog_bar.progress(13)
+		prog_bar.progress(17)
     
 	print("Database was successfully updated")
     
