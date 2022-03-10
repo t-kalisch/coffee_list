@@ -260,18 +260,41 @@ def get_stdev(names, month_id):
 
 #------------------------- getting the MAD for every functional ---------------------------------------------------
 def get_mad(names, month_id):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
+    param = get_parameters()
+    cursor.execute("select name, MAD from func_param")
+    tmp = cursor.fetchall()
+
+    mad_total=[]
+    for i in range(len(tmp)):
+        temp=[]
+        temp.append(tmp[i][0])
+        temp.append(float(tmp[i][1]))
+        mad_total.append(temp)
+    db.close()
+    return mad_total
+
+#------------------------- getting the MAD for every functional ---------------------------------------------------
+def write_mad(names, month_id):
+    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
+    host='212.227.72.95',
+    database='coffee_list')
+    cursor=db.cursor(buffered=True)
+
     param = get_parameters()
 
     mad_total=[]
     for i in range(len(param)):
         for j in range(len(param[i])-1):
             param[i][j+1] = float(param[i][j+1])
-        temp=[]
-        temp.append(param[i][0])
-        temp.append(calc_mad_corr(names, month_id, param[i]))
-        mad_total.append(temp)
-    st.write(mad_total)
-    return mad_total
+        cursor.execute("update func_param set MAD = "+str(calc_mad_corr(names, month_id, param[i]))+" where name = '"+param[i][0]+"'")
+    db.commit()
+    db.close()
+
 
 #-----------------------------calculating expectation values, deviation and standard deviation-----------------------------
 def calc_exp_values_dev(names, month_id, func):
@@ -1494,7 +1517,10 @@ def manual_update():
 		prog_bar.progress(11)
 		write_exp_values_dev(names, month_id_all, func_selected, update)
 		print("..", end="", flush=True)
-		prog_bar.progress(13)
+		prog_bar.progress(12)
+		write_mad(names, month_id_all)
+		print("..", end="", flush=True)
+		prog_bar,progress(13)
 		write_prizes(names, month_id_daily, update)
 		print("..", end="", flush=True)
 		prog_bar.progress(15)
