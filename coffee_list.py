@@ -289,8 +289,10 @@ if logged_in == "true":
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
         delete = col1.button("Delete break", on_click=clear_one_break, args=(del_id,""))
-        col1.button("Delete coffee from break", on_click=delete_coffee, args=(del_id,del_person,""))
+        st.write("-" * 34)
         del_person = col1.text_input("Delete for person", placeholder="username")
+        col1.button("Delete coffee from break", on_click=delete_coffee, args=(del_id,del_person,""))
+        
         
         
 
