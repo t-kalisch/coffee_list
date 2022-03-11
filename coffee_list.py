@@ -254,7 +254,7 @@ if logged_in == "true":
                 if done == False:
                     st.warning("Incorrect password")
 
-    if profile_nav == "Submit coffee or break":                                        # Submit break page
+    if profile_nav == "Submit coffee break":                                        # Submit break page
         st.subheader("**:coffee:** Submit a coffee break")
         st.markdown("Please enter the names and number of coffees for the break.")
         col1,col2,col3,col4,col5,col6,col7,col8 = st.columns([1,1,1,1,1,1,1,1])
@@ -276,7 +276,7 @@ if logged_in == "true":
         col1.button("Start break")
         col2.button("End break")
         
-    if profile_nav == "Delete coffee break":                                        # Delete break page
+    if profile_nav == "Delete coffee or break":                                        # Delete break page
         st.subheader("**:x:** Delete a coffee break")
         st.markdown("Please enter the extended ID of the break you want to delete.")
         last_break=1
