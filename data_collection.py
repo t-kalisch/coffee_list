@@ -35,7 +35,7 @@ def clear_one_break(del_id, test):
     db.close()
 
 	 #---------------------- deleting a coffee from a break ----------------
-def delete_coffee(id_ext, name):
+def delete_one_coffee(id_ext, name):
 	db = init_connection()
 	cursor = db.cursor(buffered=True)
 	
