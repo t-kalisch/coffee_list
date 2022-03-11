@@ -291,7 +291,7 @@ if logged_in == "true":
         delete = col1.button("Delete break", on_click=clear_one_break, args=(del_id,""))
         col1.write("-" * 34)
         del_person = col1.text_input("Delete for person", placeholder="username")
-        col1.button("Delete coffee from break", on_click=delete_coffee, args=(del_id,del_person,""))
+        col1.button("Delete coffee from break", on_click=delete_one_coffee, args=(del_id,del_person))
         
         
         
