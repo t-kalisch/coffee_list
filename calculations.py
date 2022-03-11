@@ -836,7 +836,7 @@ def write_correlation(names):
             cursor.execute("insert into corr_rel ("+names[i]+") values ("+str(0)+")")       #inserting dummy values for table size
 
     for i in range(len(names)):
-        cursor.execute("select id_ext from mbr_"+names[i])
+        cursor.execute("select id_ext, n_coffees from mbr_"+names[i])
         all_breaks=cursor.fetchall()
         for j in range(len(names)):
             temp=[]
@@ -851,10 +851,10 @@ def write_correlation(names):
                     cursor.execute("SELECT n_coffees from mbr_"+str(names[j])+" where id_ext = "+all_breaks[k][0])  #for correlation with other people
                     tmp=cursor.fetchall()
                     if len(tmp)>0:
-                        temp.append(tmp[0][0])
+                        temp.append(all_breaks[k][1])
             temp_abs1=0
             for l in range(len(temp)):
-                temp_abs1=temp_abs1+temp[l]
+                temp_abs1 += temp[l]
             cursor.execute("update corr_abs set "+names[j]+" = "+str(temp_abs1)+" where id = "+str(i+1))            #updating corr_abs table
             cursor.execute("update corr_rel set "+names[j]+" = "+str(round(100*temp_abs1/tot_coffees[i],1))+"where id = "+str(i+1)) #updating corr_rel table
     db.commit()
