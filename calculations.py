@@ -1012,25 +1012,28 @@ def get_break_sizes_per_month(names, month_id):
     return break_sizes
 
 
-#----------------------------- calculating variation factor -----------------------------------------------
-def write_variation_factor(names, month_id, update):
+#----------------------------- calculating social scores -----------------------------------------------
+def write_social_score(names, month_id, update):
     db = init_connection()
     cursor = db.cursor(buffered=True)
-    #cursor.execute("drop table if exists variation")
-    cursor.execute("create table if not exists variation (id int auto_increment, month char(6), primary key(id))")
+
+    cursor.execute("create table if not exists social_score (id int auto_increment, month varchar(6), primary key(id))")
+    cursor.execute("select count(*) from social_score where month = 'total'")
+    if cursor.fetchall()[0][0] == 0:
+        cursor.execute("insert into social_score (month) values ('total')")
 
     for i in range(len(names)):
-        cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='variation' AND column_name='"+names[i]+"'") #check if name is already in table
+        cursor.execute("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='coffee_list' AND TABLE_NAME='social_score' AND column_name='"+names[i]+"'") #check if name is already in table
         tmp=cursor.fetchall()
         if tmp[0][0] == 0:
-            cursor.execute("alter table variation add "+names[i]+" varchar(6)")
+            cursor.execute("alter table social_score add "+names[i]+" varchar(6)")
 
     cursor.execute("SELECT max(id_ext) FROM breaks")  #getting month names from beginning to current
     temp=cursor.fetchone()
     temp=list(temp)
     last_date=datetime.date(int(temp[0][0:4]),int(temp[0][4:6]),int(temp[0][6:8]))
     if update == "full":
-        start_date=datetime.date(2021, 3, 8)
+        start_date = datetime.date(2021,3,8)
     elif update == "simple":
         start_year = str(month_id[len(month_id)-2])[0:4]
         start_month = str(month_id[len(month_id)-2])[5:6]
@@ -1046,9 +1049,7 @@ def write_variation_factor(names, month_id, update):
         delta_days = (last_date-start_date).days
         var_daily=[]
 
-        
         for i in range(delta_days+1):
-            
             temp=[]
             id_day = str(curr_date.year)
             if curr_date.month < 10:
@@ -1061,7 +1062,7 @@ def write_variation_factor(names, month_id, update):
                 id_day = id_day + str(curr_date.day)
             curr_date=curr_date+datetime.timedelta(days=1)
             temp.append(id_day)
-            
+            print(id_day)
             var_total = 0
             for j in range(len(names)):
                 cursor.execute("select count(*) from mbr_"+names[j]+" where id_ext like '"+str(id_day)+"%'")       
@@ -1069,7 +1070,7 @@ def write_variation_factor(names, month_id, update):
 
                 if tmp[0][0] > 0:
                     var_total += 1                                      #total number of people who drank coffee per day
-            
+                    
             for j in range(len(names)):
                 var = 0
                 for k in range(len(names)):                             #permutations of every person for every person who drank coffee per day
@@ -1087,28 +1088,49 @@ def write_variation_factor(names, month_id, update):
                 temp.append(var)
             var_daily.append(temp)
 
+        cursor.execute("select * from percentage_breaks")                           #getting all necessary parameters for social score
+        percentage = cursor.fetchall()
+        corrections = holiday_corrections(names, month_id)
+        break_sizes = get_break_sizes_per_month(names, month_id)
+
         if update == "full":                                                                                 #updating everything
+            var_monthly=[]
+            soc_score = []
             for i in range(len(month_id)):
-                cursor.execute("select count(*) from variation where month = "+str(month_id[i]))
+                cursor.execute("select count(*) from social_score where month = "+str(month_id[i]))
                 tmp=cursor.fetchall()
                 if tmp[0][0] == 0:
-                    cursor.execute("insert into variation (month) values ('"+str(month_id[i])+"')")
-
+                    cursor.execute("insert into social_score (month) values ('"+str(month_id[i])+"')")
+                temp3=[]
                 for j in range(len(names)):
                     temp=0
                     temp1=0
+
                     for k in range(len(var_daily)):
                         if (var_daily[k][0])[0:6] == month_id[i]:
                             temp=temp + var_daily[k][j+1]
                             temp1 += 1
-                    cursor.execute("update variation set "+names[j]+" = "+str(round(temp/temp1,2))+" where month like '"+month_id[i]+"'")
+                    if temp1 == 0:
+                        soc_sc = 0
+                    else:
+                        temp2=float(percentage[i+1][j+2])*break_sizes[i][j]*(temp/temp1)*corrections[i][j]       #calculating social score per person per month
+                    temp3.append(temp2)
+                    cursor.execute("update social_score set "+names[j]+" = "+str(round(temp2,2))+" where month like '"+month_id[i]+"'")
+                soc_score.append(temp3)
+                print(soc_score)
+            total=[]
+            for i in range(len(names)):
+                temp = 0
+                for j in range(len(month_id)):
+                    temp = temp + soc_score[j][i]                                                                            #calculating total social score
+                total.append(temp)            
                 
         elif update == "simple":                                                                             #updating only last 2 months
             for i in range(2):
-                cursor.execute("select count(*) from variation where month = "+str(month_id[len(month_id)-2+i]))
+                cursor.execute("select count(*) from social_score where month = "+str(month_id[len(month_id)-2+i]))
                 tmp=cursor.fetchall()
                 if tmp[0][0] == 0:
-                    cursor.execute("insert into variation (month) values ('"+str(month_id[len(month_id)-2+i])+"')")
+                    cursor.execute("insert into social_score (month) values ('"+str(month_id[len(month_id)-2+i])+"')")
 
                 for j in range(len(names)):
                     temp=0
@@ -1117,7 +1139,28 @@ def write_variation_factor(names, month_id, update):
                         if (var_daily[k][0])[0:6] == month_id[len(month_id)-2+i]:
                             temp=temp + var_daily[k][j+1]
                             temp1 += 1
-                    cursor.execute("update variation set "+names[j]+" = "+str(round(temp/temp1,2))+" where month like '"+month_id[len(month_id)-2+i]+"'")
+
+                    if temp1 == 0:
+                        soc_sc = 0
+                    else:
+                        soc_sc = float(percentage[len(month_id)-1+i][j+2])*break_sizes[len(month_id)-2+i][j]*(temp/temp1)*corrections[len(month_id)-2+i][j]       #calculating social score per person per month
+ 
+                    cursor.execute("update social_score set "+names[j]+" = "+str(round(soc_sc,2))+" where month like '"+month_id[len(month_id)-2+i]+"'")
+            db.commit()
+            
+            cursor.execute("select * from social_score")
+            tmp=cursor.fetchall()
+            
+            total=[]
+            for i in range(len(names)):
+                temp = 0
+                for j in range(len(tmp)-1):
+                    temp = temp + float(tmp[j+1][i+2])                                                                            #calculating total social score
+                total.append(temp)
+        max_value = max(total)
+        for i in range(len(names)):
+            total[i] = round(100*total[i]/max_value,1)                                                                      #normalising on max value
+            cursor.execute("update social_score set "+names[i]+" = "+str(round(total[i],2))+" where month = 'total'")
 
     db.commit()
     db.close()
@@ -1127,38 +1170,30 @@ def write_variation_factor(names, month_id, update):
 def get_social_score(names, month_id):
     db = init_connection()
     cursor = db.cursor(buffered=True)
-    social_score=[]
-
-    cursor.execute("select * from variation")
-    variation = cursor.fetchall()
-    cursor.execute("select * from percentage_breaks")
-    percentage = cursor.fetchall()
-    corrections = holiday_corrections(names, month_id)
-    break_sizes = get_break_sizes_per_month(names, month_id)
-    #print(corrections)
-
-    for i in range(len(month_id)):
-        temp=[]
-        for j in range(len(names)):
-            temp.append(float(percentage[i+1][j+2])*break_sizes[i][j]*float(variation[i][j+2])*corrections[i][j])       #calculating social score per person per month
-        social_score.append(temp)
-
-    total=[]
-    for i in range(len(names)):
-        temp = 0
-        for j in range(len(month_id)):
-            temp = temp + social_score[j][i]                                                                            #calculating total social score
-        total.append(temp)
-        
-    max_value = max(total)
-    for i in range(len(names)):
-        total[i] = round(100*total[i]/max_value,1)                                                                      #normalising on max value
 
     social_score_total=[]
-    social_score_total.append(total)
-    social_score_total.append(social_score)
+
+    cursor.execute("select * from social_score")
+    tmp=cursor.fetchall()
+    social_score_total.append(list(tmp[0]))
+    social_score_total[0].pop(0)
+    social_score_total[0].pop(0)
+    for i in range(len(social_score_total[0])):
+        social_score_total[0][i] = float(social_score_total[0][i])
+    
+    temp=[]
+    for i in range(len(tmp)-1):
+        temp.append(list(tmp[i+1]))
+        temp[i].pop(0)
+        temp[i].pop(0)
+        for j in range(len(temp[i])):
+            temp[i][j] = float(temp[i][j])
+    social_score_total.append(temp)
+    #print(social_score_total)
+
     db.close()
     return social_score_total
+
 
 
 #----- calculating all holiday corrections, namely recalculating factor for work days of month and damping factor -----
@@ -1470,8 +1505,8 @@ def update_database(month):
         write_exp_values_dev(names, month_id_all, func_selected, update)
         calc_dynamic_functional(names,month_id_all)
         print("..", end="", flush=True)
-    write_variation_factor(names, month_id_daily,update)
-    print(".")
+    write_social_score(names, month_id_daily,update)
+    print("..")
 
     
     
@@ -1524,8 +1559,8 @@ def manual_update():
 		write_prizes(names, month_id_daily, update)
 		print("..", end="", flush=True)
 		prog_bar.progress(15)
-		write_variation_factor(names, month_id_daily,update)
-		print(".")
+		write_social_score(names, month_id_daily,update)
+		print("..")
 		prog_bar.progress(17)
     
 	print("Database was successfully updated")
