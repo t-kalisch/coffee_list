@@ -322,11 +322,8 @@ with st.sidebar:
     coffees_cumulated = st.checkbox("Cumulated coffees")
     
 if admin_status == "1":
-    update_full = st.sidebar.button("Update database", help="Click here to perform a full update of the database")
-    if update_full:
-        manual_update()
-   
-
+    update_simple = st.sidebar.button("Simple dabatbase update", help="Click here to perform a simple (last two months) update of the database", on_click = manual_update_simple)
+    update_full = st.sidebar.button("Full database update", help="Click here to perform a full update of the database", on_click = manual_update)
 
                 
                 
