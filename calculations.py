@@ -1482,61 +1482,60 @@ def manual_update_simple():
 
 #------------------------- updates database -------------------------------------
 def update_database(month):
-    db = init_connection()
-    cursor = db.cursor(buffered=True)
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
 
-    print("Recalculating ", end="", flush=True)
-    cursor.execute("update update_status set update_date = curdate()")
-    
-    names = get_members()
-    month_id_all = get_months(datetime.date(2020,11,1))[1]
-    month_id_daily = get_months(datetime.date(2021,3,8))[1]
+	print("Recalculating ", end="", flush=True)
+	with st.spinner("Updating database, please wait..."):
+		cursor.execute("update update_status set update_date = curdate()")
 
-    update="simple"     #keyword for variation function
+		names = get_members()
+		month_id_all = get_months(datetime.date(2020,11,1))[1]
+		month_id_daily = get_months(datetime.date(2021,3,8))[1]
 
-    cursor.execute("select active_func from update_status")         #getting functional currently in use
-    func_selected=cursor.fetchall()[0][0]
-    
-    prog_bar = st.progress(0)
-    write_monthly_coffees(names,month_id_all, update)
-    print("...", end="", flush=True)
-    prog_bar.progress(3)
-    write_total_coffees(names)
-    print("...", end="", flush=True)
-    prog_bar.progress(6)
-    write_correlation(names)
-    print("..", end="", flush=True)
-    prog_bar.progress(8)
-    write_weekly_coffees_breaks(names, month_id_daily, update)
-    print(".", end="", flush=True)
-    prog_bar.progress(9)
-    write_perc_breaks(names, month_id_daily, update)
-    print(".", end="", flush=True)
-    prog_bar.progress(10)
-    write_simple_data()
-    print(".", end="", flush=True)
-    prog_bar.progress(11)
-    if datetime.date.today().month != month:    #checking for new month
-        write_exp_values_dev(names, month_id_all, func_selected, update)
-        prog_bar.progress(12)
-        calc_dynamic_functional(names,month_id_all)
-        write_mad(names, month_id_all)
-        print("..", end="", flush=True)
-        prog_bar,progress(13)
-        write_prizes(names, month_id_daily, update)
-        print("..", end="", flush=True)
-        prog_bar.progress(15)
-        print("..", end="", flush=True)
-    write_social_score(names, month_id_daily,update)
-    print("..")
-    prog_bar.progress(17)
+		update="simple"     #keyword for variation function
 
-    
-    
-    print("Database was successfully updated")
-    
-    db.commit()
-    db.close
+		cursor.execute("select active_func from update_status")         #getting functional currently in use
+		func_selected=cursor.fetchall()[0][0]
+
+		prog_bar = st.progress(0)
+		write_monthly_coffees(names,month_id_all, update)
+		print("...", end="", flush=True)
+		prog_bar.progress(3)
+		write_total_coffees(names)
+		print("...", end="", flush=True)
+		prog_bar.progress(6)
+		write_correlation(names)
+		print("..", end="", flush=True)
+		prog_bar.progress(8)
+		write_weekly_coffees_breaks(names, month_id_daily, update)
+		print(".", end="", flush=True)
+		prog_bar.progress(9)
+		write_perc_breaks(names, month_id_daily, update)
+		print(".", end="", flush=True)
+		prog_bar.progress(10)
+		write_simple_data()
+		print(".", end="", flush=True)
+		prog_bar.progress(11)
+		if datetime.date.today().month != month:    #checking for new month
+			write_exp_values_dev(names, month_id_all, func_selected, update)
+			prog_bar.progress(12)
+			calc_dynamic_functional(names,month_id_all)
+			write_mad(names, month_id_all)
+			print("..", end="", flush=True)
+			prog_bar,progress(13)
+			write_prizes(names, month_id_daily, update)
+			print("..", end="", flush=True)
+			prog_bar.progress(15)
+			print("..", end="", flush=True)
+		write_social_score(names, month_id_daily,update)
+		print("..")
+		prog_bar.progress(17)
+
+	print("Database was successfully updated")
+
+	db.commit()
+	db.close
 
 #------------------------- updates database -------------------------------------
 def manual_update():
