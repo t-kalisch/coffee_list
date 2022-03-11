@@ -577,8 +577,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         df = pd.DataFrame(temp2_rel, columns=columns_corr)
         fig6 = px.scatter(df, x='x-values', y='y-values', size='size', custom_data=['size'], labels={"x-values":"", "y-values":""}, title="Relative correlation", color='size')#, text='size')
         fig6.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names_inv))
-        #fig6.update_traces(hovertemplate="%{y} with %{x}:<br>%{customdata[0]} %")
-        fig6.update_traces(hovertemplate="%{y} drank %{customdata[0]} % of<br>their coffees with %{x}")
+        #fig6.update_traces(hovertemplate="%{x} with %{y}:<br>%{customdata[0]} %")
+        fig6.update_traces(hovertemplate="%{x} drank %{customdata[0]} % of<br>their coffees with %{y}")
         fig6.update_xaxes(side="top")
         col4.plotly_chart(fig6, use_container_width=True)
 
