@@ -1471,7 +1471,15 @@ def check_update_status():
     else:
         print("Database up to date")
     db.close()
-    
+
+#--------------------------- manual button press for simple update ------------
+def manual_update_simple():
+    db = init_connection()
+    cursor = db.cursor(buffered=True)
+    cursor.execute("select update_date from update_status")
+    update_database(cursor.fetchall()[0][0].month)
+    db.close
+
 #------------------------- updates database -------------------------------------
 def update_database(month):
     db = init_connection()
