@@ -34,6 +34,44 @@ def clear_one_break(del_id, test):
     db.commit()
     db.close()
 
+	 #---------------------- deleting a coffee from a break ----------------
+def delete_coffee(id_ext, name):
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
+	
+	cursor.execute("select persons, coffees from drinkers where id_ext = '"+id_ext+"'")
+	tmp=cursor.fetchall()
+	persons = tmp[0][0].split("-")
+	coffees = tmp[0][1].split("-")
+
+	for i in range(len(persons)):
+		if persons[i] == name.upper():
+			coffees[i] = int(coffees[i]) - 1
+			cursor.execute("update mbr_"+name.upper()+" set n_coffees = "+str(coffees[i])+" where id_ext = '"+id_ext+"'")
+		if coffees[i] == 0:
+			cursor.execute("delete from mbr_"+name.upper()+" where id_ext = '"+id_ext+"'")
+
+	persons_new = ""
+	coffees_new = ""
+	for i in range(len(persons)):
+		if coffees[i] == 0:
+			pass
+		else:
+			if persons_new == "":
+				persons_new += persons[i]
+				coffees_new += str(coffees[i])
+			else:
+				persons_new = persons_new + "-" + persons[i]
+				coffees_new = coffees_new + "-" + str(coffees[i])
+	if persons_new == "":
+		cursor.execute("DELETE FROM breaks WHERE id_ext='"+id_ext+"'")
+	else:
+		cursor.execute("update drinkers set persons = '"+persons_new+"' where id_ext = '"+id_ext+"'")
+		cursor.execute("update drinkers set coffees = '"+coffees_new+"' where id_ext = '"+id_ext+"'")
+	db.commit()
+	db.close()
+	
+	
 #----------------------- holiday input ----------------------------------------
 def submit_holidays(name, month_inp, year_inp, days_inp):
     db = init_connection()
