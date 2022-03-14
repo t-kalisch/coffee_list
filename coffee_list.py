@@ -290,7 +290,7 @@ if logged_in == "true":
         col3.dataframe(df, width=600, height=500)
         delete = col1.button("Delete break", on_click=clear_one_break, args=(del_id,""))
         col1.write("-" * 34)
-        del_person = col1.text_input("Delete for person", placeholder="username")
+        del_person = col1.text_input("Delete for person", placeholder="Username")
         col1.button("Delete coffee from break", on_click=delete_one_coffee, args=(del_id,del_person))
         
         
