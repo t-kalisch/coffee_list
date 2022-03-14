@@ -182,7 +182,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 		id_ext += str(int(date_br[1]))
 		if int(date_br[2]) < 10:
 			id_ext += "0"
-		id_ext += str(int(date_br[2]))
+		id_ext += str(int(date_br[0]))
 		
 		cursor.execute("SELECT count(id_ext) FROM breaks WHERE id_ext like '"+id_ext+"%'")    #searching for breaks of the same day as enterd break
 		ids=cursor.fetchall()	
@@ -195,7 +195,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 		st.write(id_ext)
 		#cursor.execute("insert into breaks (id_ext, day, month, year) values (%s, %s, %s, %s)", (id_ext, date_br[0], date_br[1], date_br[2]))
 		#cursor.execute("insert into break_sizes (id_ext, size) values (%s, %s)", (id_ext, len(persons_comp)))
-		for i in range(persons_comp):
+		for i in range(len(persons_comp)):
 			#cursor.execute("insert into mbr_"+persons_comp[i].upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, coffees_comp[i]))
 			#cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
 			tmp = cursor.fetchone()
