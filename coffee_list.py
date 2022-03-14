@@ -270,6 +270,7 @@ if logged_in == "true":
         p1_coffees = col6.text_input("Coffees 1")
         p2_coffees = col7.text_input("Coffees 2")
         p3_coffees = col8.text_input("Coffees 3")
+        col1,col2,col3,col4,col5,col6,col7,col8 = st.columns([1,1,1,1,1,1,1,1])
         date_day = col1.text_input("Day", placeholder = datetime.date.today().day)
         date_month = col2.text_input("Month", placeholder = datetime.date.today().month)
         date_year = col3.text_input("Year", placeholder = datetime.date.today().year)
