@@ -273,8 +273,8 @@ if logged_in == "true":
         date_day = col1.text_input("Day", placeholder = datetime.date.today().day)
         date_month = col2.text_input("Month", placeholder = datetime.date.today().month)
         date_year = col3.text_input("Year", placeholder = datetime.date.today().year)
-        persons=['TK','PB','NV','DB','FLG','SHK',p1_name,p2_name,p3_name]
-        coffees=[tk,pb,nv,db,flg,shk,p1_coffees,p2_coffees,p3_coffees]
+        persons=['TK','PB','DB','FLG','SHK',p1_name,p2_name,p3_name]
+        coffees=[tk,pb,db,flg,shk,p1_coffees,p2_coffees,p3_coffees]
         date_br=[date_day,date_month,date_year]
         st.write("-" * 34)
         col1,col2,col3 = st.columns([1,1,6])
