@@ -164,7 +164,6 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 			persons_comp.append(persons[i])
 			coffees_comp.append(coffees[i])
 			valid_break = True
-	st.write(persons_comp)
 	if valid_break == False:
 		st.error("No valid break")
 	else:
