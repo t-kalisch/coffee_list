@@ -114,8 +114,6 @@ def change_profile_data(user_old, user, user_pw, admin_status):
 	db = init_connection()
 	cursor = db.cursor(buffered=True)
 	if user != "":
-		#cursor.execute("update members set name = '"+user+"' where name = '"+user_old+"'")
-		#cursor.execute("RENAME TABLE mbr_"+user_old.upper()+" TO mbr_"+user.upper())
 		user_old = user
 	if user_pw != "":
 		cursor.execute("update members set password = '"+user_pw+"' where name = '"+user_old+"'")
@@ -151,3 +149,70 @@ def add_break_sizes():                                                      # in
     db.close()
 
     
+def submit_break(persons,coffees,date_br):					# submitting break into database
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
+	names = get_members()
+	
+	persons_comp=[]
+	coffees_comp=[]
+	persons_str = ""
+	coffees_str = ""
+	valid_break = False
+	for i in range(len(persons)):
+		if coffees[i] != "" and persons[i] != "":
+			persons_comp.append(persons[i])
+			coffees.append(coffees[i])
+			valid_break = True
+	if valid_break == False:
+		st.error("No valid break")
+	else:
+		if date_br[0] == "" and date_br[1] == "" and date_br[2] == "":
+			date_br[0] = datetime.date.today().day
+			date_br[1] = datetime.date.today().month
+			date_br[2] = datetime.date.today().year
+		else:
+			date_str=date_br[0]+"-"+date_br[1]+"-"+date_br[2]+" 0:00"
+			if(datetime.datetime.now() < datetime.datetime.strptime(date_str, "%d-%m-%Y %H:%M")):
+				st.error("Invalid date entered!")
+				return
+		id_ext == date_br[2]
+		if int(date_br[1]) < 10:
+			id_ext += "0"
+		id_ext += str(int(date_br[1]))
+		id int(date_br[2]) < 10:
+			id_ext += "0"
+		id_ext += str(int(date_br[2]))
+		
+		cursor.execute("SELECT count(id_ext) FROM breaks WHERE id_ext like '"+id_ext+"%'")    #searching for breaks of the same day as enterd break
+		ids=cursor.fetchall()	
+		if ids == 0:
+			id_ext += "01"
+		else:
+			if ids < 9:
+				id_ext += "0"
+			id_ext += str(ids+1)
+		
+		cursor.execute("insert into breaks (id_ext, day, month, year) values (%s, %s, %s, %s)", (id_ext, date_br[0], date_br[1], date_br[2]))
+		cursor.execute("insert into break_sizes (id_ext, size) values (%s, %s)", (id_ext, len(persons_comp)))
+		for i in range(persons_comp):
+			cursor.execute("insert into mbr_"+persons_comp[i].upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, coffees_comp[i]))
+			cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
+			tmp = cursor.fetchone()
+			if tmp[0] == 0:
+				cursor.execute("insert into members (name) values ('"+str(persons[i])+"')")                                             #adding person to members table
+				cursor.execute("alter table holidays add "+persons[i]+" varchar(6)")                                                    #adding person to holidays table
+				update_database(datetime.datetime.today().month)
+			if i == 0:
+				persons_str += persons_comp[i].upper()
+				coffees_str += coffees_comp[i]
+			else:
+				persons_str += "-"
+				coffees_str += "-"
+				persons_str += persons_comp[i].upper()
+				coffees_str += coffees_comp[i]
+		cursor.execute("insert into drinkers (id_ext, persons, coffees) values (%s, %s, %s)", (id_ext, persons_str, coffees_str))
+		st.success("Your coffee break has been saved (Persons: "+persons_str+", Coffees: "+coffees_str)
+	db.commit()
+	db.close
+				
