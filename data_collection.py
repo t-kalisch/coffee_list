@@ -176,7 +176,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 			if(datetime.datetime.now() < datetime.datetime.strptime(date_str, "%d-%m-%Y %H:%M")):
 				st.error("Invalid date entered!")
 				return
-		id_ext == date_br[2]
+		id_ext = date_br[2]
 		if int(date_br[1]) < 10:
 			id_ext += "0"
 		id_ext += str(int(date_br[1]))
