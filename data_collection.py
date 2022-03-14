@@ -192,16 +192,16 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 			if ids < 9:
 				id_ext += "0"
 			id_ext += str(ids+1)
-		
-		cursor.execute("insert into breaks (id_ext, day, month, year) values (%s, %s, %s, %s)", (id_ext, date_br[0], date_br[1], date_br[2]))
-		cursor.execute("insert into break_sizes (id_ext, size) values (%s, %s)", (id_ext, len(persons_comp)))
+		st.write(id_ext)
+		#cursor.execute("insert into breaks (id_ext, day, month, year) values (%s, %s, %s, %s)", (id_ext, date_br[0], date_br[1], date_br[2]))
+		#cursor.execute("insert into break_sizes (id_ext, size) values (%s, %s)", (id_ext, len(persons_comp)))
 		for i in range(persons_comp):
-			cursor.execute("insert into mbr_"+persons_comp[i].upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, coffees_comp[i]))
-			cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
+			#cursor.execute("insert into mbr_"+persons_comp[i].upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, coffees_comp[i]))
+			#cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
 			tmp = cursor.fetchone()
 			if tmp[0] == 0:
-				cursor.execute("insert into members (name) values ('"+str(persons[i])+"')")                                             #adding person to members table
-				cursor.execute("alter table holidays add "+persons[i]+" varchar(6)")                                                    #adding person to holidays table
+				#cursor.execute("insert into members (name) values ('"+str(persons[i])+"')")                                             #adding person to members table
+				#cursor.execute("alter table holidays add "+persons[i]+" varchar(6)")                                                    #adding person to holidays table
 				update_database(datetime.datetime.today().month)
 			if i == 0:
 				persons_str += persons_comp[i].upper()
@@ -211,7 +211,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 				coffees_str += "-"
 				persons_str += persons_comp[i].upper()
 				coffees_str += coffees_comp[i]
-		cursor.execute("insert into drinkers (id_ext, persons, coffees) values (%s, %s, %s)", (id_ext, persons_str, coffees_str))
+		#cursor.execute("insert into drinkers (id_ext, persons, coffees) values (%s, %s, %s)", (id_ext, persons_str, coffees_str))
 		st.success("Your coffee break has been saved (Persons: "+persons_str+", Coffees: "+coffees_str)
 	db.commit()
 	db.close
