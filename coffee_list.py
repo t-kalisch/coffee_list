@@ -564,7 +564,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         columns_corr_abs=['x-values','y-values','Coffees']
         columns_corr_rel=['x-values','y-values','Percent']
         
-        df = pd.DataFrame(temp2_abs, columns=columns_corr)
+        df = pd.DataFrame(temp2_abs, columns=columns_corr_abs)
         fig5 = px.scatter(df, x='x-values', y='y-values', size='Coffees', custom_data=['Coffees'], labels={"x-values":"", "y-values":""}, title="Absolute correlation", color='Coffees')
         fig5.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names_inv))
         #fig5.update_traces(hovertemplate="%{y} with %{x}:<br>%{customdata[0]} coffees")
@@ -572,7 +572,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig5.update_xaxes(side="top")
         col3.plotly_chart(fig5, use_container_width=True)#              absolute correlation
         #                                                  --------------------------------------------------
-        df = pd.DataFrame(temp2_rel, columns=columns_corr)
+        df = pd.DataFrame(temp2_rel, columns=columns_corr_rel)
         fig6 = px.scatter(df, x='x-values', y='y-values', size='Percent', custom_data=['Percent'], labels={"x-values":"", "y-values":""}, title="Relative correlation", color='Percent')#, text='size')
         fig6.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names_inv))
         #fig6.update_traces(hovertemplate="%{x} with %{y}:<br>%{customdata[0]} %")
