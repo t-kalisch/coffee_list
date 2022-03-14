@@ -162,7 +162,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 	for i in range(len(persons)):
 		if coffees[i] != "" and persons[i] != "":
 			persons_comp.append(persons[i])
-			coffees.append(coffees[i])
+			coffees_comp.append(coffees[i])
 			valid_break = True
 	if valid_break == False:
 		st.error("No valid break")
