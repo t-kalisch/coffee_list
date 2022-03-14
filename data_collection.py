@@ -197,7 +197,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 		#cursor.execute("insert into break_sizes (id_ext, size) values (%s, %s)", (id_ext, len(persons_comp)))
 		for i in range(len(persons_comp)):
 			#cursor.execute("insert into mbr_"+persons_comp[i].upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, coffees_comp[i]))
-			#cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
+			cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
 			tmp = cursor.fetchone()
 			if tmp[0] == 0:
 				#cursor.execute("insert into members (name) values ('"+str(persons[i])+"')")                                             #adding person to members table
