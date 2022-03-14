@@ -180,7 +180,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 		if int(date_br[1]) < 10:
 			id_ext += "0"
 		id_ext += str(int(date_br[1]))
-		id int(date_br[2]) < 10:
+		if int(date_br[2]) < 10:
 			id_ext += "0"
 		id_ext += str(int(date_br[2]))
 		
