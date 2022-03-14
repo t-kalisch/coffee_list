@@ -1263,9 +1263,9 @@ def get_members():
 def get_last_breaks(last_break):
 	db = init_connection()
 	cursor = db.cursor(buffered=True)
-	cursor.execute("select * from breaks order by id_ext desc limit 10")
+	cursor.execute("select * from breaks order by id_ext desc limit "+str(last_break)
 	breaks=cursor.fetchall()
-	cursor.execute("select * from drinkers order by id_ext desc limit 10")
+	cursor.execute("select * from drinkers order by id_ext desc limit "+str(last_break))
 	drinkers=cursor.fetchall()
 
 	last_breaks=[]
