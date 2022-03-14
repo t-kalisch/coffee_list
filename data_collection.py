@@ -212,7 +212,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 				persons_str += persons_comp[i].upper()
 				coffees_str += coffees_comp[i]
 		#cursor.execute("insert into drinkers (id_ext, persons, coffees) values (%s, %s, %s)", (id_ext, persons_str, coffees_str))
-		st.success("Your coffee break has been saved (Persons: "+persons_str+", Coffees: "+coffees_str)
+		st.success("Your coffee break has been saved (Persons: "+persons_str+", Coffees: "+coffees_str+")")
 	db.commit()
 	db.close
 				
