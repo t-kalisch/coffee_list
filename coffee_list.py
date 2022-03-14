@@ -278,7 +278,7 @@ if logged_in == "true":
         coffees=[tk,pb,db,flg,shk,p1_coffees,p2_coffees,p3_coffees]
         date_br=[date_day,date_month,date_year]
         st.write("-" * 34)
-        col1,col2,col3 = st.columns([1,1,6])
+        col1,col2 = st.columns([2,6])
         col1.button("Submit break", on_click=submit_break, args=(persons,coffees,date_br))
         
     if profile_nav == "Delete coffee or break":                                        # Delete break page
