@@ -280,7 +280,7 @@ if logged_in == "true":
         col1,col2 = st.columns([2,6])
         col1.button("Submit break", on_click=submit_break, args=(persons,coffees,date_br))
         st.write("-" * 34)
-        at.write("Enter an extended ID and Name to add a coffee to a break.")
+        st.write("Enter an extended ID and Name to add a coffee to a break.")
         last_breaks=get_last_breaks(last_break)
         col1, col2, col3 = st.columns([1,1,2])
         col1.text_input("Extended ID", placeholder=last_breaks[len(last_breaks)-1][0])
