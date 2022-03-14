@@ -14,7 +14,7 @@ import plotly.graph_objects as go
 from data_collection import *
 #from calculations import *
 
-@st.cache(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True, suppress_st_warning = True)
 def get_manager():
     return stx.CookieManager()
 
