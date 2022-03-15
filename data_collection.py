@@ -255,7 +255,7 @@ def add_coffee_to_break(id_ext, name, user):
 						else:
 							coffees_str = coffees_str+"-"+str(coffees[j])
 
-					cursor.execute("update drinkers set persons = '"+persons+"', coffees = '"+coffees+"' where id_ext = '"+id_ext+"'")
+					cursor.execute("update drinkers set persons = '"+drinker_data[0]+"', coffees = '"+coffees_str+"' where id_ext = '"+id_ext+"'")
 					st.success("Added a coffee for "+name.upper()+" into break "+id_ext+".")
 		if user_exists == False:
 			cursor.execute("insert into members (name) values ('"+name.upper()+"')")                                             #adding person to members table
