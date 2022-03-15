@@ -283,9 +283,9 @@ if logged_in == "true":
         st.write("Enter an extended ID and Name to add a coffee to a break.")
         last_breaks=get_last_breaks(10)
         col1, col2, col3 = st.columns([1,1,2])
-        col1.text_input("Extended ID", placeholder=last_breaks[len(last_breaks)-1][0])
-        col2.text_input("Username", placeholder=logged_in_user)
-        col1.button("Add coffee")
+        id_ext = col1.text_input("Extended ID", placeholder=last_breaks[len(last_breaks)-1][0])
+        coffee_name = col2.text_input("Username", placeholder=logged_in_user)
+        col1.button("Add coffee", on_click=add_coffee_to_break, args=(id_ext, coffee_name, logged_in_user))
         
     if profile_nav == "Delete coffee or break":                                        # Delete break page
         st.subheader("**:x:** Delete a coffee break")
