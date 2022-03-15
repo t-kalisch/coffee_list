@@ -296,8 +296,7 @@ if logged_in == "true":
         last_breaks=get_last_breaks(10)
         col1,col2,col3 = st.columns([1,0.5,3])
         del_id = col1.text_input("Extended ID of break", placeholder=last_breaks[len(last_breaks)-1][0])
-        columns=['Extended ID','Date','Drinkers','Coffees']
-        df=pd.DataFrame(last_breaks,columns=columns)
+        df=pd.DataFrame(last_breaks,columns=['Extended ID','Date','Drinkers','Coffees'])
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
         delete = col1.button("Delete break", on_click=clear_one_break, args=(del_id,""))
