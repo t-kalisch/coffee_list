@@ -286,7 +286,7 @@ if logged_in == "true":
         id_ext = col1.text_input("Extended ID", placeholder=last_breaks[len(last_breaks)-1][0])
         coffee_name = col2.text_input("Username", placeholder=logged_in_user)
         col1.button("Add coffee", on_click=add_coffee_to_break, args=(id_ext, coffee_name, logged_in_user))
-        df=pd.DataFrame(last_breaks,columns=columns)
+        df=pd.DataFrame(last_breaks,columns=['Extended ID','Date','Drinkers','Coffees'])
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
         
