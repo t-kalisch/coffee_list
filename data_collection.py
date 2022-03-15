@@ -241,6 +241,7 @@ def add_coffee_to_break(id_ext, name, user):
 					drinker_data[0][0] = drinker_data[0][1]+"-"+name.upper()
 					drinker_data[0][1] = drinker_data[0][1]+"-1"
 					cursor.execute("update drinkers set persons = '"+drinker_data[0][0]+"', coffees = '"+drinker_data[0][1]+"' where id_ext = '"+id_ext+"'")
+					st.success("Added "+name.upper()+" into break "+id_ext+".")
 				else:
 					cursor.execute("update mbr_"+name.upper()+" set n_coffees = "+str(tmp[0][0]+1)+" where id_ext = '"+id_ext+"'")
 					persons = drinker_data[0][0].split("-")
@@ -254,6 +255,7 @@ def add_coffee_to_break(id_ext, name, user):
 							coffees_str = coffees_str+"-"+str(coffees[j])
 
 					cursor.execute("update drinkers set persons = '"+persons+"', coffees = '"+coffees+"' where id_ext = '"+id_ext+"'")
+					st.success("Added a coffee for "+name.upper()+" into break "+id_ext+".")
 		if user_exists == False:
 			cursor.execute("insert into members (name) values ('"+name.upper()+"')")                                             #adding person to members table
 			cursor.execute("alter table holidays add "+name.upper()+" varchar(6)")                                                    #adding person to holidays table
