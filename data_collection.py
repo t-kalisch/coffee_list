@@ -225,7 +225,7 @@ def add_coffee_to_break(id_ext, name, user):
 	if name == "":
 		name = user
 	cursor.execute("select persons, coffees from drinkers where id_ext = '"+id_ext+"'")
-	drinker_data=cursor.fetchall()
+	drinker_data=list(cursor.fetchall()[0])
 	st.write(drinker_data)
 	if drinker_data == []:
 		st.warning("Invalid extended ID")
@@ -239,14 +239,14 @@ def add_coffee_to_break(id_ext, name, user):
 				tmp = cursor.fetchall()
 				if tmp == []:
 					cursor.execute("insert into mbr_"+name.upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, 1))
-					drinker_data[0][0] = str(drinker_data[0][0])+"-"+name.upper()
-					drinker_data[0][1] = str(drinker_data[0][1])+"-1"
-					cursor.execute("update drinkers set persons = '"+drinker_data[0][0]+"', coffees = '"+drinker_data[0][1]+"' where id_ext = '"+id_ext+"'")
+					drinker_data[0] = str(drinker_data[0])+"-"+name.upper()
+					drinker_data[1] = str(drinker_data[1])+"-1"
+					cursor.execute("update drinkers set persons = '"+drinker_data[0]+"', coffees = '"+drinker_data[1]+"' where id_ext = '"+id_ext+"'")
 					st.success("Added "+name.upper()+" into break "+id_ext+".")
 				else:
 					cursor.execute("update mbr_"+name.upper()+" set n_coffees = "+str(tmp[0][0]+1)+" where id_ext = '"+id_ext+"'")
-					persons = drinker_data[0][0].split("-")
-					coffees = drinker_data[0][1].split("-")
+					persons = drinker_data[0].split("-")
+					coffees = drinker_data[1].split("-")
 					for j in range(len(persons)):
 						if persons[j] == name:
 							coffees[j] += 1
