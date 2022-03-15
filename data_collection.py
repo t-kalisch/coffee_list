@@ -249,7 +249,7 @@ def add_coffee_to_break(id_ext, name, user):
 					coffees = drinker_data[1].split("-")
 					for j in range(len(persons)):
 						if persons[j] == name:
-							coffees[j] += 1
+							coffees[j] = int(coffees[j] + 1
 						if j == 0:
 							coffees_str = str(coffees[j])
 						else:
