@@ -231,7 +231,7 @@ def add_coffee_to_break(id_ext, name, user):
 		return
 	else:
 		user_exists = False
-		for i in range(names):
+		for i in range(len(names)):
 			if name.upper() == names[i]:
 				user_exists = True
 				cursor.execute("select n_coffees from mbr_"+name.upper()+" where id_ext = '"+id_ext+"'")
