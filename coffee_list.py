@@ -125,7 +125,7 @@ if logged_in == "true":
         #profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change password"), 0)
     elif admin_status == "1":
-        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee break","Delete coffee or break","Enter holidays","Change profile data"), 0)
+        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee or break","Delete coffee or break","Enter holidays","Change profile data"), 0)
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
         st.subheader("**:calendar:** Enter holidays")
@@ -254,7 +254,7 @@ if logged_in == "true":
                 if done == False:
                     st.warning("Incorrect password")
 
-    if profile_nav == "Submit coffee break":                                        # Submit break page
+    if profile_nav == "Submit coffee or break":                                        # Submit break page
         st.subheader("**:coffee:** Submit a coffee break")
         st.markdown("Please enter the names and number of coffees for the break.")
         col1,col2,col3,col4,col5,col6,col7,col8 = st.columns([1,1,1,1,1,1,1,1])
