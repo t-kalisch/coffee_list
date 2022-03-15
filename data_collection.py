@@ -239,8 +239,8 @@ def add_coffee_to_break(id_ext, name, user):
 				tmp = cursor.fetchall()
 				if tmp == []:
 					cursor.execute("insert into mbr_"+name.upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, 1))
-					drinker_data[0][0] = drinker_data[0][1]+"-"+name.upper()
-					drinker_data[0][1] = drinker_data[0][1]+"-1"
+					drinker_data[0][0] = str(drinker_data[0][0])+"-"+name.upper()
+					drinker_data[0][1] = str(drinker_data[0][1])+"-1"
 					cursor.execute("update drinkers set persons = '"+drinker_data[0][0]+"', coffees = '"+drinker_data[0][1]+"' where id_ext = '"+id_ext+"'")
 					st.success("Added "+name.upper()+" into break "+id_ext+".")
 				else:
