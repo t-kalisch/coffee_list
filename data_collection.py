@@ -200,8 +200,9 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 			cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
 			tmp = cursor.fetchone()
 			if tmp[0] == 0:
-				cursor.execute("insert into members (name) values ('"+str(persons[i])+"')")                                             #adding person to members table
-				cursor.execute("alter table holidays add "+persons[i]+" varchar(6)")                                                    #adding person to holidays table
+				cursor.execute("insert into members (name) values ('"+str(persons[i].upper())+"')")                                             #adding person to members table
+				cursor.execute("alter table holidays add "+persons[i].upper()+" varchar(6)")                                                    #adding person to holidays table
+				cursor.execute("create table if not exists mbr_"+persons[i].upper()+" (id_ext char(10), n_coffees int, primary key(id_ext), CONSTRAINT fk_member_"+persons[i].upper()+"_break_ID_ext FOREIGN KEY(id_ext) REFERENCES breaks(id_ext) ON DELETE CASCADE)")     #creating a table for each individual person
 				update_database(datetime.datetime.today().month)
 			if i == 0:
 				persons_str += persons_comp[i].upper()
@@ -216,3 +217,53 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 	db.commit()
 	db.close
 				
+
+def add_coffee_to_break(id_ext, name, user):
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
+	names = get_members()
+	if name == "":
+		name = user
+	cursor.execute("select persons, coffees from drinkers where id_ext = '"+id_ext+"'")
+	drinker_data=cursor.fetchall()
+	if tmp == []:
+		st.warning("Invalid extended ID")
+		return
+	else:
+		user_exists = False
+		for i in range(names):
+			if name.upper() == names[i]:
+				user_exists = True
+				cursor.execute("select n_coffees from mbr_"+name.upper()+" where id_ext = '"+id_ext+"'")
+				tmp = cursor.fetchall()
+				if tmp == []:
+					cursor.execute("insert into mbr_"+name.upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, 1))
+					drinker_data[0][0] = drinker_data[0][1]+"-"+name.upper()
+					drinker_data[0][1] = drinker_data[0][1]+"-1"
+					cursor.execute("update drinkers set persons = '"+drinker_data[0][0]+"', coffees = '"+drinker_data[0][1]+"' where id_ext = '"+id_ext+"'")
+				else:
+					cursor.execute("update mbr_"+name.upper()+" set n_coffees = "+str(tmp[0][0]+1)+" where id_ext = '"+id_ext+"'")
+					persons = drinker_data[0][0].split("-")
+					coffees = drinker_data[0][1].split("-")
+					for j in range(len(persons)):
+						if persons[j] == name:
+							coffees[j] += 1
+						if j == 0:
+							coffees_str = str(coffees[j])
+						else:
+							coffees_str = coffees_str+"-"+str(coffees[j])
+
+					cursor.execute("update drinkers set persons = '"+persons+"', coffees = '"+coffees+"' where id_ext = '"+id_ext+"'")
+		if user_exists == False:
+			cursor.execute("insert into members (name) values ('"+name.upper()+"')")                                             #adding person to members table
+			cursor.execute("alter table holidays add "+name.upper()+" varchar(6)")                                                    #adding person to holidays table
+			cursor.execute("create table if not exists mbr_"+name.upper()+" (id_ext char(10), n_coffees int, primary key(id_ext), CONSTRAINT fk_member_"+name.upper()+"_break_ID_ext FOREIGN KEY(id_ext) REFERENCES breaks(id_ext) ON DELETE CASCADE)")     #creating a table for each individual person
+			update_database(datetime.datetime.today().month)
+			cursor.execute("insert into mbr_"+name.upper()+" (id_ext, n_coffees) values (%s, %s)", (id_ext, 1))
+			drinker_data[0][0] = drinker_data[0][1]+"-"+name.upper()
+			drinker_data[0][1] = drinker_data[0][1]+"-1"
+			cursor.execute("update drinkers set persons = '"+drinker_data[0][0]+"', coffees = '"+drinker_data[0][1]+"' where id_ext = '"+id_ext+"'")
+	db.commit()
+	db.close()
+
+		
