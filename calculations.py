@@ -1532,6 +1532,7 @@ def update_database(month):
 		print("..")
 		prog_bar.progress(17)
 
+	cursor.execute("update update_status set update_time = current_timestamp()")
 	print("Database was successfully updated")
 
 	db.commit()
@@ -1584,7 +1585,8 @@ def manual_update():
 		write_social_score(names, month_id_daily,update)
 		print("..")
 		prog_bar.progress(17)
-    
+    	
+	cursor.execute("update update_status set update_time = current_timestamp()")
 	print("Database was successfully updated")
     
 	db.commit()
