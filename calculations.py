@@ -1476,6 +1476,7 @@ def check_update_status():
 def manual_update_simple():
     db = init_connection()
     cursor = db.cursor(buffered=True)
+    cursor.execute("select update_date from update_status")
     tmp = cursor.fetchall()
     update_database(tmp[0][0].month)
     db.close
