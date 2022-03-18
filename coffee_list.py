@@ -589,7 +589,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
         fig6 = px.scatter(df, x='x-values', y='y-values', size='Percent', custom_data=['Percent'], labels={"x-values":"", "y-values":""}, title="Relative correlation", color='Percent')#, text='size')
         fig6.update_layout(title_font_size=24, showlegend=False, xaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names), yaxis=dict(tickmode = 'array', tickvals = tickval_num, ticktext = names_inv))
         #fig6.update_traces(hovertemplate="%{x} with %{y}:<br>%{customdata[0]} %")
-        fig6.update_traces(hovertemplate="%{x} drank %{customdata[0]} % of<br>their coffees with %{y}")
+        fig6.update_traces(hovertemplate="%{y} drank %{customdata[0]} % of<br>their coffees with %{x}")
         fig6.update_xaxes(side="top")
         col4.plotly_chart(fig6, use_container_width=True)
 
