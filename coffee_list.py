@@ -665,7 +665,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 
         df = pd.DataFrame(total, columns={'Number of coffees'}, index=names)                #total percentages
 
-        fig11 = px.bar(df, x='Number of coffees', y=names, title="Total coffees per work day", labels={"y":"", "count":"Number of coffees", "variable":"drinkers"}, text='Number of coffees', text_auto=True, orientation='h')
+        fig11 = px.bar(df, x='Number of coffees', y=names, title="Total coffees per work day", labels={"y":"", "count":"Number of coffees", "variable":"drinkers"}, text='Number of coffees', text_auto=True, orientation='h').update_yaxes(categoryorder="total ascending")
         fig11.update_layout(title_font_size=24, showlegend=False)
         fig11.update_traces(hovertemplate='%{y}: %{x}')
         col8.plotly_chart(fig11, use_container_width=True)
