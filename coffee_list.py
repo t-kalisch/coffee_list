@@ -512,7 +512,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 
         df = pd.DataFrame(total_prizes, columns={'Number of prizes'}, index=names)                #total number of prizes
 
-        fig8 = px.bar(df, x='Number of prizes', y=names, title="Total number of prizes", labels={"y":"", "count":"Social score", "variable":"drinkers"}, text='Number of prizes', text_auto=True, orientation='h')#.update_yaxes(categoryorder="total ascending")
+        fig8 = px.bar(df, x='Number of prizes', y=nams, title="Total number of prizes", labels={"y":"", "count":"Social score", "variable":"drinkers"}, text='Number of prizes', text_auto=True, orientation='h')#.update_yaxes(categoryorder="total ascending").update_yaxes(categoryorder="total ascending")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{y}: %{x}')
         fig8.update_xaxes(showticklabels=False)
@@ -612,7 +612,7 @@ if logged_in == "true" and profile_nav == "Show diagrams":
 
         df = pd.DataFrame(percentage_total, columns={'percentage'}, index=names)
 
-        fig8 = px.bar(df, x='percentage', y=names, title="Total percentages of breaks", labels={"y":"", "count":"Percentage", "variable":"drinkers"}, text='percentage', text_auto=True, orientation='h')
+        fig8 = px.bar(df, x='percentage', y=names, title="Total percentages of breaks", labels={"y":"", "count":"Percentage", "variable":"drinkers"}, text='percentage', text_auto=True, orientation='h').update_yaxes(categoryorder="total ascending")
         fig8.update_layout(title_font_size=24, showlegend=False)
         fig8.update_traces(hovertemplate='%{y}: %{x} %')
         col6.plotly_chart(fig8, use_container_width=True)
