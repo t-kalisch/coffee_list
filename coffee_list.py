@@ -425,8 +425,8 @@ if logged_in == "true" and profile_nav == "Show diagrams":
             temp.append(temp1)
         df = pd.DataFrame(temp, columns={"names","total"}, index=names)              #total coffees pie chart
 
-        fig3 = px.pie(df, names = names, values = total_coffees)
-        #fig3 = go.Figure(go.Pie(labels = names, values = total_coffees, sort=False, hole=.4))
+        #fig3 = px.pie(df, names = names, values = total_coffees)
+        fig3 = go.Figure(go.Pie(labels = names, values = total_coffees, sort=False, hole=.4))
         fig3.update_layout(title_font_size=24)
         col1.plotly_chart(fig3, use_container_width=True)
 
