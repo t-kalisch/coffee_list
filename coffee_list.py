@@ -181,7 +181,7 @@ if logged_in == "true":
                     for i in range(len(all_holidays)):
                         temp.append(all_holidays[j][0])
                         temp.append(all_holidays[j][1])
-                        temp.append(all_holidays[j][i]
+                        temp.append(all_holidays[j][i])
                         holidays_person.append(temp)
             df=pd.DataFrame(holidays_person,columns=columns)
             st.dataframe(df, width=1000, height=1000)
