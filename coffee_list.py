@@ -171,6 +171,7 @@ if logged_in == "true":
             #if up_hol:
             #    get_all_holidays(dateteime.datetime.now())
             all_holidays = get_all_holidays(datetime.datetime.now())
+            print(all_holidays)
             holidays_person=[]
             names=get_members()
             columns=["Month","Total work days"]
