@@ -173,8 +173,8 @@ if logged_in == "true":
             for i in range(len(names)):
                 if names[i] == st.session_state.user_name:
                     columns.append(names[i])
-                    temp=[]
                     for j in range(len(all_holidays)):
+                        temp=[]
                         temp.append(all_holidays[j][0])
                         temp.append(all_holidays[j][1])
                         temp.append(all_holidays[j][i+2])
