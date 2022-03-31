@@ -146,11 +146,8 @@ if logged_in == "true":
 
             st.write("-" * 34)   
             st.subheader("All holidays")
-            #up_hol = st.button("Update", help="Update holidays")
-            #if up_hol:
-            #    get_all_holidays(dateteime.datetime.now())
             all_holidays = get_all_holidays(datetime.datetime.now())
-            print(all_holidays)
+            #print(all_holidays)
             names=get_members()
             columns=["Month","Total work days"]
             for i in range(len(names)):
@@ -168,11 +165,8 @@ if logged_in == "true":
                 submit_holidays(st.session_state.user_name, month, year, holidays)
             st.write("-" * 34)   
             st.subheader("All holidays")
-            #up_hol = st.button("Update", help="Update holidays")
-            #if up_hol:
-            #    get_all_holidays(dateteime.datetime.now())
             all_holidays = get_all_holidays(datetime.datetime.now())
-            print(all_holidays)
+            #print(all_holidays)
             holidays_person=[]
             names=get_members()
             columns=["Month","Total work days"]
@@ -181,9 +175,9 @@ if logged_in == "true":
                     columns.append(names[i])
                     temp=[]
                     for j in range(len(all_holidays)):
-                        temp.append(all_holidays[0][j])
-                        temp.append(all_holidays[1][j])
-                        temp.append(all_holidays[i][j])
+                        temp.append(all_holidays[j][0])
+                        temp.append(all_holidays[j][1])
+                        temp.append(all_holidays[j][i+2])
                         holidays_person.append(temp)
             df=pd.DataFrame(holidays_person,columns=columns)
             st.dataframe(df, width=1000, height=1000)
