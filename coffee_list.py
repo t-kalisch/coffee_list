@@ -172,14 +172,17 @@ if logged_in == "true":
             #    get_all_holidays(dateteime.datetime.now())
             all_holidays = get_all_holidays(datetime.datetime.now())
             holidays_person=[]
-            holidays_person.append(all_holidays[0])
-            holidays_person.append(all_holidays[1])
             names=get_members()
             columns=["Month","Total work days"]
             for i in range(len(names)):
                 if names[i] == st.session_state.user_name:
                     columns.append(names[i])
-                    holidays_person.append(all_holidays[i+2])
+                    temp=[]
+                    for i in range(len(all_holidays)):
+                        temp.append(all_holidays[j][0])
+                        temp.append(all_holidays[j][1])
+                        temp.append(all_holidays[j][i]
+                        holidays_person.append(temp)
             df=pd.DataFrame(holidays_person,columns=columns)
             st.dataframe(df, width=1000, height=1000)
         
