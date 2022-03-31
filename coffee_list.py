@@ -179,6 +179,7 @@ if logged_in == "true":
                         temp.append(all_holidays[j][1])
                         temp.append(all_holidays[j][i+2])
                         holidays_person.append(temp)
+            print(holidays_person)
             df=pd.DataFrame(holidays_person,columns=columns)
             st.dataframe(df, width=1000, height=1000)
         
