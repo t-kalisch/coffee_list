@@ -136,13 +136,13 @@ if logged_in == "true":
             person_hol = col3.text_input("Person", placeholder = "User")
             holidays = col4.text_input("Number of holidays", placeholder=0)
             if person_hol == "":
-                sub_hol = st.button("Submit holidays", help="Submit holidays for yourself")
-                if sub_hol:
-                    submit_holidays(st.session_state.user_name, month, year, holidays)
+                sub_hol = st.button("Submit holidays", help="Submit holidays for yourself", on_click=submit_holidays; args=(st.session_state.user_name, month, year, holidays))
+                #if sub_hol:
+                #    submit_holidays(st.session_state.user_name, month, year, holidays)
             else:
-                sub_hol = st.button("Submit holidays", help="Submit holidays for "+person_hol)
-                if sub_hol:
-                    submit_holidays(person_hol, month, year, holidays)
+                sub_hol = st.button("Submit holidays", help="Submit holidays for "+person_hol, on_click=submit_holidays; args=(person_hol,month,year,holidays))
+                #if sub_hol:
+                #    submit_holidays(person_hol, month, year, holidays)
 
             st.write("-" * 34)   
             st.subheader("All holidays")
@@ -165,6 +165,23 @@ if logged_in == "true":
             sub_hol = col1.button("Submit", help="Submit holidays")
             if sub_hol:
                 submit_holidays(st.session_state.user_name, month, year, holidays)
+            st.write("-" * 34)   
+            st.subheader("All holidays")
+            #up_hol = st.button("Update", help="Update holidays")
+            #if up_hol:
+            #    get_all_holidays(dateteime.datetime.now())
+            all_holidays = get_all_holidays(datetime.datetime.now())
+            holidays_person=[]
+            holidays_person.append(all_holidays[0])
+            holidays_person.append(all_holidays[1])
+            names=get_members()
+            columns=["Month","Total work days"]
+            for i in range(len(names)):
+                if names[i] == st.session_state.user_name:
+                    columns.append(names[i])
+                    holidays_person.append(all_holidays[i+2])
+            df=pd.DataFrame(holidays_person,columns=columns)
+            st.dataframe(df, width=1000, height=1000)
         
     if profile_nav == "Change username":                                            # Change username page
         st.subheader("**:adult:** Change username")
