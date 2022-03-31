@@ -136,11 +136,11 @@ if logged_in == "true":
             person_hol = col3.text_input("Person", placeholder = "User")
             holidays = col4.text_input("Number of holidays", placeholder=0)
             if person_hol == "":
-                sub_hol = st.button("Submit holidays", help="Submit holidays for yourself", on_click=submit_holidays; args=(st.session_state.user_name, month, year, holidays))
+                sub_hol = st.button("Submit holidays", help="Submit holidays for yourself", on_click=submit_holidays, args=(st.session_state.user_name, month, year, holidays))
                 #if sub_hol:
                 #    submit_holidays(st.session_state.user_name, month, year, holidays)
             else:
-                sub_hol = st.button("Submit holidays", help="Submit holidays for "+person_hol, on_click=submit_holidays; args=(person_hol,month,year,holidays))
+                sub_hol = st.button("Submit holidays", help="Submit holidays for "+person_hol, on_click=submit_holidays, args=(person_hol,month,year,holidays))
                 #if sub_hol:
                 #    submit_holidays(person_hol, month, year, holidays)
 
