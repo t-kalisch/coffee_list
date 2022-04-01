@@ -51,7 +51,7 @@ def check_login(user, user_pw):                         #login check
     if user == "guest":
         g_pw = get_guest_pw()
         if user_pw == g_pw:
-            login_chekc = True
+            login_check = True
             admin_status = 2
     else:
         login_check=False
