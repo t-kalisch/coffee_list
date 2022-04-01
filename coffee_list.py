@@ -48,12 +48,18 @@ admin_status=st.session_state.admin
 
 #@st.cache(suppress_st_warning=True)
 def check_login(user, user_pw):                         #login check
-    login_check=False
-    user_data=get_user_data()
-    for i in range(len(user_data)):
-        if user == user_data[i][0] and user_pw == user_data[i][1]:
-            login_check = True
-            admin_status=user_data[i][2]
+    if user == "guest":
+        g_pw = get_guest_pw()
+        if user_pw == g_pw:
+            login_chekc = True
+            admin_status = 2
+    else:
+        login_check=False
+        user_data=get_user_data()
+        for i in range(len(user_data)):
+            if user == user_data[i][0] and user_pw == user_data[i][1]:
+                login_check = True
+                admin_status=user_data[i][2]
     if login_check == True:
         st.session_state.logged_in = "true"
         st.session_state.user_name = user
@@ -121,11 +127,13 @@ else:
     
 
 if logged_in == "true":
-    if admin_status != "1":
+    if admin_status != "1" and admin_status != "2":
         #profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change username","Change password"), 0)
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Enter holidays","Change password"), 0)
     elif admin_status == "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee or break","Delete coffee or break","Enter holidays","Change profile data"), 0)
+    elif admin_status == "2":
+        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams"))
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
         st.subheader("**:calendar:** Enter holidays")
