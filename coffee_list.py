@@ -111,6 +111,8 @@ if logged_in == "true":
     st.title("Logged in as {}".format(logged_in_user))
     if admin_status == "1":
         col2.write("  Status: Administrator")
+    elif admin_status == "2":
+        col2.write("  Status: guest")
     else:
         col2.write("  Member status: User") 
         
