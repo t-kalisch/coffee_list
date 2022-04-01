@@ -17,6 +17,14 @@ def db_logout():
     db.close()
 
 
+def get_guest_pw():
+	db = init_connection()
+	cursor = db.cursor(buffered=True)
+	cursor.execute("select guest_pw from update_status")
+	pw=cursor.fetchall()[0][0]
+	db.close()
+	return pw
+
 def get_user_data():
 	db = init_connection()
 	cursor = db.cursor(buffered=True)
