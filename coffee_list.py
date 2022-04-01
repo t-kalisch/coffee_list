@@ -135,7 +135,8 @@ if logged_in == "true":
     elif admin_status == "1":
         profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams","Submit coffee or break","Delete coffee or break","Enter holidays","Change profile data"), 0)
     elif admin_status == "2":
-        profile_nav = st.sidebar.selectbox("Profile Options", ("Show diagrams"))
+        options = ["Show diagrams"]
+        profile_nav = st.sidebar.selectbox("Profile Options", options)
     
     if profile_nav == "Enter holidays":                                             # Enter holidays page
         st.subheader("**:calendar:** Enter holidays")
