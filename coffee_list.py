@@ -248,6 +248,7 @@ if logged_in == "true":
     if profile_nav == "Change profile data":                                          # Change profile data page
         st.subheader("**:closed_lock_with_key:** Change the profile of a member")
         st.markdown("You can enter a new username and password for a member, or change their member status.")
+        st.markdown("Guest password: "+get_guest_pw)
         col1,col2,col3 = st.columns([0.5,1,0.7])
         change_user = col1.text_input("User", placeholder = "Username")
         username_new = col2.text_input("New username", placeholder = "Username")
