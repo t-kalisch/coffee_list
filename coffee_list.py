@@ -359,13 +359,7 @@ with st.sidebar:
     break_percentage = st.checkbox("Percentages of breaks")
     soc_sc = st.checkbox("Social score")
     coffees_pwd = st.checkbox("Coffees per work day")
-    coffees_cumulated = st.checkbox("Cumulated coffees")
-    
-if admin_status == "1":
-    update_simple = st.sidebar.button("Simple database update", help="Click here to update the last two months", on_click = manual_update_simple)
-    update_full = st.sidebar.button("Full database update", help="Click here to perform a full update of the database", on_click = manual_update)
-
-                
+    coffees_cumulated = st.checkbox("Cumulated coffees")                
                 
 if logged_in == "true":
     if profile_nav == "Show diagrams":
