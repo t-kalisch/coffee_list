@@ -160,7 +160,7 @@ if logged_in == "true":
             all_holidays = get_all_holidays(datetime.datetime.now())
             #print(all_holidays)
             names=get_members()
-            columns=["Month","Total work days"]
+            columns=["ID","Tot. wd"]
             for i in range(len(names)):
                 columns.append(names[i])
             #st.write(all_holidays)
