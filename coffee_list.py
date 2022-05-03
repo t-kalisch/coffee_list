@@ -163,6 +163,7 @@ if logged_in == "true":
             columns=["Month","Total work days"]
             for i in range(len(names)):
                 columns.append(names[i])
+            st.write(all_holidays)
             df=pd.DataFrame(all_holidays,columns=columns)
             st.dataframe(df, width=1000, height=1000)
   
@@ -190,7 +191,6 @@ if logged_in == "true":
                         temp.append(all_holidays[j][i+2])
                         temp.append(all_holidays[j][1])
                         holidays_person.append(temp)
-            st.write(holidays_person)
             df=pd.DataFrame(holidays_person,columns=columns)
             st.dataframe(df, width=1000, height=1000)
         
