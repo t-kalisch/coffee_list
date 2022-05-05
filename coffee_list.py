@@ -93,7 +93,13 @@ def logout_check():
     st.session_state.user_name = None
     st.session_state.admin = "0"
     logged_in = "false"
-        
+ 
+
+def add_coffee_to_break_check(id_ext, coffee_name, logged_in_user):
+    if id_ext = "":
+        id_ext = last_breaks[len(last_breaks)-1][0]
+    add_coffee_to_break(id_ext, coffee_name, logged_in_user)
+
         
 with st.sidebar:
     
@@ -314,7 +320,7 @@ if logged_in == "true":
         col1, col2, col3 = st.columns([1,1,3])
         id_ext = col1.text_input("Extended ID", placeholder=last_breaks[len(last_breaks)-1][0])
         coffee_name = col2.text_input("Username", placeholder=logged_in_user)
-        col1.button("Add coffee", on_click=add_coffee_to_break, args=(id_ext, coffee_name, logged_in_user))
+        col1.button("Add coffee", on_click=add_coffee_to_break_check, args=(id_ext, coffee_name, logged_in_user))
         df=pd.DataFrame(last_breaks,columns=['Extended ID','Date','Drinkers','Coffees'])
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
