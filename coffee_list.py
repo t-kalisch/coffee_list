@@ -100,11 +100,13 @@ def add_coffee_to_break_check(id_ext, coffee_name, logged_in_user):
         id_ext = last_breaks[len(last_breaks)-1][0]
     add_coffee_to_break(id_ext, coffee_name, logged_in_user)
 
-def clear_one_break_check(del_id,""):
+def clear_one_break_check(del_id,sample):
     if del_id=="":
         del_id = last_breaks[len(last_breaks)-1][0]
     clear_one_break(del_id,"")
-        
+  
+
+
 with st.sidebar:
     
     col1,col2 = st.columns([1,1.65])
