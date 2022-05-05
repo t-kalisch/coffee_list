@@ -100,6 +100,10 @@ def add_coffee_to_break_check(id_ext, coffee_name, logged_in_user):
         id_ext = last_breaks[len(last_breaks)-1][0]
     add_coffee_to_break(id_ext, coffee_name, logged_in_user)
 
+def clear_one_break_check(del_id,""):
+    if del_id=="":
+        del_id = last_breaks[len(last_breaks)-1][0]
+    clear_one_break(del_id,"")
         
 with st.sidebar:
     
@@ -319,7 +323,7 @@ if logged_in == "true":
         last_breaks=get_last_breaks(10)
         col1, col2, col3 = st.columns([1,1,3])
         id_ext = col1.text_input("Extended ID", placeholder=last_breaks[len(last_breaks)-1][0])
-        coffee_name = col2.text_input("Username", placeholder=logged_in_user)
+        coffee_name = col2.text_input("Username", placeholder="User")
         col1.button("Add coffee", on_click=add_coffee_to_break_check, args=(id_ext, coffee_name, logged_in_user))
         df=pd.DataFrame(last_breaks,columns=['Extended ID','Date','Drinkers','Coffees'])
         col3.markdown("Last 10 breaks")
@@ -334,7 +338,7 @@ if logged_in == "true":
         df=pd.DataFrame(last_breaks,columns=['Extended ID','Date','Drinkers','Coffees'])
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
-        delete = col1.button("Delete break", on_click=clear_one_break, args=(del_id,""))
+        delete = col1.button("Delete break", on_click=clear_one_break_check, args=(del_id,""))
         col1.write("-" * 34)
         del_person = col1.text_input("Delete for person", placeholder="Username")
         col1.button("Delete coffee from break", on_click=delete_one_coffee, args=(del_id,del_person))
