@@ -100,10 +100,10 @@ def add_coffee_to_break_check(id_ext, coffee_name, logged_in_user):
         id_ext = last_breaks[len(last_breaks)-1][0]
     add_coffee_to_break(id_ext, coffee_name, logged_in_user)
 
-def clear_one_break_check(del_id,sample):
+def delete_one_coffee_check(del_id,del_person):
     if del_id=="":
         del_id = last_breaks[len(last_breaks)-1][0]
-    clear_one_break(del_id,"")
+    delete_one_coffee(del_id,del_person)
   
 
 
@@ -340,10 +340,10 @@ if logged_in == "true":
         df=pd.DataFrame(last_breaks,columns=['Extended ID','Date','Drinkers','Coffees'])
         col3.markdown("Last 10 breaks")
         col3.dataframe(df, width=600, height=500)
-        delete = col1.button("Delete break", on_click=clear_one_break_check, args=(del_id,""))
+        delete = col1.button("Delete break", on_click=clear_one_break, args=(del_id,""))
         col1.write("-" * 34)
         del_person = col1.text_input("Delete for person", placeholder="Username")
-        col1.button("Delete coffee from break", on_click=delete_one_coffee, args=(del_id,del_person))
+        col1.button("Delete coffee from break", on_click=delete_one_coffee_check, args=(del_id,del_person))
         
         
         
