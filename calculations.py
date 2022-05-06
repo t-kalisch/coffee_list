@@ -1524,6 +1524,9 @@ def manual_update_simple(sample1,sample2):
     #(stdin, stdout, stderr) = client.exec_command('./mysql_scripts/test_script.sh)')
     #print("Done")
     client.close()
+    st.write("Connection closed.")
+
+
 
 
 #calc_polynomial_functional(get_members(), get_months(datetime.date(2020,11,1))[1])
