@@ -16,6 +16,8 @@ def init_connection():
 
 def init_ssh():
     client = SSHClient()
+    client.load_system_host_keys()
+    client.load_host_keys('~/.ssh/known_hosts')
     client.set_missing_host_key_policy(AutoAddPolicy())
     #client.connect(**st.secrets["ssh-server"])
     client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
