@@ -1494,7 +1494,7 @@ def check_update_status():
 def manual_update_simple(sample1,sample2):
     ssh_server = init_ssh()
 
-    ssh_server.exec_command('./mysql_scripts/simple_update_dyn_func.sh')
+    ssh_server.paramiko.exec_command('./mysql_scripts/simple_update_dyn_func.sh')
 
     ssh_server.close()
 
