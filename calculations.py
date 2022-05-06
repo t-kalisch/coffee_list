@@ -1496,8 +1496,8 @@ def manual_update_simple(sample1,sample2):
 
     print("Sending your command")
     # Check in connection is made previously
-    if (self.client):
-        stdin, stdout, stderr = self.client.exec_command(command)
+    if (client):
+        stdin, stdout, stderr = client.exec_command(command)
         while not stdout.channel.exit_status_ready():
             # Print stdout data when available
             if stdout.channel.recv_ready():
