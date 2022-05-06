@@ -1509,7 +1509,7 @@ def manual_update_simple(sample1,sample2):
 
                 # Print as string with utf8 encoding
                 st.write(str(alldata, "utf8"))
-		st.write("Done")
+                st.write("Done")
 
         stdin.close()
         stdout.close()
