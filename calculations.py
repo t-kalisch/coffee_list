@@ -1493,10 +1493,35 @@ def manual_update_simple(sample1,sample2):
     #client.connect(**st.secrets["ssh-server"])
     client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
-    (stdin, stdout, stderr) = client.exec_command('(/usr/bin/python3 /~/../home/simple_update_dyn_func.py)')
-    client.exec_command('echo `date` > test.out')
-    (stdin, stdout, stderr) = client.exec_command('(cd /~/mysql_scripts; ./test_script.sh)')
-    print("Done")
+
+    print("Sending your command")
+    # Check in connection is made previously
+    if (self.client):
+        stdin, stdout, stderr = self.client.exec_command(command)
+        while not stdout.channel.exit_status_ready():
+            # Print stdout data when available
+            if stdout.channel.recv_ready():
+                # Retrieve the first 1024 bytes
+                alldata = stdout.channel.recv(2048)
+                while stdout.channel.recv_ready():
+                    # Retrieve the next 1024 bytes
+                    alldata += stdout.channel.recv(2048)
+
+                # Print as string with utf8 encoding
+                print(str(alldata, "utf8"))
+
+        stdin.close()
+        stdout.close()
+        stderr.close()
+
+     else:
+        print("Connection not opened.")
+
+
+    #(stdin, stdout, stderr) = client.exec_command('(/usr/bin/python3 /~/../home/simple_update_dyn_func.py)')
+    #client.exec_command('echo `date` > test.out')
+    #(stdin, stdout, stderr) = client.exec_command('(cd /~/mysql_scripts; ./test_script.sh)')
+    #print("Done")
     client.close()
 
 
