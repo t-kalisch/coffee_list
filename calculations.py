@@ -1497,7 +1497,7 @@ def manual_update_simple(sample1,sample2):
     print("Sending your command")
     # Check in connection is made previously
     if (client):
-        stdin, stdout, stderr = client.exec_command(command)
+        stdin, stdout, stderr = client.exec_command('./~/mysql_scripts/test_script.sh)')
         while not stdout.channel.exit_status_ready():
             # Print stdout data when available
             if stdout.channel.recv_ready():
@@ -1520,7 +1520,7 @@ def manual_update_simple(sample1,sample2):
 
     #(stdin, stdout, stderr) = client.exec_command('(/usr/bin/python3 /~/../home/simple_update_dyn_func.py)')
     #client.exec_command('echo `date` > test.out')
-    #(stdin, stdout, stderr) = client.exec_command('(cd /~/mysql_scripts; ./test_script.sh)')
+    #(stdin, stdout, stderr) = client.exec_command('./~/mysql_scripts/test_script.sh)')
     #print("Done")
     client.close()
 
