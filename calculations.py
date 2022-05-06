@@ -16,7 +16,8 @@ def init_connection():
 
 def init_ssh():
     client = SSHClient()
-    client.connect(**st.secrets["ssh-server"])
+    #client.connect(**st.secrets["ssh-server"])
+    client.connect('212.227.72.95:22', username='root', password='4aZq5A4Di!')
 
 
 def db_logout():
