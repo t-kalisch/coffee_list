@@ -7,11 +7,17 @@ from datetime import date
 import pandas as pd
 from plotly import *
 import plotly.express as px
+from paramiko import SSHClient
 
 
 #@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 def init_connection():
     return mysql.connect(**st.secrets["mysql"])
+
+def init_ssh():
+    client = SSHClient()
+    client.connect(**st.secrets["ssh-server"])
+
 
 def db_logout():
     db.close()
@@ -1481,13 +1487,12 @@ def check_update_status():
     db.close()
 
 #--------------------------- manual button press for simple update ------------
-def manual_update_simple():
-    db = init_connection()
-    cursor = db.cursor(buffered=True)
-    cursor.execute("select update_date from update_status")
-    tmp = cursor.fetchall()
-    update_database(tmp[0][0].month)
-    db.close
+def manual_update_simple(sample1,sample2):
+    ssh_server = init_ssh()
+
+    ssh_server.exec_command('./mysql_scripts/simple_update_dyn_func.sh')
+
+    ssh_server.close()
 
 #------------------------- updates database -------------------------------------
 def update_database(month):
