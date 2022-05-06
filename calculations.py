@@ -7,18 +7,18 @@ from datetime import date
 import pandas as pd
 from plotly import *
 import plotly.express as px
-from paramiko import SSHClient
-
+#from paramiko import SSHClient
+import paramiko
 
 #@st.cache(allow_output_mutation=True, hash_funcs={"_thread.RLock": lambda _: None})
 def init_connection():
     return mysql.connect(**st.secrets["mysql"])
 
 def init_ssh():
-    client = SSHClient()
+    client = paramiko.SSHClient()
     client.load_system_host_keys()
     #client.load_host_keys('~/.ssh/known_hosts')
-    client.set_missing_host_key_policy(AutoAddPolicy())
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     #client.connect(**st.secrets["ssh-server"])
     client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
