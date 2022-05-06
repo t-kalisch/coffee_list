@@ -1492,11 +1492,17 @@ def check_update_status():
 
 #--------------------------- manual button press for simple update ------------
 def manual_update_simple(sample1,sample2):
-    ssh_server = init_ssh()
+    #ssh_server = init_ssh()
+    client = paramiko.SSHClient()
+    client.load_system_host_keys()
+    #client.load_host_keys('~/.ssh/known_hosts')
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    #client.connect(**st.secrets["ssh-server"])
+    client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
-    ssh_server.paramiko.exec_command('./mysql_scripts/simple_update_dyn_func.sh')
+    client.exec_command('./mysql_scripts/simple_update_dyn_func.sh')
 
-    ssh_server.close()
+    client.close()
 
 #------------------------- updates database -------------------------------------
 def update_database(month):
