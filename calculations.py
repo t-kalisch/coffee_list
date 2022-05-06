@@ -14,13 +14,6 @@ import paramiko
 def init_connection():
     return mysql.connect(**st.secrets["mysql"])
 
-def init_ssh():
-    client = paramiko.SSHClient()
-    client.load_system_host_keys()
-    #client.load_host_keys('~/.ssh/known_hosts')
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    #client.connect(**st.secrets["ssh-server"])
-    client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
 
 def db_logout():
@@ -1500,7 +1493,8 @@ def manual_update_simple(sample1,sample2):
     #client.connect(**st.secrets["ssh-server"])
     client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
-    client.exec_command('./mysql_scripts/simple_update_dyn_func.sh')
+    client.exec_command('./~/mysql_scripts/simple_update_dyn_func.sh')
+    client.exec_command('echo test > test.out')
 
     client.close()
 
