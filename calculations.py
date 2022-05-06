@@ -1496,7 +1496,7 @@ def manual_update_simple(sample1,sample2):
     client.exec_command('./root/mysql_scripts/simple_update_dyn_func.sh')
     client.exec_command('echo test > test.out')
     client.exec_command('./root/mysql_scripts/test_script.sh')
-
+    print("Done")
     client.close()
 
 
