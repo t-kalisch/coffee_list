@@ -1497,7 +1497,7 @@ def manual_update_simple(sample1,sample2):
     st.write("Sending your command")
     # Check in connection is made previously
     if (client):
-        stdin, stdout, stderr = client.exec_command('./mysql_scripts/test_script.sh)')
+        stdin, stdout, stderr = client.exec_command('./mysql_scripts/test_script.sh')
         while not stdout.channel.exit_status_ready():
             # Print stdout data when available
             if stdout.channel.recv_ready():
@@ -1509,6 +1509,7 @@ def manual_update_simple(sample1,sample2):
 
                 # Print as string with utf8 encoding
                 st.write(str(alldata, "utf8"))
+		st.write("Done")
 
         stdin.close()
         stdout.close()
