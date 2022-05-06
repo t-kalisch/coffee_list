@@ -1514,7 +1514,7 @@ def manual_update_simple(sample1,sample2):
         stdout.close()
         stderr.close()
 
-     else:
+    else:
         print("Connection not opened.")
 
 
