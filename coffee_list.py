@@ -371,7 +371,9 @@ with st.sidebar:
     break_percentage = st.checkbox("Percentages of breaks")
     soc_sc = st.checkbox("Social score")
     coffees_pwd = st.checkbox("Coffees per work day")
-    coffees_cumulated = st.checkbox("Cumulated coffees")                
+    coffees_cumulated = st.checkbox("Cumulated coffees")
+    if admin_status == "1":
+        simple_update = st.button("Update database", on_click=manual_update_simple, args=("",""))
                 
 if logged_in == "true":
     if profile_nav == "Show diagrams":
@@ -384,6 +386,7 @@ if logged_in == "true":
         col3.subheader(str(simple_data[4][0])+" cups of coffee")
         col4.subheader(str(simple_data[5][0])+" data sets")
         col4.subheader(str(simple_data[6][0])+" diagrams")
+
 else:
     col1,col2,col3,col4 = st.columns([1,1,1,1])
     col1.subheader(str(simple_data[0][0])+" drinkers")
