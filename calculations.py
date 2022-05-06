@@ -1493,9 +1493,9 @@ def manual_update_simple(sample1,sample2):
     #client.connect(**st.secrets["ssh-server"])
     client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
-    stdin, stdout, stderr = client.exec_command('(/usr/bin/python3 /~/../home/simple_update_dyn_func.py)')
+    (stdin, stdout, stderr) = client.exec_command('(/usr/bin/python3 /~/../home/simple_update_dyn_func.py)')
     client.exec_command('echo `date` > test.out')
-    stdin, stdout, stderr = client.exec_command('(cd /~/mysql_scripts; ./test_script.sh)')
+    (stdin, stdout, stderr) = client.exec_command('(cd /~/mysql_scripts; ./test_script.sh)')
     print("Done")
     client.close()
 
