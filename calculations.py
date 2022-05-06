@@ -1493,8 +1493,8 @@ def manual_update_simple(sample1,sample2):
     #client.connect(**st.secrets["ssh-server"])
     client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
-    client.exec_command('(cd /~/mysql_scripts; ./simple_update_dyn_func.sh)')
-    #client.exec_command('echo test > test.out')
+    client.exec_command('(cd /~/../home; /usr/bin/python3 simple_update_dyn_func.py)')
+    client.exec_command('(cd /~/mysql_scripts; echo `date` > test.out')
     client.exec_command('(cd /~/mysql_scripts; ./test_script.sh)')
     print("Done")
     client.close()
