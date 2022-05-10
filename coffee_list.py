@@ -372,8 +372,8 @@ with st.sidebar:
     soc_sc = st.checkbox("Social score")
     coffees_pwd = st.checkbox("Coffees per work day")
     coffees_cumulated = st.checkbox("Cumulated coffees")
-    if admin_status == "1":
-        simple_update = st.button("Update database", on_click=manual_update_simple, args=("",""))
+    #if admin_status == "1":
+    #    simple_update = st.button("Update database", on_click=manual_update_simple, args=("",""))
                 
 if logged_in == "true":
     if profile_nav == "Show diagrams":
