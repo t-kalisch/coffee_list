@@ -1484,14 +1484,14 @@ def check_update_status():
     db.close()
 
 #--------------------------- manual button press for simple update ------------
-def manual_update_simple(sample1,sample2):
-    #ssh_server = init_ssh()
-    client = paramiko.SSHClient()
-    client.load_system_host_keys()
-    #client.load_host_keys('~/.ssh/known_hosts')
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    #client.connect(**st.secrets["ssh-server"])
-    client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
+#def manual_update_simple(sample1,sample2):
+#    #ssh_server = init_ssh()
+#    client = paramiko.SSHClient()
+#    client.load_system_host_keys()
+#    #client.load_host_keys('~/.ssh/known_hosts')
+#    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+#    #client.connect(**st.secrets["ssh-server"])
+#    client.connect('212.227.72.95', username='root', password='4aZq5A4Di!')
 
 
 #    st.write("Sending your command")
@@ -1523,8 +1523,8 @@ def manual_update_simple(sample1,sample2):
     #client.exec_command('echo `date` > test.out')
     #(stdin, stdout, stderr) = client.exec_command('./mysql_scripts/test_script.sh)')
     #print("Done")
-    client.close()
-    st.write("Connection closed.")
+    #client.close()
+    #st.write("Connection closed.")
 
 
 
