@@ -972,7 +972,10 @@ def get_coffees_per_work_day(names, month_id):
     for i in range(len(month_id)):
         temp=[]
         for j in range(len(names)):
-            temp.append(round(tmp[j][i+2]/workdays[i][j],3))     #dividing monthly coffees by monthly work days
+	    if workdays[i][j] == 0:
+		temp.append(0)
+	    else:
+                temp.append(round(tmp[j][i+2]/workdays[i][j],3))     #dividing monthly coffees by monthly work days
             total_workdays[j]=total_workdays[j]+workdays[i][j] 	 #getting total workdays per person
         temp1.append(temp)
     
