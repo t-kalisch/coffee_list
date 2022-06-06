@@ -199,7 +199,7 @@ def submit_break(persons,coffees,date_br):					# submitting break into database
 			cursor.execute("select count(*) from members where name = '"+persons_comp[i]+"'")
 			tmp = cursor.fetchone()
 			if tmp[0] == 0:
-				cursor.execute("insert into members (name) values ('"+str(persons[i].upper())+"')")                                             #adding person to members table
+				cursor.execute("insert into members (name, admin) values ('"+str(persons[i].upper())+"',0)")                                             #adding person to members table
 				cursor.execute("alter table holidays add "+persons[i].upper()+" int")                                                    #adding person to holidays table
 				cursor.execute("create table if not exists mbr_"+persons[i].upper()+" (id_ext char(10), n_coffees int, primary key(id_ext), CONSTRAINT fk_member_"+persons[i].upper()+"_break_ID_ext FOREIGN KEY(id_ext) REFERENCES breaks(id_ext) ON DELETE CASCADE)")     #creating a table for each individual person
 				db.commit()
@@ -258,7 +258,7 @@ def add_coffee_to_break(id_ext, name, user):
 					cursor.execute("update drinkers set persons = '"+drinker_data[0]+"', coffees = '"+coffees_str+"' where id_ext = '"+id_ext+"'")
 					st.success("Added a coffee for "+name.upper()+" into break "+id_ext+".")
 		if user_exists == False:
-			cursor.execute("insert into members (name) values ('"+name.upper()+"')")                                             #adding person to members table
+			cursor.execute("insert into members (name,admin) values ('"+name.upper()+"',0)")                                             #adding person to members table
 			cursor.execute("alter table holidays add "+name.upper()+" varchar(6)")                                                    #adding person to holidays table
 			cursor.execute("create table if not exists mbr_"+name.upper()+" (id_ext char(10), n_coffees int, primary key(id_ext), CONSTRAINT fk_member_"+name.upper()+"_break_ID_ext FOREIGN KEY(id_ext) REFERENCES breaks(id_ext) ON DELETE CASCADE)")     #creating a table for each individual person
 			update_database(datetime.datetime.today().month)
