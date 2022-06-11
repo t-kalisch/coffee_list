@@ -271,9 +271,7 @@ def get_stdev(names, month_id):
 
 #------------------------- getting the MAD for every functional ---------------------------------------------------
 def get_mad(names, month_id):
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
+    db = init_connection()
     cursor=db.cursor(buffered=True)
 
     param = get_parameters()
@@ -291,9 +289,7 @@ def get_mad(names, month_id):
 
 #------------------------- getting the MAD for every functional ---------------------------------------------------
 def write_mad(names, month_id):
-    db = mysql.connect(user='PBTK', password='akstr!admin2', #connecting to mysql
-    host='212.227.72.95',
-    database='coffee_list')
+    db = init_connection()
     cursor=db.cursor(buffered=True)
 
     param = get_parameters()
